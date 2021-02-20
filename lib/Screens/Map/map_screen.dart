@@ -29,7 +29,7 @@ class MapSampleState extends State<MapSample> {
         markerId: MarkerId("first"),
         position: LatLng(32.43296265331129, 35.08832357078792),
         icon: mapMarker,
-        infoWindow: InfoWindow(title: "nablus",snippet: "hiii")));
+        infoWindow: InfoWindow(title: "nablus",snippet: "hiii",)));
     setState(() {});
   }
 

@@ -31,7 +31,10 @@ class _MainPageState extends State<MainPage> {
           IconButton(
             icon: Icon(Icons.close, size: 35,),
 
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+
+            },
           )
         ],
       ),

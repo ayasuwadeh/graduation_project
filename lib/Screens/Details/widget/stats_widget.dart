@@ -12,7 +12,7 @@ class StatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+    padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children:

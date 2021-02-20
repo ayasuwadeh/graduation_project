@@ -21,8 +21,14 @@ class BottomNavBar extends StatelessWidget {  const BottomNavBar({
             isActive: true,
           ),
           BottomNavItem(
+            title: "Explore",
+            icon: Icons.search_rounded,
+            isActive: false,
+          ),
+
+          BottomNavItem(
             title: "Fav Places",
-            icon: Icons.favorite,
+            icon: Icons.bookmark,
           ),
           BottomNavItem(
             title: "Profile",
