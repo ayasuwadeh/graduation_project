@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/Screens/Login/login_screen.dart';
 import 'package:graduation_project/Screens/SignUp/sign_up_screen.dart';
+import 'package:graduation_project/Screens/pageviewSignup/mainPage.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/constants.dart';
 
@@ -57,7 +58,7 @@ class WelcomeScreen extends StatelessWidget {
                         press: (){
                           Navigator.push(context, MaterialPageRoute(
                               builder: (context){
-                                return SignUpScreen();
+                                return SignUpView();
                               }
                           ));
                         },

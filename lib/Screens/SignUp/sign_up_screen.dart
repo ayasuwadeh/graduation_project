@@ -25,84 +25,92 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Positioned.fill(
-            child: Opacity(
-          child: Image(
-            image: AssetImage("assets/images/piza.jpg"),
-            fit: BoxFit.cover,
-          ),
-          opacity: 0.7,
-        )),
-        Positioned.fill(
-          top: size.height * 0.1,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Sign Up",
-                    style: GoogleFonts.raleway(
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      ),
-                    )
-                ),
-                SizedBox(
-                  height: size.height * 0.08,
-                ),
-                RoundedTextFormField(
-                  hintText: "Email",
-                  icon: Icons.person,
-                ),
-                RoundedPasswordField(
-                  hintText: "Password",
-                ),
-                RoundedPasswordField(
-                  hintText: "Confirm Password",
-                ),
-                RoundedButton(
-                  text: "Sign Up",
-                  color: kPrimaryColor,
-                  textColor: kPrimaryLightColor,
-                  press: () {},
-                ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
-                AlreadyHaveAnAccountCheck(
-                  login: false,
-                  press: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return LoginScreen();
-                    }));
-                  },
-                ),
-                OrDivider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SocialIcon(
-                      icon: CustomIcons.facebook,
-                    ),
-                    SocialIcon(
-                      icon: CustomIcons.twitter,
-                    ),
-                    SocialIcon(
-                      icon: CustomIcons.gplus,
-                    ),
-                  ],
-                )
-              ],
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+
+      appBar: AppBar(
+         elevation: 0,
+        backgroundColor: Colors.transparent,
+         ),
+      body: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Positioned.fill(
+              child: Opacity(
+            child: Image(
+              image: AssetImage("assets/images/piza.jpg"),
+              fit: BoxFit.cover,
             ),
-          ),
-        )
-      ],
+            opacity: 0.7,
+          )),
+          Positioned.fill(
+            top: size.height * 0.1,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Sign Up",
+                      style: GoogleFonts.raleway(
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      )
+                  ),
+                  SizedBox(
+                    height: size.height * 0.08,
+                  ),
+                  RoundedTextFormField(
+                    hintText: "Email",
+                    icon: Icons.person,
+                  ),
+                  RoundedPasswordField(
+                    hintText: "Password",
+                  ),
+                  RoundedPasswordField(
+                    hintText: "Confirm Password",
+                  ),
+                  RoundedButton(
+                    text: "Sign Up",
+                    color: kPrimaryColor,
+                    textColor: kPrimaryLightColor,
+                    press: () {},
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  AlreadyHaveAnAccountCheck(
+                    login: false,
+                    press: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return LoginScreen();
+                      }));
+                    },
+                  ),
+                  OrDivider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SocialIcon(
+                        icon: CustomIcons.facebook,
+                      ),
+                      SocialIcon(
+                        icon: CustomIcons.twitter,
+                      ),
+                      SocialIcon(
+                        icon: CustomIcons.gplus,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

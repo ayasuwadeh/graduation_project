@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/Screens/SignUp/sign_up_screen.dart';
 import 'package:graduation_project/Screens/Login/login_form.dart';
+import 'package:graduation_project/Screens/pageviewSignup/mainPage.dart';
 import 'package:graduation_project/components/already_have_an_account_check.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -16,10 +17,11 @@ class LoginScreen extends StatelessWidget {
         children: <Widget>[
           Positioned.fill(
               child: Opacity(
+
                 child: Image(
                   image: AssetImage("assets/images/pyramids.jpg"),
                   fit: BoxFit.cover,
-                ), opacity: 0.7,
+                ), opacity: 0.2,
               )
           ),
           Positioned.fill(
@@ -43,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                   AlreadyHaveAnAccountCheck(login: true, press: (){
                     Navigator.push(context, MaterialPageRoute(
                         builder: (context){
-                          return SignUpScreen();
+                          return SignUpView();
                         }
                     ));
                   },)
