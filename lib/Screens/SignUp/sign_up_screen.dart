@@ -35,16 +35,25 @@ class Body extends StatelessWidget {
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
+          Positioned(
+              top: 95,
+              left: 120,
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("assets/icons/coockatoo.png"),
+                    )
+                ),
+
+              )
+          ),
+
           Positioned.fill(
-              child: Opacity(
-            child: Image(
-              image: AssetImage("assets/images/piza.jpg"),
-              fit: BoxFit.cover,
-            ),
-            opacity: 0.7,
-          )),
-          Positioned.fill(
-            top: size.height * 0.1,
+            top: size.height * 0.09,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -60,11 +69,16 @@ class Body extends StatelessWidget {
                       )
                   ),
                   SizedBox(
-                    height: size.height * 0.08,
+                    height: size.height * 0.19,
                   ),
                   RoundedTextFormField(
-                    hintText: "Email",
+                    hintText: "Your Name",
                     icon: Icons.person,
+                  ),
+
+                  RoundedTextFormField(
+                    hintText: "Email",
+                    icon: Icons.email,
                   ),
                   RoundedPasswordField(
                     hintText: "Password",
@@ -72,7 +86,7 @@ class Body extends StatelessWidget {
                   RoundedPasswordField(
                     hintText: "Confirm Password",
                   ),
-                  RoundedButton(
+                /*  RoundedButton(
                     text: "Sign Up",
                     color: kPrimaryColor,
                     textColor: kPrimaryLightColor,
@@ -89,7 +103,7 @@ class Body extends StatelessWidget {
                         return LoginScreen();
                       }));
                     },
-                  ),
+                  ),*/
                   OrDivider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +118,20 @@ class Body extends StatelessWidget {
                         icon: CustomIcons.gplus,
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    //top: 600,
+                    // left: 120,
+                      margin: EdgeInsets.only(left: 115) ,
+                      child: Row(
+                        children: [
+                          Text("swipe right to continue",style: TextStyle(color: Colors.grey,fontSize: 15),),
+                          Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
+
+                        ],
+                      )
+                  ),
                 ],
               ),
             ),

@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       child:
       Container(
-          margin: EdgeInsets.only(top: 20),
+          margin: EdgeInsets.only(top: 50),
 
           child:Column(
         children: [
@@ -134,11 +134,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-          const SizedBox(height: 45),
+          const SizedBox(height: 27),
             Container(
                 //top: 600,
                // left: 120,
-              margin: EdgeInsets.only(left: 90) ,
+              margin: EdgeInsets.only(left: 95) ,
                 child: Row(
                   children: [
                     Icon(Icons.arrow_back_outlined,color: Colors.grey,),

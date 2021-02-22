@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/SignUp/sign_up_screen.dart';
+import 'package:graduation_project/Screens/SignUp/sign_up_screen1.dart';
 import 'package:graduation_project/Screens/Login/login_form.dart';
 import 'package:graduation_project/Screens/Recommendation/main.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -33,6 +34,7 @@ class _SignUpViewState extends State<SignUpView> {
         children:[ PageView(
           children:[
             new SignUpScreen(),
+            new SignUpScreen1(),
             new MyHomePage(),
             new WelcomeCard(),
 
@@ -53,7 +55,7 @@ class _SignUpViewState extends State<SignUpView> {
             margin: new EdgeInsets.symmetric(vertical: 20.0),
             child: SmoothPageIndicator(
                 controller: controller,  // PageController
-                count:  3,
+                count:  4,
 
                 effect:  ExpandingDotsEffect(
                   dotColor:  Colors.black,

@@ -58,7 +58,8 @@ class _MainPageState extends State<MainPage> {
                 images: [Image.asset('assets/images/china.jpg', fit: BoxFit.cover),
                   Image.asset('assets/images/piza.jpg', fit: BoxFit.cover,)
                 ],
-              ),)
+              ),
+            )
           ],
         ),
         panelBuilder: (ScrollController scrollController)=>PanelWidget(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Screens/Home/home_screen.dart';
 
 class WelcomeCard extends StatelessWidget {
   @override
@@ -51,6 +52,7 @@ class WelcomeCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: RaisedButton(
+
                   padding: EdgeInsets.all(12),
                   textColor: Colors.white,
                   color: Colors.deepOrange,
@@ -58,7 +60,11 @@ class WelcomeCard extends StatelessWidget {
                     "    Let's Go!    ",
                     style: TextStyle(fontSize: 19),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                      return HomeScreen();
+                  }));},
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
                   ),
@@ -86,7 +92,19 @@ class WelcomeCard extends StatelessWidget {
               ],
             ),
           ),
+
         ]),
+          Positioned(
+              top: 600,
+              left: 120,
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_back_outlined,color: Colors.grey,),
+                  Text("you can swipe to left",style: TextStyle(color: Colors.grey,fontSize: 15),),
+                ],
+              )
+          ),
+
           Positioned(
               top: 60,
               left: 120,

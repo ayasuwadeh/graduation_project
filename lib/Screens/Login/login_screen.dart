@@ -15,42 +15,55 @@ class LoginScreen extends StatelessWidget {
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Positioned.fill(
-              child: Opacity(
+          Positioned(
+              top: 120,
+              left: 120,
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("assets/icons/coockatoo.png"),
+                    )
+                ),
 
-                child: Image(
-                  image: AssetImage("assets/images/pyramids.jpg"),
-                  fit: BoxFit.cover,
-                ), opacity: 0.2,
               )
           ),
           Positioned.fill(
+            top: size.height * 0.09,
+
+            child: 
+            SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    child: Text(
-                      "LOGIN",
-                      style: GoogleFonts.raleway(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                      )
-                    ), padding: EdgeInsets.symmetric(vertical: 20),
-                  ),
-                  LoginForm(),
-                  SizedBox(height: size.height * 0.03,),
-                  AlreadyHaveAnAccountCheck(login: true, press: (){
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context){
-                          return SignUpView();
-                        }
-                    ));
-                  },)
-                ],
-              ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      child: Text(
+                        "LOGIN",
+                        style: GoogleFonts.raleway(
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        )
+                      ), padding: EdgeInsets.symmetric(vertical: 20),
+                    ),
+                    SizedBox(height: size.height*0.2,),
+                    LoginForm(),
+                    SizedBox(height: size.height * 0.01,),
+                    AlreadyHaveAnAccountCheck(login: true, press: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context){
+                            return SignUpView();
+                          }
+                      ));
+                    },)
+                  ],
+                ),
+            ),
           ),
         ],
       ),

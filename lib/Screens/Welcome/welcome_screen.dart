@@ -1,3 +1,4 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,19 +8,40 @@ import 'package:graduation_project/Screens/pageviewSignup/mainPage.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/constants.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin{
+
   @override
   Widget build(BuildContext context) {
-
-    Size size = MediaQuery.of(context).size;
+     Curve animation=Curves.easeInOutCirc ;
+    Size size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Positioned.fill(child: Image(
-            image: AssetImage("assets/images/china.jpg"),
-            fit: BoxFit.cover,
-          )),
+          Positioned.fill(
+
+              child: Carousel(
+                dotSize: 0,
+                dotVerticalPadding: 220,
+                dotBgColor: Colors.transparent,
+                autoplayDuration: Duration(seconds: 2),
+                animationCurve: animation,
+
+                images: [
+                  Image.asset('assets/images/china.jpg', fit: BoxFit.cover),
+                  Image.asset('assets/images/pyramids.jpg', fit: BoxFit.cover),
+                  Image.asset('assets/images/piza.jpg', fit: BoxFit.cover,)
+                ],
+              ),
+
+          ),
           Positioned(
             bottom: 10,
             child: Column(
@@ -28,14 +50,14 @@ class WelcomeScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Text(
-                    "A new \nway to travel ! ",
-                    style: GoogleFonts.bigShouldersDisplay(
-                      textStyle:  TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50,
-                        color: Colors.white,
-                      ),
-                    )
+                      "A new \nway to travel ! ",
+                      style: GoogleFonts.bigShouldersDisplay(
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 50,
+                          color: Colors.white,
+                        ),
+                      )
                   ),
                 ),
                 Container(
@@ -46,18 +68,18 @@ class WelcomeScreen extends StatelessWidget {
                     children: <Widget>[
                       RoundedButton(
                         text: "LOGIN",
-                        press: (){
+                        press: () {
                           Navigator.push(context, MaterialPageRoute(
-                              builder: (context){
+                              builder: (context) {
                                 return LoginScreen();
                               }));
                         },
                       ),
                       RoundedButton(
                         text: "SIGN UP",
-                        press: (){
+                        press: () {
                           Navigator.push(context, MaterialPageRoute(
-                              builder: (context){
+                              builder: (context) {
                                 return SignUpView();
                               }
                           ));
@@ -77,4 +99,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-
