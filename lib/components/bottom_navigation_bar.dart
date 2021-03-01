@@ -14,26 +14,35 @@ class BottomNavBar extends StatelessWidget {  const BottomNavBar({
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
+        children: [
+
           BottomNavItem(
             title: "Today",
             icon: Icons.home,
             isActive: true,
           ),
-          BottomNavItem(
-            title: "Explore",
-            icon: Icons.search_rounded,
-            isActive: false,
+          RaisedButton(
+            padding: EdgeInsets.all(5.0),
+color: Colors.deepOrangeAccent,
+            shape: CircleBorder(),
+            child: Icon(Icons.navigation,color: Colors.white,size: 40,),
+            onPressed: () {  },
           ),
 
           BottomNavItem(
-            title: "Fav Places",
-            icon: Icons.bookmark,
+            title: "Explore",
+            icon: Icons.explore,
+            isActive: false,
           ),
-          BottomNavItem(
-            title: "Profile",
-            icon: Icons.person,
-          ),
+
+          // BottomNavItem(
+          //   title: "Fav Places",
+          //   icon: Icons.bookmark,
+          // ),
+          // BottomNavItem(
+          //   title: "Profile",
+          //   icon: Icons.person,
+          // ),
         ],
       ),
     );

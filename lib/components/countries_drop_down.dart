@@ -16,7 +16,8 @@ class _CountriesDropDownState extends State<CountriesDropDown> {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: dropdownValue,
-      icon: Icon(Icons.arrow_downward),
+     // icon: Icon(Icons.arrow_downward),
+
       iconSize: 24,
       elevation: 16,
       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),

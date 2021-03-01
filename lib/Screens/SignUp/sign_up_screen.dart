@@ -15,6 +15,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: Body(),
     );
   }
@@ -25,9 +26,9 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
+    return
+      Scaffold(
       extendBodyBehindAppBar: true,
-
       appBar: AppBar(
          elevation: 0,
         backgroundColor: Colors.transparent,

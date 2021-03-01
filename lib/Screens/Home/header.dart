@@ -9,7 +9,8 @@ class Header extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Row(
-      children: <Widget>[
+      children: [
+
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           padding: EdgeInsets.symmetric(horizontal: 20),

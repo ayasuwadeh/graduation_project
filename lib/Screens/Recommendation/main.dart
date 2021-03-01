@@ -68,20 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Choice> options;
 
-  int _counter = 0;
   int id;
 
-  void _change(bool, int id) {
-    setState(() {
-      // options.id;
-    });
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
