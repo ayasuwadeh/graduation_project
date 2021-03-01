@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/bookmarks/main.dart';
+import 'package:graduation_project/Screens/EditUserProfile/main.dart';
+
 import 'package:graduation_project/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -23,7 +25,7 @@ class MainDrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 65.0,
-              child: Image.asset("assets/icons/coockatoo.png"),
+              child: Image.asset("assets/icons/cockatoo.png"),
                   ),
 
                 SizedBox(
@@ -64,7 +66,10 @@ class MainDrawer extends StatelessWidget {
         //Now let's Add the button for the Menu
         //and let's copy that and modify it
         ListTile(
-          onTap: () {},
+          onTap: () {Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
+                return EditProfile();
+              }));},
           leading: Icon(
             Icons.edit,
             color: Colors.deepOrange,

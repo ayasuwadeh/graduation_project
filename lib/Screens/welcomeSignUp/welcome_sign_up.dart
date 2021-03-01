@@ -115,7 +115,7 @@ class WelcomeCard extends StatelessWidget {
                     shape: BoxShape.circle,
                     image: new DecorationImage(
                       fit: BoxFit.fill,
-                      image: AssetImage("assets/icons/coockatoo.png"),
+                      image: AssetImage("assets/icons/cockatoo.png"),
                     )
                 ),
 

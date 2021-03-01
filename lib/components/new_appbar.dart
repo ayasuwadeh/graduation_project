@@ -23,7 +23,7 @@ class _NewAppBarState extends State<NewAppBar> {
             width: 90,
             child: IconButton(
 
-              icon: Image.asset("assets/icons/coockatoo.png"),
+              icon: Image.asset("assets/icons/cockatoo.png"),
               onPressed: (){
                 widget.scaffoldState.currentState.openDrawer();
 

@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 90,
                           child: IconButton(
 
-                            icon: Image.asset("assets/icons/coockatoo.png"),
+                            icon: Image.asset("assets/icons/cockatoo.png"),
                             onPressed: (){
                                 _scaffoldState.currentState.openDrawer();
 
