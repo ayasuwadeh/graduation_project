@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/Home/home_screen.dart';
+import 'cockatoo_icon.dart';
 
 class WelcomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body:
       Stack(
         children: [
 
           Column(children: [
-          SizedBox(height: 165),
+          SizedBox(height: height*0.22),
 
           Container(
-            margin: EdgeInsets.all(20),
-            height: 325,
+            margin: EdgeInsets.all(height*0.03),
+            height: height*0.47,
             child: Column(children: [
               // SizedBox(height: 165,),
               Card(
@@ -25,7 +29,7 @@ class WelcomeCard extends StatelessWidget {
                   children: [
 
                     SizedBox(
-                      height: 35,
+                      height: height*0.052,
                     ),
                     Text(
                       ' hey, cockatoo would be always around',
@@ -72,16 +76,14 @@ class WelcomeCard extends StatelessWidget {
               ),
 
               SizedBox(
-                height: 20,
+                height: height*0.01,
               ),
             ]),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(20)
+                  ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black45.withOpacity(0.5),
@@ -95,8 +97,8 @@ class WelcomeCard extends StatelessWidget {
 
         ]),
           Positioned(
-              top: 600,
-              left: 120,
+              top: height*0.896,
+              left: width*0.27,
               child: Row(
                 children: [
                   Icon(Icons.arrow_back_outlined,color: Colors.grey,),
@@ -104,23 +106,7 @@ class WelcomeCard extends StatelessWidget {
                 ],
               )
           ),
-
-          Positioned(
-              top: 60,
-              left: 120,
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage("assets/icons/cockatoo.png"),
-                    )
-                ),
-
-              )
-          ),
+        CockatooPic(path:"assets/icons/cockatoo.png"),
       ]),
     );
   }

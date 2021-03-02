@@ -7,23 +7,6 @@ import 'package:graduation_project/Screens/EditUserProfile/widgets/raisedbutton_
 import 'package:graduation_project/Screens/EditUserProfile/widgets/country_selector.dart';
 import 'package:graduation_project/Screens/EditUserProfile/widgets/Date_selector.dart';
 import 'package:graduation_project/Screens/EditUserProfile/widgets/save_discard.dart';
-// void main() {
-//   runApp(MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       theme: ThemeData(
-//           colorScheme:ColorScheme.light().copyWith(
-//             primary: Colors.deepOrange,
-//           ),),
-//       home: EditProfile(),
-//     );
-//   }
-// }
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key key, }) : super(key: key);

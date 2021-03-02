@@ -96,12 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
           alignment: Alignment(.5,-7),
           child: Column(
             children: <Widget>[
-              // Text(
-              //
-              //   'what kinds of foods do you like?',
-              //   style: TextStyle(fontStyle: FontStyle.normal, fontSize: 18),
-              //
-              // ),
               Container(
                 margin: EdgeInsets.all(10.0),
 

@@ -1,24 +1,8 @@
-
 import 'package:graduation_project/Screens/bookmarks/date_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/bookmarks/card.dart';
 
-void main() {
-  runApp(Main());
-}
-
-class Main extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-      ),
-      home: MyBookmarks(),
-    );
-  }
-}
 
 class MyBookmarks extends StatefulWidget {
   MyBookmarks({Key key}) : super(key: key);
@@ -42,10 +26,12 @@ class _MyBookmarksState extends State<MyBookmarks> {
     }
   ];
 
-  List <Icon> icons=[Icon(Icons.clear_all,color: Colors.black,),
+  List <Icon> icons=//for the header
+  [Icon(Icons.clear_all,color: Colors.black,),
     Icon(Icons.restaurant,color: Colors.black,),
-    Icon(Icons.nature_people,color: Colors.black,),];
-  int _value = 1;
+    Icon(Icons.nature_people,color: Colors.black,),
+  ];
+  int _value = 0;
   int index;
   @override
   Widget build(BuildContext context) {
@@ -54,15 +40,12 @@ class _MyBookmarksState extends State<MyBookmarks> {
       appBar: AppBar(
         leading: IconButton(icon:Icon(Icons.arrow_back),
           color: Colors.black,
-          onPressed: () {              Navigator.pop(context);
+          onPressed: () {
+          Navigator.pop(context);
           },),
         backgroundColor: Colors.white,
-        title: Align(
-            alignment: Alignment.topLeft,
-            child:
+        title:
             Text("Bookmarks", style: TextStyle(color: Colors.black87),)
-
-        ),
       ),
       body:
       ListView(
@@ -72,7 +55,7 @@ class _MyBookmarksState extends State<MyBookmarks> {
             alignment: WrapAlignment.center,
             spacing: 8.0, // gap between adjacent chips
 
-            children: List<Widget>.generate(
+            children: List<Widget>.generate(//header
               3,
                   (int index) {
                 return ChoiceChip(

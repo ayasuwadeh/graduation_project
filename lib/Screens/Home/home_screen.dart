@@ -49,14 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: Image.asset("assets/icons/cockatoo.png"),
                             onPressed: (){
                                 _scaffoldState.currentState.openDrawer();
-
                             },
                           ),
                         ),
                         SizedBox(width: 33),
-                        // Text("Cockatoo",style: GoogleFonts.lobsterTwo(
-                        //   fontSize: 55,
-                        // ),)
                         Header(),
 
                       ],

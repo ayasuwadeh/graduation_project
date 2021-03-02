@@ -34,11 +34,6 @@ class CardNState extends State <CardN> {
 
                 ),
               ),
-              // RaisedButton(
-              //
-              //   onPressed: () { },
-              //   child: const Text('Enabled Button', style: TextStyle(fontSize: 20)),
-              // ),
             ],
           ),
     );
