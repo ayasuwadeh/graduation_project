@@ -27,14 +27,14 @@ class _ExplorePageState extends State<ExplorePage> {
                 left: 10,),
             child: Row(
               children: [
-                Text("Find Your \nNext Adventure.",
-                  style: TextStyle(
-                    letterSpacing: 1.3,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    height: 1.3,
-                  ),),
+                // Text("Find Your \nNext Adventure.",
+                //   style: TextStyle(
+                //     letterSpacing: 1.3,
+                //     color: Colors.black87,
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 25,
+                //     height: 1.3,
+                //   ),),
                // SizedBox(width: 30,),
 
 
