@@ -14,11 +14,11 @@ class Header extends StatelessWidget {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           padding: EdgeInsets.symmetric(horizontal: 20),
-          width: size.width * 0.6,
+          width: size.width * 0.38,//0.6
           height: 50,
           decoration: BoxDecoration(
             color: kPrimaryLightColor,
-            borderRadius: BorderRadius.circular(29),
+            borderRadius: BorderRadius.circular(20),
           ),
           child: CountriesDropDown(),
         ),
