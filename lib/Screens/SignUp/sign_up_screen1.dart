@@ -1,17 +1,13 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/Login/login_screen.dart';
 import 'package:graduation_project/components/already_have_an_account_check.dart';
-import 'package:graduation_project/components/custom_icons_icons.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/components/rounded_passwordfield.dart';
 import 'package:graduation_project/components/rounded_textField.dart';
-import 'package:graduation_project/components/social_icons.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 
 class SignUpScreen1 extends StatelessWidget {
@@ -30,7 +26,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String countryValue="select Your Country";
+  String countryValue="Select Your Country";
   String countryValue1="Select Your Country";
   final focusNode = FocusNode();
 
@@ -55,13 +51,12 @@ class _BodyState extends State<Body> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-
-
-          Positioned.fill(
-            top: size.height * 0.12,
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+            height: size.height * 0.7,
+            margin: EdgeInsets.only(top: size.height * 0.15),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +64,7 @@ class _BodyState extends State<Body> {
 
                 children: <Widget>[
                   Text(
-                      "continue setting up your profile",
+                      "Continue setting up your profile",
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -165,26 +160,32 @@ class _BodyState extends State<Body> {
                       }));
                     },
                   ),
-
-                  SizedBox(height: 85,),
-                  Container(
-                    //top: 600,
-                    // left: 120,
-                      margin: EdgeInsets.only(left: 95) ,
-                      child: Row(
-                        children: [
-                          Icon(Icons.arrow_back_outlined,color: Colors.grey,),
-
-                          Text("you can swipe right or left",style: TextStyle(color: Colors.grey,fontSize: 15),),
-                          Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
-
-                        ],
-                      )
-                  ),
                 ],
               ),
             ),
-          )
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                  height: 30,
+                  //top: 600,
+                  // left: 120,
+                  margin: EdgeInsets.only(bottom: 40) ,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(Icons.arrow_back_outlined,color: Colors.grey,),
+
+                      Text("you can swipe right or left",style: TextStyle(color: Colors.grey,fontSize: 15),),
+                      Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
+                    ],
+                  )
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -87,24 +87,6 @@ class Body extends StatelessWidget {
                   RoundedPasswordField(
                     hintText: "Confirm Password",
                   ),
-                /*  RoundedButton(
-                    text: "Sign Up",
-                    color: kPrimaryColor,
-                    textColor: kPrimaryLightColor,
-                    press: () {},
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  AlreadyHaveAnAccountCheck(
-                    login: false,
-                    press: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return LoginScreen();
-                      }));
-                    },
-                  ),*/
                   OrDivider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -121,17 +103,13 @@ class Body extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 10,),
-                  Container(
-                    //top: 600,
-                    // left: 120,
-                      margin: EdgeInsets.only(left: 115) ,
-                      child: Row(
-                        children: [
-                          Text("swipe right to continue",style: TextStyle(color: Colors.grey,fontSize: 15),),
-                          Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
-
-                        ],
-                      )
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("swipe right to continue",style: TextStyle(color: Colors.grey,fontSize: 15),),
+                      Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
+                    ],
                   ),
                 ],
               ),
