@@ -18,7 +18,7 @@ class _CountriesDropDownState extends State<CountriesDropDown> {
       value: dropdownValue,
      // icon: Icon(Icons.arrow_downward),
 
-      iconSize: 24,
+      iconSize: 0,
       elevation: 16,
       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       underline: Container(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/bookmarks/main.dart';
 import 'package:graduation_project/Screens/EditUserProfile/main.dart';
-
+import 'package:graduation_project/Screens/Routes/main.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -91,7 +91,10 @@ class MainDrawer extends StatelessWidget {
         ),
 
         ListTile(
-          onTap: () {},
+          onTap: () {Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
+                return MyRoutes();
+              }));},
           leading: Icon(
             Icons.zoom_out_map_sharp,
                 color:Colors.deepOrange,

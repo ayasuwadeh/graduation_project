@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/constants.dart';
-
+import 'package:graduation_project/Screens/Explore/main.dart';
 class BottomNavBar extends StatelessWidget {  const BottomNavBar({
     Key key,
   }) : super(key: key);
@@ -19,7 +19,8 @@ class BottomNavBar extends StatelessWidget {  const BottomNavBar({
           BottomNavItem(
             title: "Today",
             icon: Icons.home,
-            isActive: true,
+            isActive: false,
+
           ),
           RaisedButton(
             padding: EdgeInsets.all(5.0),
@@ -32,7 +33,15 @@ color: Colors.deepOrangeAccent,
           BottomNavItem(
             title: "Explore",
             icon: Icons.explore,
-            isActive: false,
+            isActive: true,
+            press: ()
+            {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
+                    return ExplorePage();
+                  }));
+            },
+
           ),
 
           // BottomNavItem(
