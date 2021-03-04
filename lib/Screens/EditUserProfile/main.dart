@@ -1,12 +1,12 @@
 import 'package:graduation_project/Screens/EditUserProfile/widgets/image_container.dart';
-import 'file:///C:/Users/Msys/AndroidStudioProjects/edit_profile/lib/widgets/underliened_passwordfield.dart';
-import 'file:///C:/Users/Msys/AndroidStudioProjects/edit_profile/lib/widgets/underlined_textField.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/Screens/EditUserProfile/widgets/raisedbutton_text_icon.dart';
 import 'package:graduation_project/Screens/EditUserProfile/widgets/country_selector.dart';
 import 'package:graduation_project/Screens/EditUserProfile/widgets/Date_selector.dart';
 import 'package:graduation_project/Screens/EditUserProfile/widgets/save_discard.dart';
+import 'package:graduation_project/Screens/EditUserProfile/widgets/underliened_passwordfield.dart';
+import 'package:graduation_project/Screens/EditUserProfile/widgets/underlined_textField.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key key, }) : super(key: key);

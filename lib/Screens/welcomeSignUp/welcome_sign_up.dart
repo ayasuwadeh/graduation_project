@@ -9,16 +9,12 @@ class WelcomeCard extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body:
-      Stack(
-        children: [
-
-          Column(children: [
-          SizedBox(height: height*0.22),
-
+      body: Stack(children: [
+        Column(children: [
+          SizedBox(height: height * 0.22),
           Container(
-            margin: EdgeInsets.all(height*0.03),
-            height: height*0.47,
+            margin: EdgeInsets.all(height * 0.03),
+            height: height * 0.47,
             child: Column(children: [
               // SizedBox(height: 165,),
               Card(
@@ -27,9 +23,8 @@ class WelcomeCard extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: Column(
                   children: [
-
                     SizedBox(
-                      height: height*0.052,
+                      height: height * 0.052,
                     ),
                     Text(
                       ' hey, cockatoo would be always around',
@@ -56,7 +51,6 @@ class WelcomeCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: RaisedButton(
-
                   padding: EdgeInsets.all(12),
                   textColor: Colors.white,
                   color: Colors.deepOrange,
@@ -65,10 +59,11 @@ class WelcomeCard extends StatelessWidget {
                     style: TextStyle(fontSize: 19),
                   ),
                   onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                      builder: (context){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
                       return HomeScreen();
-                  }));},
+                    }));
+                  },
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
                   ),
@@ -76,14 +71,12 @@ class WelcomeCard extends StatelessWidget {
               ),
 
               SizedBox(
-                height: height*0.01,
+                height: height * 0.01,
               ),
             ]),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(20)
-                  ),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black45.withOpacity(0.5),
@@ -94,19 +87,29 @@ class WelcomeCard extends StatelessWidget {
               ],
             ),
           ),
-
         ]),
-          Positioned(
-              top: height*0.896,
-              left: width*0.27,
-              child: Row(
-                children: [
-                  Icon(Icons.arrow_back_outlined,color: Colors.grey,),
-                  Text("you can swipe to left",style: TextStyle(color: Colors.grey,fontSize: 15),),
-                ],
-              )
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            margin: EdgeInsets.only(bottom: 40),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Icon(
+                  Icons.arrow_back_outlined,
+                  color: Colors.grey,
+                ),
+                Text(
+                  "you can swipe to left",
+                  style: TextStyle(color: Colors.grey, fontSize: 15),
+                ),
+              ],
+            ),
           ),
-        CockatooPic(path:"assets/icons/cockatoo.png"),
+        ),
+        CockatooPic(path: "assets/icons/cockatoo.png"),
       ]),
     );
   }

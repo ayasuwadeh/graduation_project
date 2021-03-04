@@ -34,6 +34,7 @@ class CardNState extends State <CardN> {
 
                 ),
               ),
+              SizedBox(height: 20)
             ],
           ),
     );

@@ -33,109 +33,89 @@ class Body extends StatelessWidget {
          elevation: 0,
         backgroundColor: Colors.transparent,
          ),
-      body: SingleChildScrollView(
-        child: Column(
-          //alignment: Alignment.center,
-          children: <Widget>[
-
-            Container(
-             // top: size.height * 0.09,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: 40,),
-                    Text(
-                      "Sign Up",
-                        style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
-                        )
-                    ),
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: new DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage("assets/icons/cockatoo.png"),
-                          )
-                      ),
-
-
-                    ),
-
-                    RoundedTextFormField(
-                      hintText: "Your Name",
-                      icon: Icons.person,
-                    ),
-
-                    RoundedTextFormField(
-                      hintText: "Email",
-                      icon: Icons.email,
-                    ),
-                    RoundedPasswordField(
-                      hintText: "Password",
-                    ),
-                    RoundedPasswordField(
-                      hintText: "Confirm Password",
-                    ),
-                  /*  RoundedButton(
-                      text: "Sign Up",
-                      color: kPrimaryColor,
-                      textColor: kPrimaryLightColor,
-                      press: () {},
-                    ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    AlreadyHaveAnAccountCheck(
-                      login: false,
-                      press: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return LoginScreen();
-                        }));
-                      },
-                    ),*/
-                    OrDivider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SocialIcon(
-                          icon: CustomIcons.facebook,
-                        ),
-                        SocialIcon(
-                          icon: CustomIcons.twitter,
-                        ),
-                        SocialIcon(
-                          icon: CustomIcons.gplus,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10,),
-                    Container(
-                      //top: 600,
-                      // left: 120,
-                        margin: EdgeInsets.only(left: 115) ,
-                        child: Row(
-                          children: [
-                            Text("swipe right to continue",style: TextStyle(color: Colors.grey,fontSize: 15),),
-                            Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
-
-                          ],
-                        )
-                    ),
-                  ],
+      body: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Positioned(
+              top: 95,
+              left: 120,
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("assets/icons/cockatoo.png"),
+                    )
                 ),
+
+              )
+          ),
+
+          Positioned.fill(
+            top: size.height * 0.09,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Sign Up",
+                      style: GoogleFonts.raleway(
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      )
+                  ),
+                  SizedBox(
+                    height: size.height * 0.19,
+                  ),
+                  RoundedTextFormField(
+                    hintText: "Your Name",
+                    icon: Icons.person,
+                  ),
+
+                  RoundedTextFormField(
+                    hintText: "Email",
+                    icon: Icons.email,
+                  ),
+                  RoundedPasswordField(
+                    hintText: "Password",
+                  ),
+                  RoundedPasswordField(
+                    hintText: "Confirm Password",
+                  ),
+                  OrDivider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SocialIcon(
+                        icon: CustomIcons.facebook,
+                      ),
+                      SocialIcon(
+                        icon: CustomIcons.twitter,
+                      ),
+                      SocialIcon(
+                        icon: CustomIcons.gplus,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("swipe right to continue",style: TextStyle(color: Colors.grey,fontSize: 15),),
+                      Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
+                    ],
+                  ),
+                ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
