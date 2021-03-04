@@ -83,7 +83,8 @@ class _EditInterestsState extends State<EditInterests> {
                 padding: EdgeInsets.only(left: 10),
                 child: Align(
                   alignment: Alignment.topLeft,
-                  child: Text("Check and uncheck based on your interests",style: GoogleFonts.lobsterTwo(
+                  child: Text("Check and uncheck based on your interests",
+                    style: GoogleFonts.lobsterTwo(
                       fontSize: 20, color: Colors.black87
                   ),),
                 ),

@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         key: _scaffoldState,
          drawer: Drawer(child: MainDrawer(),),
         // appBar: AppBar(title: Text("hh",)),
-        bottomNavigationBar: BottomNavBar(),
+        bottomNavigationBar: BottomNavBar(activePage: 'Home',),
         body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
@@ -53,16 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(width: 33),
-                        Header(),
 
                       ],
                     ),
 
                     ]),
-                  SizedBox(height: 80),
-                  AdventuresCards(),
-                  SizedBox(height: 30),
+                  SizedBox(height: 50),
                   Categories(),
+                  SizedBox(height: 30),
+                  AdventuresCards(),
                   SizedBox(height: 30),
                   PlacesCards(),
                   SizedBox(height: 30,),

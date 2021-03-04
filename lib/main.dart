@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/Welcome/welcome_screen.dart';
 
 import 'constants.dart';
-
+import 'package:graduation_project/Screens/Splash/MainSplash.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: WelcomeScreen(),
+      home: MainSplash(),
     );
   }
 

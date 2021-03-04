@@ -12,61 +12,58 @@ class LoginScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-              top: 120,
-              left: 120,
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage("assets/icons/cockatoo.png"),
-                    )
-                ),
+      body:
+        SingleChildScrollView(
+          child: Column(
+            children: [
 
-              )
-          ),
-          Positioned.fill(
-            top: size.height * 0.09,
 
-            child: 
-            SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      child: Text(
-                        "LOGIN",
-                        style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
-                        )
-                      ), padding: EdgeInsets.symmetric(vertical: 20),
-                    ),
-                    SizedBox(height: size.height*0.2,),
-                    LoginForm(),
-                    SizedBox(height: size.height * 0.01,),
-                    AlreadyHaveAnAccountCheck(login: true, press: (){
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context){
-                            return SignUpView();
-                          }
-                      ));
-                    },)
-                  ],
-                ),
-            ),
-          ),
-        ],
-      ),
+
+             Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height:size.height*0.07 ,),
+                      Padding(
+                        child: Text(
+                          "LOGIN",
+                          style: GoogleFonts.raleway(
+                            textStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),
+                          )
+                        ), padding: EdgeInsets.symmetric(vertical: 20),
+                      ),
+                      Container(
+                        width: 150,
+                        height: 150,
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: new DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("assets/icons/cockatoo.png"),
+                            )
+                        ),
+
+
+                      ),
+                      LoginForm(),
+                      SizedBox(height: size.height * 0.01,),
+                      AlreadyHaveAnAccountCheck(login: true, press: (){
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context){
+                              return SignUpView();
+                            }
+                        ));
+                      },)
+                    ],
+                  ),
+
+
+            ],),
+        ),
+
     );
   }
 }

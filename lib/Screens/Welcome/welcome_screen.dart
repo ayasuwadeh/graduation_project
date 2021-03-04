@@ -28,6 +28,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
           Positioned.fill(
 
               child: Carousel(
+
                 dotSize: 0,
                 dotVerticalPadding: 220,
                 dotBgColor: Colors.transparent,

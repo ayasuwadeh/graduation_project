@@ -43,11 +43,12 @@ class _PageViewWidgetState extends State<PageViewWidget> {
                   angle=1-angle;
                 }
               return Container(
+
                 padding: EdgeInsets.only(
-                    right: 10,
-                    left: 20,
-                    top:100 - scale * 45,
-                  bottom: 10,
+                    right: width*0.08,
+                    left: width*0.001,
+                    top:100 - scale*height*0.045 ,
+                  bottom: height*0.1,
                 ),
               child: Transform(
                 transform: Matrix4.identity()..setEntry(3, 2, 0.001)..rotateY(angle),
@@ -58,12 +59,18 @@ class _PageViewWidgetState extends State<PageViewWidget> {
                   child: Stack(
                     children: [
                       ShaderMask(
+
                         shaderCallback: (rect) {
                           return LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Colors.black, Colors.transparent],
-                          ).createShader(Rect.fromLTRB(255, 200, rect.width, rect.height));
+                              colors: [
+                                Colors.transparent,
+                                Colors.black,
+                                Colors.amberAccent
+
+                              ],
+                              begin: Alignment.centerLeft,
+                              end: new Alignment(1.7, 1.7)
+                          ).createShader(Rect.fromLTRB(20, 20, rect.width, rect.height));
                         },
                         blendMode: BlendMode.dstIn,
                         child: InkWell(
@@ -87,13 +94,14 @@ class _PageViewWidgetState extends State<PageViewWidget> {
                             child: Image.asset(
                                 "assets/images/pyramids.jpg",
                               width: width,
+                              height: height*0.75,
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
                       ),
                       Positioned(
-                        bottom: 60,
+                        top: 20,
                         left: 20,
                         child: AnimatedOpacity(
                           opacity: angle==0?1:0,
