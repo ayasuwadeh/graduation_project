@@ -16,16 +16,16 @@ class AdventuresCards extends StatelessWidget {
           child: Row(
             children: <Widget>[
               AdventureCard(
-                text: "Hiking",
-                image: "assets/images/pyramids.jpg",
+                text: "Art Galleries",
+                image: "assets/images/art_gallery.jpg",
               ),
               AdventureCard(
-                text: "Skiing",
-                image: "assets/images/china.jpg",
+                text: "Zoo",
+                image: "assets/images/zoo.jpg",
               ),
               AdventureCard(
-                text: "Carting",
-                image: "assets/images/piza.jpg",
+                text: "Park",
+                image: "assets/images/park.jpg",
               ),
               SizedBox(
                 width: 20,

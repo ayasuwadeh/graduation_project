@@ -1,9 +1,9 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Details/places.dart';
 import 'package:graduation_project/Screens/Details/widget/panel_widget.dart';
 import 'package:graduation_project/components/bottom_navigation_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:graduation_project/Screens/Details/places.dart';
 
 
 class MainPage extends StatefulWidget {
@@ -12,7 +12,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final place = places[0];
+  final place = places;
   final panelController = PanelController();
 
   @override
@@ -62,7 +62,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
         panelBuilder: (ScrollController scrollController)=>PanelWidget(
-          place: place,
+          place: place[0],
           onClickedPanel: panelController.open,
 
         ),

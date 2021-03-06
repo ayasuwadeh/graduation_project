@@ -57,10 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     ]),
-                  SizedBox(height: 50),
-                  Categories(),
-                  SizedBox(height: 30),
+                  SizedBox(height: 15),
                   AdventuresCards(),
+                  SizedBox(height: 30),
+                  Categories(),
                   SizedBox(height: 30),
                   PlacesCards(),
                   SizedBox(height: 30,),

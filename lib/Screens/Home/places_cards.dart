@@ -26,8 +26,8 @@ class PlacesCards extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                //PlaceCard(),
-                //PlaceCard()
+                PlaceCard(),
+                PlaceCard()
               ],
             ),
           ),

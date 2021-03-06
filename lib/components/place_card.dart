@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/constants.dart';
 
 class PlaceCard extends StatelessWidget {
-  final String name;
-  final String city;
-  final String country;
-  final String location;
+  //final String name;
+  //final String city;
+  //final String country;
+  //final String location;
 
-  const PlaceCard({Key key, this.name, this.city, this.country, this.location}) : super(key: key);
+  //const PlaceCard({Key key, this.name = 'Sama nablus', this.city = 'Nablus', this.country, this.location}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +43,12 @@ class PlaceCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  name,
+                  'Sama Nablus',
                   style: TextStyle(fontSize: 16, color: Colors.black),
                   maxLines: 2,
                 ),
                 Text(
-                  city + ", " + country,
+                  'Park',
                   maxLines: 2,
                   softWrap: true,
                   overflow: TextOverflow.fade,

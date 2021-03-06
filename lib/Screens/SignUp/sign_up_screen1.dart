@@ -61,6 +61,7 @@ class _BodyState extends State<Body> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
 
                 children: <Widget>[
                   Text(
@@ -73,7 +74,7 @@ class _BodyState extends State<Body> {
                       )
                   ),
                   SizedBox(
-                    height: size.height * 0.05,
+                    height: size.height * 0.09,
                   ),
 
                  ///////Country chooser widget
@@ -112,6 +113,7 @@ class _BodyState extends State<Body> {
 
                   /////////////////// birthday picker
 
+                  SizedBox(height: 30,),
                   GestureDetector(
                     onTap: () {
 
@@ -142,7 +144,7 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                 SizedBox(height: 25,),
-                RoundedButton(
+                /*RoundedButton(
                     text: "Sign Up",
                     color: kPrimaryColor,
                     textColor: kPrimaryLightColor,
@@ -159,7 +161,7 @@ class _BodyState extends State<Body> {
                         return LoginScreen();
                       }));
                     },
-                  ),
+                  ),*/
                 ],
               ),
             ),

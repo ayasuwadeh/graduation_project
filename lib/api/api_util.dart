@@ -20,6 +20,9 @@ class ApiUtil{
   static const String CURRENCY_EXCHANGE_CATEGORY_ID = 'categoryId=5744ccdfe4b0c0459246b4be';
   static const String MARKET_CATEGORY_ID = 'categoryId=50be8ee891d4fa8dcc7199a7';
   static const String HOTEL_CATEGORY_ID = 'categoryId=4bf58dd8d48988d1fa931735';
+  static const String ART_GALLERY_CATEGORY_ID = 'categoryId=4bf58dd8d48988d1f1931735';
+  static const String ZOO_CATEGORY_ID = 'categoryId=4bf58dd8d48988d17b941735';
+  static const String PARK_CATEGORY_ID = 'categoryId=4bf58dd8d48988d163941735';
 
   static String ALL_HOSPITALS(String latitude, String longitude){
     return MAIN_FOURSQUARE_REQUEST + CLIENT_ID + '&' + CLIENT_SECRET + '&' + V + '&' + 'll=' + latitude + ',' + longitude + '&' + 'intent=checkin&radius=5000&limit=50' + '&' + HOSPITAL_CATEGORY_ID;

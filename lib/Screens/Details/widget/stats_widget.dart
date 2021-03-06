@@ -3,7 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:graduation_project/models/place.dart';
 
 class StatsWidget extends StatelessWidget {
-  final int rate;
+  final double rate;
 
    StatsWidget({
     @required this.rate,

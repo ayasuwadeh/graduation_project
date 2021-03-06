@@ -1,28 +1,25 @@
 import 'package:flutter/cupertino.dart';
 
 class Place {
-   String id;
-   String name;
-   String city;
-   String country;
-   int rating;
-   String location;
-   String link;
-   String imageId;
+  final String name;
+  final double rating;
+  final int phoneNumber;
+  //final int countPosts;
+  //final String urlImage;
+  final String location;
+  final String bio;
+  //final List<String> urlPhotos;
+  //bool isFollowing;
 
-  Place(this.id, this.name, this.city, this.country, this.rating, this.location,
-      this.link, this.imageId);
-
-  Place.fromJson(Map<String, dynamic> jsonObject){
-      this.id = jsonObject['id'].toString();
-      this.name = jsonObject['name'].toString();
-      this.city = jsonObject['city'].toString();
-      this.country = jsonObject['country'].toString();
-      this.rating = jsonObject['rating'];
-      this.location = jsonObject['location'];
-      this.link = jsonObject['link'].toString();
-      this.imageId = jsonObject['image_id'].toString();
-  }
+  Place({
+    @required this.name,
+    @required this.rating,
+    @required this.phoneNumber,
+    // @required this.countPosts,
+    //@required this.urlImage,
+    @required this.location,
+    @required this.bio,
+    // @required this.urlPhotos,
+    // this.isFollowing,
+  });
 }
-
-
