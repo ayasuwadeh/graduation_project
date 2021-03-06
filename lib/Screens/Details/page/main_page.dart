@@ -4,7 +4,6 @@ import 'package:graduation_project/Screens/Details/places.dart';
 import 'package:graduation_project/Screens/Details/widget/panel_widget.dart';
 import 'package:graduation_project/components/bottom_navigation_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 
 class MainPage extends StatefulWidget {

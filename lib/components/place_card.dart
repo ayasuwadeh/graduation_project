@@ -1,11 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/constants.dart';
 
 class PlaceCard extends StatelessWidget {
+  final String name;
+  final String city;
+  final String country;
+  final String location;
+
+  const PlaceCard({Key key, this.name, this.city, this.country, this.location}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(bottom: size.height * 0.05),
       decoration: BoxDecoration(
           color: Colors.white12,
           borderRadius: BorderRadius.circular(20)
@@ -26,29 +35,37 @@ class PlaceCard extends StatelessWidget {
             ),
           ),
           SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Sama Nablus",
-                style: TextStyle(fontSize: 16, color: Colors.black),
-                maxLines: 2,
-              ),
-              Text(
-                "Park",
-                style: TextStyle(
-                    fontSize: 14, color: Colors.black45
+          Container(
+            width: size.width * 0.4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  name,
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                  maxLines: 2,
                 ),
-              )
-            ],
+                Text(
+                  city + ", " + country,
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
+                  style: TextStyle(
+                      fontSize: 14, color: Colors.black45
+                  ),
+                )
+              ],
+            ),
           ),
           Spacer(),
           Padding(
             padding: EdgeInsets.all(10),
             child: Icon(
-              Icons.favorite_border,
+              Icons.location_on,
               size: 30,
-              color: Colors.red,
+              color: kPrimaryColor
             ),
           )
         ],

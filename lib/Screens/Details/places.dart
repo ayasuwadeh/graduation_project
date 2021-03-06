@@ -2,7 +2,7 @@
 import 'package:graduation_project/models/place.dart';
 
 final places = <Place>[
-  Place(
+  /*Place(
     name: 'Lauren Turner',
     bio:
     'Psychology, science, and art are what helps me to learn the outside world and myself.',
@@ -17,6 +17,6 @@ final places = <Place>[
     //   'assets/photo2.jpg',
     //   'assets/photo3.jpg',
     // ],
-  ),
+  ),*/
 
 ];

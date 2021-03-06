@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
         key: _scaffoldState,
          drawer: Drawer(child: MainDrawer(),),
-        // appBar: AppBar(title: Text("hh",)),
         bottomNavigationBar: BottomNavBar(activePage: 'Home',),
         body: SafeArea(
             child: SingleChildScrollView(

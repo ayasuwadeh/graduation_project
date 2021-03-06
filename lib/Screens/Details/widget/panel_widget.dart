@@ -63,7 +63,7 @@ class PanelWidget extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        user.bio,
+        "details",
         style: TextStyle(fontStyle: FontStyle.italic),
       ),
       SizedBox(height: 12),
