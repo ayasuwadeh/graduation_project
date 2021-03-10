@@ -7,6 +7,7 @@ import 'package:graduation_project/Screens/SignUp/sign_up_screen.dart';
 import 'package:graduation_project/Screens/pageviewSignup/mainPage.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -27,19 +28,36 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
         children: <Widget>[
           Positioned.fill(
 
-              child: Carousel(
+              child: CarouselSlider(
 
-                dotSize: 0,
-                dotVerticalPadding: 220,
-                dotBgColor: Colors.transparent,
-                autoplayDuration: Duration(seconds: 2),
-                animationCurve: animation,
 
-                images: [
-                  Image.asset('assets/images/china.jpg', fit: BoxFit.cover),
-                  Image.asset('assets/images/pyramids.jpg', fit: BoxFit.cover),
-                  Image.asset('assets/images/piza.jpg', fit: BoxFit.cover,)
-                ],
+
+                items: [                'assets/images/china.jpg',
+                'assets/images/pyramids.jpg',
+                 'assets/images/piza.jpg', ].map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                          width: double.infinity,
+                          child: Image.asset(i, fit: BoxFit.cover,width: double.infinity,)
+                      );
+                    },
+                  );
+                }).toList(),
+
+                options: CarouselOptions(
+                  height: size.height,
+
+                  enlargeCenterPage: false,
+                  autoPlay: true,
+                  aspectRatio: 9 / 16,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayCurve: Curves.easeInOut,
+                  enableInfiniteScroll: true,
+                  autoPlayAnimationDuration: Duration(milliseconds: 1000),
+                  viewportFraction:1
+                  ,
+                ),
               ),
 
           ),

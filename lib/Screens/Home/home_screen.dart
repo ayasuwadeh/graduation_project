@@ -9,7 +9,7 @@ import 'package:graduation_project/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'adventure_cards.dart';
 import 'categories.dart';
-import 'header.dart';
+import 'package:graduation_project/Screens/OCRfeature/main.dart';
 import 'Drawer.dart';
 
 
@@ -24,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return
       Scaffold(
 
@@ -39,25 +41,44 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                      // SliverAppBar()
                       Row(
-                      children: [
-                        SizedBox(
-                          height: 90,
-                          width: 90,
-                          child: IconButton(
+                        children: [
+                          Stack(
+                          children: [
+                            SizedBox(width:size.width*1 ),
+                            SizedBox(height:size.height*0.17 ),
 
-                            icon: Image.asset("assets/icons/cockatoo.png"),
-                            onPressed: (){
-                                _scaffoldState.currentState.openDrawer();
-                            },
-                          ),
-                        ),
-                        SizedBox(width: 33),
+                            SizedBox(
+                              height: 90,
+                              width: 90,
+                              child: IconButton(
 
-                      ],
+                                icon: Image.asset("assets/icons/cockatoo.png"),
+                                onPressed: (){
+                                    _scaffoldState.currentState.openDrawer();
+                                },
+                              ),
+                            ),
+                            Positioned(
+                              top: size.height*0.037,
+                              left: size.width*0.22,
+                              child: Text("Cockatoo",style:GoogleFonts.lobsterTwo(
+                                fontSize: 37,
+                                color: Colors.black54
+                              )),
+                            ),
+                            Positioned(
+                                top: -30,
+                                  left: size.width*0.63,
+
+                                  child: MainOCR()),
+
+                          ],
                     ),
+                        ],
+                      ),
 
                     ]),
-                  SizedBox(height: 15),
+                  //SizedBox(height: 35),
                   AdventuresCards(),
                   SizedBox(height: 30),
                   Categories(),

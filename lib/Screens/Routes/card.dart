@@ -2,19 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-class BookCard extends StatefulWidget {
+class RouteCard extends StatefulWidget {
   final AssetImage image;
   final String name;
   final String country;
-
-  const BookCard({Key key,@required this.image,@required this.name, @required this.country}) :
+  final bool isOpend;
+   RouteCard({Key key,@required this.image,@required this.name, @required this.country, this.isOpend}) :
         super(key: key);
   @override
-  _BookCardState createState() => _BookCardState();
+  _RouteCardState createState() => _RouteCardState();
 }
 
-class _BookCardState extends State<BookCard> {
+class _RouteCardState extends State<RouteCard> {
  bool _isSaved=true;
+ bool _isSwiped=false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -62,21 +63,37 @@ class _BookCardState extends State<BookCard> {
                   ),
                 ),
               ),
-              Column(
+              Row(
                 children: [
 
-                  SizedBox(height: 100,),
-                  Align(
+                  //SizedBox(height: 80,),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 13),
+                    child: Align(
 
-                    alignment: Alignment.bottomLeft,
-                    child: Row(children:[
-                      Text("   "),
-                      Icon(Icons.location_pin,color: Colors.black54,),
-                      Text(widget.name+", "+widget.country,
-                        style: TextStyle(fontSize: 17
-                            ,fontWeight: FontWeight.bold,
-                        color: Color(0xC1090A0A)),),]),
-                  )
+                      alignment: Alignment.bottomLeft,
+                      child: Row(children:[
+                        Text("   "),
+                        Icon(Icons.location_pin,color: Colors.black54,),
+                        Text(widget.name+", "+widget.country,
+                          style: TextStyle(fontSize: 17
+                              ,fontWeight: FontWeight.bold,
+                          color: Color(0xC1090A0A)),),]),
+                    ),
+                  ),
+                  SizedBox(width: width*0.43,),
+                  widget.isOpend?Icon(
+                    Icons.double_arrow_rounded,
+                    color: Colors.deepOrange.withOpacity(0.50),
+                    size: 30,
+                  ):
+                  Icon(
+                    Icons.double_arrow_rounded,
+                    color: Colors.deepOrange.withOpacity(0.60),
+                    size: 30,
+                  ),
+
+
 
                 ],
               )

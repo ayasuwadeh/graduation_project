@@ -6,6 +6,7 @@ import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/models/market.dart';
 import 'package:graduation_project/constants.dart';
 import 'market_card.dart';
+import 'package:graduation_project/components/autocomplete_search_bar.dart';
 
 class MarketsListScreen extends StatelessWidget {
 
@@ -41,6 +42,7 @@ class MarketsListScreen extends StatelessWidget {
                 ],
               ),
             ),
+            SearchBar(hint: "Search",),
             MallsListWidget(),
           ],
         ),
