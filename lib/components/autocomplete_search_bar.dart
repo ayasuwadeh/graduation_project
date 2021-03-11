@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
-
+import 'package:graduation_project/constants.dart';
 
 class SearchBar extends StatefulWidget {
   final String hint;
@@ -16,13 +16,13 @@ class _SearchBarState extends State<SearchBar> {
   List<String> suggestions = [
     "Apple",
     "Armidillo",
-    "Actual",
-    "Actuary",
+    "Soho Grand Hotel",
+    "Arlo SoHo",
     "America",
     "Argentina",
     "Australia",
     "Antarctica",
-    "Blueberry",
+    "Ten Ichi Market",
     "Cheese",
     "Danish",
     "Eclair",
@@ -58,11 +58,11 @@ class _SearchBarState extends State<SearchBar> {
         child: Column(
           children: [
             Container(
-              width: size.width*0.86,
+              width: size.width*0.84,
               margin: EdgeInsets.only(bottom: size.width*0.02),
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 22),
               decoration: BoxDecoration(
-                color: Colors.black38.withAlpha(10),
+                color: kPrimaryLightColor,
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),

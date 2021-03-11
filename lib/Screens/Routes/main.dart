@@ -17,7 +17,7 @@ class _MyRoutesState extends State<MyRoutes> {
     String f="";
     String f1="";
     final mq = MediaQuery.of(context);
-
+    bool opend=false;
     void showAlertDialog(BuildContext context) {
       showDialog(
           context: context,
@@ -83,6 +83,15 @@ class _MyRoutesState extends State<MyRoutes> {
             );
           });
     }
+    void handleSlideIsOpenChanged(bool isOpen) {
+      setState(() {
+        opend = isOpen ? true : false;
+      });
+    }
+
+    final SlidableController slidableController = SlidableController(//TODO change the icon when sliding
+      onSlideIsOpenChanged: handleSlideIsOpenChanged,
+    );
 
 
 
@@ -104,10 +113,11 @@ class _MyRoutesState extends State<MyRoutes> {
         itemCount: 10,
         itemBuilder: (context,index){
           return Slidable(key: ValueKey(index),
-
-              child: BookCard(image: AssetImage("assets/images/route.jpg"),
+              controller: slidableController,
+              child: RouteCard(image: AssetImage("assets/images/route.jpg"),
             name: "Piza Tower",
-            country: "Italy",),
+            country: "Italy",
+              isOpend: opend,),
               actionPane: SlidableDrawerActionPane(),
 
               secondaryActions: <Widget>[

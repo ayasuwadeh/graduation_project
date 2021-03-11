@@ -6,7 +6,7 @@ import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/models/hotel.dart';
 import 'package:graduation_project/constants.dart';
 import 'hotel_card.dart';
-
+import 'package:graduation_project/components/autocomplete_search_bar.dart';
 class HotelsListScreen extends StatelessWidget {
 
   @override
@@ -41,6 +41,7 @@ class HotelsListScreen extends StatelessWidget {
                 ],
               ),
             ),
+            SearchBar(hint:"Search"),
             MallsListWidget(),
           ],
         ),

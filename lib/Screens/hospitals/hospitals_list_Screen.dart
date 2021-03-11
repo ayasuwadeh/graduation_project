@@ -6,6 +6,7 @@ import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/models/hospital.dart';
 import 'package:graduation_project/constants.dart';
 import 'hospital_card.dart';
+import 'package:graduation_project/components/autocomplete_search_bar.dart';
 
 class HospitalsListScreen extends StatelessWidget {
 
@@ -41,6 +42,7 @@ class HospitalsListScreen extends StatelessWidget {
                 ],
               ),
             ),
+            SearchBar(hint:"Search"),
             HospitalsListWidget(),
           ],
         ),
