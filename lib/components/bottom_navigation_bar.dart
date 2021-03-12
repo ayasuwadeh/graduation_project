@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/Screens/Explore/main.dart';
 import 'package:graduation_project/Screens/Home/home_screen.dart';
+import 'package:graduation_project/Screens/routeTracking/route_welcoming_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   final String activePage;
@@ -66,11 +67,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           RaisedButton(
             padding: EdgeInsets.all(5.0),
-color: Colors.deepOrangeAccent,
+            color: kPrimaryColor,
             shape: CircleBorder(),
             child: Icon(Icons.navigation,color: Colors.white,size: 40,),
             onPressed: () {
-
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
+                    return RouteWelcomeScreen();
+                  }));
             },
           ),
 
