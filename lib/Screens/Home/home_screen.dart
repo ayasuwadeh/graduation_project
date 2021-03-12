@@ -67,8 +67,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               )),
                             ),
                             Positioned(
+                                top: 37,
+                                left: size.width*0.85,
+
+                                child:
+                                Container(
+                                  height: 46,
+                                  width: 60,
+                                  color: kPrimaryLightColor,
+                                  child: Align(
+                                    alignment: Alignment.center ,
+                                    child: Text("   OCR",style: TextStyle(fontSize: 17),),),
+                                )
+                            ),
+                            Positioned(
                                 top: -30,
-                                  left: size.width*0.63,
+                                  left: size.width*0.53,
 
                                   child: MainOCR()),
 
