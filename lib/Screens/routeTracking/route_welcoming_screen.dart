@@ -1,11 +1,34 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Home/home_screen.dart';
 import 'package:graduation_project/Screens/routeTracking/map_screen.dart';
 import 'package:graduation_project/components/cockatoo_icon.dart';
 import 'package:graduation_project/components/bottom_navigation_bar.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class RouteWelcomeScreen extends StatelessWidget {
+class RouteWelcomeScreen extends StatefulWidget {
+  @override
+  _RouteWelcomeScreenState createState() => _RouteWelcomeScreenState();
+}
+
+class _RouteWelcomeScreenState extends State<RouteWelcomeScreen> {
+  PermissionStatus _status;
+
+  @override
+  void initState() {
+    super.initState();
+    Permission.locationAlways.status.then((value) => updateStatus(value));
+  }
+
+  updateStatus(PermissionStatus status) {
+    if (status != _status) {
+      setState(() {
+        _status = status;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -18,8 +41,12 @@ class RouteWelcomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
-            icon: Icon(Icons.close, size: 35, color: kPrimaryColor,),
-            onPressed: (){
+            icon: Icon(
+              Icons.close,
+              size: 35,
+              color: kPrimaryColor,
+            ),
+            onPressed: () {
               Navigator.pop(context);
             },
           )
@@ -66,7 +93,7 @@ class RouteWelcomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         'Cockatoo is with you wherever you go, so feel safe and free. Location tracker enables '
-                            'you to store the route that you are going. Just click Go and the journey will start!',
+                        'you to store the route that you are going. Just click Go and the journey will start!',
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.6),
                           fontSize: 18,
@@ -87,10 +114,7 @@ class RouteWelcomeScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 19),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                          return MapScreen();
-                        }));
+                    askLocationPermission();
                   },
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
@@ -106,6 +130,63 @@ class RouteWelcomeScreen extends StatelessWidget {
         ]),
         CockatooPic(path: "assets/icons/cockatoo.png"),
       ]),
+    );
+  }
+
+  void askLocationPermission() {
+    Permission.locationAlways.request().then((status) => whenRequested(status));
+  }
+
+  whenRequested(PermissionStatus status) {
+    if (status.isGranted) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return MapScreen();
+      }));
+    } else if (status.isDenied) {
+      showLocationIsNeededDialog(true);
+    } else if (Platform.isAndroid && status.isPermanentlyDenied) {
+      showLocationIsNeededDialog(false);
+    } else {
+      print('cannot use map');
+    }
+    updateStatus(status);
+  }
+
+  Future<void> showLocationIsNeededDialog(bool completeyDenied) async {
+    var textDialog = "";
+    completeyDenied? textDialog = 'Route tracking needs to access your location in order to save routes. If you press cancel you will not be able to use this feature.':
+        textDialog = 'Route tracking needs to access your location in the background in order to save routes. If you press cancel you will not be able to use this feature.';
+
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Location is needed'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(textDialog),
+                Text('Would you like to allow using Location?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Allow'),
+              onPressed: () {
+                openAppSettings();
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
