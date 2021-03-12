@@ -145,39 +145,46 @@ class _MainOCRState extends State<MainOCR> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: kPrimaryLightColor,
-
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    bottomLeft: Radius.circular(25),
-
-                  ),
-                  border: Border.all(
-                    width: 3,
+              Transform(
+                transform: Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value)),
+                alignment: Alignment.center,
+                child: Container(
+                  decoration: BoxDecoration(
                     color: kPrimaryLightColor,
-                    style: BorderStyle.solid,
-                  ),
-                ),
 
-                  child: CircularButton(
-                    color: kPrimaryLightColor,
-                    width: 40,
-                    height: 40,
-                    icon: Icon(
-                      Icons.camera,
-                      color: Colors.deepOrangeAccent,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      bottomLeft: Radius.circular(25),
+                      topRight: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
+
+
                     ),
-                    onClick: () {
-                      if (animationController.isCompleted) {
-                        animationController.reverse();
-                      } else {
-                        animationController.forward();
-                      }
-                    },
+                    border: Border.all(
+                      width: 3,
+                      color: kPrimaryLightColor,
+                      style: BorderStyle.solid,
+                    ),
                   ),
-                ),
+
+                    child: CircularButton(
+                      color: kPrimaryLightColor,
+                      width: 40,
+                      height: 40,
+                      icon: Icon(
+                        Icons.camera,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      onClick: () {
+                        if (animationController.isCompleted) {
+                          animationController.reverse();
+                        } else {
+                          animationController.forward();
+                        }
+                      },
+                    ),
+                  ),
+              ),
 
            ]);
 

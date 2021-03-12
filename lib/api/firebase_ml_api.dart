@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 class FirebaseMLApi {
+
   static Future<String> recogniseText(File imageFile) async {
     if (imageFile == null) {
       return 'No selected image';

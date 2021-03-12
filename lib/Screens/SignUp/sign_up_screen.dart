@@ -33,90 +33,92 @@ class Body extends StatelessWidget {
          elevation: 0,
         backgroundColor: Colors.transparent,
          ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-              top: 95,
-              left: 120,
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage("assets/icons/cockatoo.png"),
-                    )
-                ),
+      body: SingleChildScrollView
+        (
+        child: Column(
+          children: [
+            Column(
+              children: [
 
-              )
-          ),
-
-          Positioned.fill(
-            top: size.height * 0.09,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Sign Up",
-                      style: GoogleFonts.raleway(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                  SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: size.height * 0.07,
                         ),
-                      )
-                  ),
-                  SizedBox(
-                    height: size.height * 0.19,
-                  ),
-                  RoundedTextFormField(
-                    hintText: "Your Name",
-                    icon: Icons.person,
+
+                        Text(
+                            "Sign Up",
+                            style: GoogleFonts.raleway(
+                              textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                              ),
+                            )
+                        ),
+                        Container(
+                          width: 150,
+                          height: 150,
+                          decoration: new BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: new DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage("assets/icons/cockatoo.png"),
+                              )
+                          ),
+
+                        ),
+
+                        RoundedTextFormField(
+                          hintText: "Your Name",
+                          icon: Icons.person,
+                        ),
+
+                        RoundedTextFormField(
+                          hintText: "Email",
+                          icon: Icons.email,
+                        ),
+                        RoundedPasswordField(
+                          hintText: "Password",
+                        ),
+                        RoundedPasswordField(
+                          hintText: "Confirm Password",
+                        ),
+                        OrDivider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SocialIcon(
+                              icon: CustomIcons.facebook,
+                            ),
+                            SocialIcon(
+                              icon: CustomIcons.twitter,
+                            ),
+                            SocialIcon(
+                              icon: CustomIcons.gplus,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10,),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("swipe right to continue",style: TextStyle(color: Colors.grey,fontSize: 15),),
+                            Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
 
-                  RoundedTextFormField(
-                    hintText: "Email",
-                    icon: Icons.email,
-                  ),
-                  RoundedPasswordField(
-                    hintText: "Password",
-                  ),
-                  RoundedPasswordField(
-                    hintText: "Confirm Password",
-                  ),
-                  OrDivider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SocialIcon(
-                        icon: CustomIcons.facebook,
-                      ),
-                      SocialIcon(
-                        icon: CustomIcons.twitter,
-                      ),
-                      SocialIcon(
-                        icon: CustomIcons.gplus,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("swipe right to continue",style: TextStyle(color: Colors.grey,fontSize: 15),),
-                      Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
+              ],
+            )
+          ],
+        ),
+      )
     );
   }
 }

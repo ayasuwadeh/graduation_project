@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:clipboard/clipboard.dart';
 
 class TextAreaWidget extends StatelessWidget {
   final String text;
-  final VoidCallback onClickedCopy;
+  //final VoidCallback onClickedCopy;
 
   const TextAreaWidget({
     @required this.text,
-    @required this.onClickedCopy,
+ //   @required this.onClickedCopy,
     Key key,
   }) : super(key: key);
 
@@ -43,7 +44,7 @@ class TextAreaWidget extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.copy, color: Colors.black),
                 color: Colors.grey[200],
-                onPressed: onClickedCopy,
+                onPressed: copyToClipboard,
               ),
             ),
 
@@ -53,5 +54,11 @@ class TextAreaWidget extends StatelessWidget {
       ],
     );
   }
+  void copyToClipboard() {
+    if (text.trim() != '') {
+      FlutterClipboard.copy(text);
+    }
+  }
+
 
 }

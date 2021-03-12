@@ -21,7 +21,7 @@ class _TranslatorState extends State<Translator> {
   Language _selectedLanguage;
   final translator = GoogleTranslator();
   var translatedText;
-  var t;
+  //var t;
   @override
   void initState() {
     _dropdownMenuItems = buildDropdownMenuItems(_languages);
@@ -41,9 +41,18 @@ class _TranslatorState extends State<Translator> {
     }
     return items;
   }
-  onChangeDropdownItem(Language selectedLanguage) {
+  onChangeDropdownItem(Language selectedLanguage) async{
+    //change the language first
     setState(() {
       _selectedLanguage = selectedLanguage;
+    });
+//then translate
+    await translator.translate(widget.text,
+        to: _selectedLanguage.code).then((value) => {
+      setState(() {
+        translatedText=value;
+      })
+
     });
   }
 
@@ -102,21 +111,12 @@ class _TranslatorState extends State<Translator> {
                           ),
                           SizedBox(width: width*0.1,),
 
-                           IconButton(
-                             iconSize: 45,
-                              icon: Icon(Icons.arrow_circle_down_outlined,
-                                  color: Colors.deepOrangeAccent
-                              ),
-                              color: Colors.grey[200],
-                              onPressed: translate,
-                            ),
-
                         ],
                       ),
                      // SizedBox(height: height*0.001,),
                       TextAreaWidget(text:
                       translatedText==null?" ":translatedText.toString(),
-                          onClickedCopy: widget.onClickedCopy)
+                          )
 
                     ],
                   )
@@ -128,18 +128,18 @@ class _TranslatorState extends State<Translator> {
 
     }
 
-  void translate() async {
-
-       await translator.translate(widget.text,
-          to: _selectedLanguage.code).then((value) => {
-       setState(() {
-       translatedText=value;
-       })
-
-       });
-
-
-
-  }
+  // void translate() async {
+  //
+  //      await translator.translate(widget.text,
+  //         to: _selectedLanguage.code).then((value) => {
+  //      setState(() {
+  //      translatedText=value;
+  //      })
+  //
+  //      });
+  //
+  //
+  //
+  // }
 
 }
