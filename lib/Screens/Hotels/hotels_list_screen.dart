@@ -24,7 +24,9 @@ class HotelsListScreen extends StatelessWidget {
               child: Row(
                 children: [
                   InkWell(
-                    //TODO make it go back
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
                       child: Icon(
                         Icons.arrow_back,
                         color: kPrimaryColor,

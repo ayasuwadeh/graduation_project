@@ -174,5 +174,5 @@ class _LiveMapState extends State<LiveMap> {
         child: RouteNameDialog()
     );
   }
-  
+
 }
