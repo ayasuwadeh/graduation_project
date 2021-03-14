@@ -8,6 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
 
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION" />
