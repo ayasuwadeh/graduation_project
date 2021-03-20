@@ -8,9 +8,10 @@ class ApiUtil{
 
   static const String ALL_CULTURES = '/cultures';
 
-
   // FOR foursqaure requests
   static const String MAIN_FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/search?';
+  static const String FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/';
+
   static const String CLIENT_ID = 'client_id=2RPMC1UN4IL12SVLGQPDFUMYWJHBU10MCRR1BDBQPCIVK5MG';
   static const String CLIENT_SECRET = 'client_secret=YEOS2I23JAM05F420R0JHD1XUV5Z2JQXCO5LA1GTCKVNUS22';
   static const String V = 'v=20210219';
@@ -42,6 +43,13 @@ class ApiUtil{
 
   static String ALL_HOTELS(String latitude, String longitude){
     return MAIN_FOURSQUARE_REQUEST + CLIENT_ID + '&' + CLIENT_SECRET + '&' + V + '&' + 'll=' + latitude + ',' + longitude + '&' + 'intent=checkin&radius=5000&limit=50' + '&' + HOTEL_CATEGORY_ID;
+  }
+
+  static String HOTEL_RATE(String id){
+    return FOURSQUARE_REQUEST +id+'?'+ CLIENT_ID + '&' + CLIENT_SECRET + '&' + V ;
+  }
+  static String HOTEL_IMAGE(String id){
+    return FOURSQUARE_REQUEST +id+'/photos'+'?'+ CLIENT_ID + '&' + CLIENT_SECRET + '&' + V+'&group=venue&limit=1' ;
   }
 
 
