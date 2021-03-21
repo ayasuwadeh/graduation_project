@@ -9,6 +9,7 @@ class Auth extends ChangeNotifier {
   bool _isAuthenticated = false;
   User _user;
   String _token;
+  Map<String, String> _headers;
 
   bool get isAuthenticated  => _isAuthenticated;
   User get user => _user;
@@ -41,8 +42,23 @@ class Auth extends ChangeNotifier {
     return _isAuthenticated;
   }
 
-  void logout() {
-    deleteToken();
+  Future<void> logout() async{
+    String deleteTokenUrl = ApiUtil.MAIN_API_UTIL + '/auth/logout';
+
+    await getToken().then((token) => setHeaders(token));
+
+    //print(_token);
+
+    var response = await http.post(deleteTokenUrl, headers: getHeaders());
+    if (response.statusCode == 200) {
+      storage.delete(key: 'token');
+      cleanup();
+      notifyListeners();
+      print('200');
+    }
+    else{
+      print(response.statusCode);
+    }
   }
 
   Future<void> setUserByToken(String token) async {
@@ -83,32 +99,22 @@ class Auth extends ChangeNotifier {
     _token = null;
   }
 
-  void deleteToken() async{
-    String deleteTokenUrl = ApiUtil.MAIN_API_UTIL + '/auth/logout';
-
-    Map<String, String> headers = {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $_token'
-    };
-
-    //print(_token);
-
-    var response = await http.post(deleteTokenUrl, headers: headers);
-    if (response.statusCode == 200) {
-      storage.delete(key: 'token');
-      cleanup();
-      notifyListeners();
-    }
-    else{
-      print(response.statusCode);
-    }
-  }
-
   Future<bool> tryToken() async{
 
     return setUserByToken(await getToken()).then((val) => this.isAuthenticated? true : false);
 
 
+  }
+
+  setHeaders(String token) {
+     _headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+  }
+
+  Map getHeaders(){
+    return _headers;
   }
 
 }

@@ -11,12 +11,9 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Container(
-        color:Colors.white,
-        child: Column(
-
-          children: [
+    return Container(
+      color: Colors.white,
+      child: Column(children: [
         Container(
           child: Padding(
             padding: EdgeInsets.only(top: 50.0),
@@ -26,20 +23,21 @@ class MainDrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 65.0,
-              child: Image.asset("assets/icons/cockatoo.png"),
-                  ),
-
+                  child: Image.asset("assets/icons/cockatoo.png"),
+                ),
                 SizedBox(
                   height: 5.0,
                 ),
                 Consumer<Auth>(
-                  builder: (context, auth, child){
+                  builder: (context, auth, child) {
                     return Text(
-                    (auth.isAuthenticated && auth.user != null)? auth.user.name : "" ,
-                    style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.w800,
-                    ),
+                      (auth.isAuthenticated && auth.user != null)
+                          ? auth.user.name
+                          : "",
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w800,
+                      ),
                     );
                   },
                 ),
@@ -47,20 +45,24 @@ class MainDrawer extends StatelessWidget {
                   height: 5.0,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,//Center Column contents vertically,
-                  crossAxisAlignment: CrossAxisAlignment.center, //Center Column contents horizontally,
+                  mainAxisAlignment: MainAxisAlignment
+                      .center, //Center Column contents vertically,
+                  crossAxisAlignment: CrossAxisAlignment
+                      .center, //Center Column contents horizontally,
                   children: [
-                    Icon(Icons.location_pin,color: Colors.deepOrange,),
-
-                    Text(
-                    " Location",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
+                    Icon(
+                      Icons.location_pin,
+                      color: Colors.deepOrange,
                     ),
-                  ),
-
-                ],),
+                    Text(
+                      " Location",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -72,39 +74,51 @@ class MainDrawer extends StatelessWidget {
 
         /////taps
         ListTile(
-          onTap: () {Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-                return EditProfile();
-              }));},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return EditProfile();
+            }));
+          },
           leading: Icon(
             Icons.edit,
             color: Colors.deepOrange,
           ),
-          title: Text("Edit Your Profile",style: TextStyle(fontSize: 16),),
+          title: Text(
+            "Edit Your Profile",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
 
         ListTile(
-          onTap: () {Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-                return MyBookmarks();
-              }));},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return MyBookmarks();
+            }));
+          },
           leading: Icon(
             Icons.bookmark,
             color: Colors.deepOrange,
           ),
-          title: Text("Your Bookmarks",style: TextStyle(fontSize: 16),),
+          title: Text(
+            "Your Bookmarks",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
 
         ListTile(
-          onTap: () {Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-                return MyRoutes();
-              }));},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return MyRoutes();
+            }));
+          },
           leading: Icon(
             Icons.zoom_out_map_sharp,
-                color:Colors.deepOrange,
+            color: Colors.deepOrange,
           ),
-          title: Text("Your Routes",style: TextStyle(fontSize: 16),),
+          title: Text(
+            "Your Routes",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
         ListTile(
           onTap: () {},
@@ -112,27 +126,32 @@ class MainDrawer extends StatelessWidget {
             Icons.settings,
             color: Colors.deepOrange,
           ),
-          title: Text("Settings",style: TextStyle(fontSize: 16),),
+          title: Text(
+            "Settings",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
-             SizedBox(height: 110,),
-            ListTile(
-              onTap: () {
-                Provider.of<Auth>(context, listen: false).logout();
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context){
-                    return WelcomeScreen();
-                  }
-                ));
-              },
-              leading: Icon(
-                Icons.logout,
-                color: Colors.deepOrange,
-              ),
-              title: Text("Logout",style: TextStyle(fontSize: 16),),
-            ),
-
-          ]),
-      );
+        SizedBox(
+          height: 110,
+        ),
+        ListTile(
+          onTap: () {
+            Provider.of<Auth>(context, listen: false).logout().then(
+                (loggedOut) => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return WelcomeScreen();
+                    })));
+          },
+          leading: Icon(
+            Icons.logout,
+            color: Colors.deepOrange,
+          ),
+          title: Text(
+            "Logout",
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ]),
+    );
   }
 }
-
