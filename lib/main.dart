@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Welcome/welcome_screen.dart';
-
 import 'constants.dart';
 import 'package:graduation_project/Screens/Splash/MainSplash.dart';
+import 'package:provider/provider.dart';
+import 'package:graduation_project/services/auth.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(
+      MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => Auth()),
+          ],
+          child: MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -4,6 +4,9 @@ import 'package:graduation_project/Screens/Home/home_screen.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/components/rounded_passwordfield.dart';
 import 'package:graduation_project/components/rounded_textField.dart';
+import 'package:graduation_project/services/auth.dart';
+import 'package:provider/provider.dart';
+import 'package:graduation_project/api/user_login_token_api.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -11,11 +14,17 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  Map<String, String> _loginObject = Map<String, String>();
+  Map<String, String> _creds = Map<String, String>();
   String _pass1; // Your new password
   bool _autovalidate = false;
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _creds.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +35,14 @@ class _LoginFormState extends State<LoginForm> {
         children: <Widget>[
           RoundedTextFormField(
             hintText: "Email",
-            onSaved: (String val) => _loginObject['email'] = val,
+            onSaved: (String val) => _creds['email'] = val,
             validator: _validateEmail,
             autoFocus: true,
           ),
           RoundedPasswordField(
             hintText: "Password",
             //onChanged: (String val) => setState(() => _pass1 = val),
-            onSaved: (String val) => _loginObject['password'] = val,
+            onSaved: (String val) => _creds['password'] = val,
             validator: _validatePassword,
           ),
           RoundedButton(
@@ -48,7 +57,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   String _validateEmail(String email) {
-
     RegExp regex = RegExp(r'\w+@\w+\.\w+');
 
     if (email.isEmpty)
@@ -72,15 +80,24 @@ class _LoginFormState extends State<LoginForm> {
     if (_key.currentState.validate()) {
       // Commit the field values to their variables
       _key.currentState.save();
-      print("""
-      The user has registered with an email address of '${_loginObject['email']}' 
-      and a password of '${_loginObject['password']}'
-      """);
+      submitForm();
+    }
+  }
+
+  void submitForm() async{
+
+    bool result = await Provider.of<Auth>(context, listen: false).login(_creds);
+
+    if(result == true){
       Navigator.push(context, MaterialPageRoute(
           builder: (context){
             return HomeScreen();
           }
       ));
+      //Navigator.pop(context);
+    }else if(result == false){
+      print('error');
+      // TODO: pop up window to tell that your email or password are incorrect
     }
   }
 

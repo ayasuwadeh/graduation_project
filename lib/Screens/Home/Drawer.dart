@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/bookmarks/main.dart';
 import 'package:graduation_project/Screens/EditUserProfile/main.dart';
 import 'package:graduation_project/Screens/Routes/main.dart';
-import 'package:graduation_project/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:graduation_project/services/auth.dart';
+import 'package:provider/provider.dart';
+import 'package:graduation_project/Screens/Welcome/welcome_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key key}) : super(key: key);
@@ -31,12 +32,16 @@ class MainDrawer extends StatelessWidget {
                 SizedBox(
                   height: 5.0,
                 ),
-                Text(
-                  "His name",
-                  style: TextStyle(
+                Consumer<Auth>(
+                  builder: (context, auth, child){
+                    return Text(
+                    (auth.isAuthenticated && auth.user != null)? auth.user.name : "" ,
+                    style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.w800,
-                  ),
+                    ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 5.0,
@@ -111,7 +116,14 @@ class MainDrawer extends StatelessWidget {
         ),
              SizedBox(height: 110,),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Provider.of<Auth>(context, listen: false).logout();
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context){
+                    return WelcomeScreen();
+                  }
+                ));
+              },
               leading: Icon(
                 Icons.logout,
                 color: Colors.deepOrange,
