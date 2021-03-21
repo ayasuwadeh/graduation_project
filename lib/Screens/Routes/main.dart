@@ -5,7 +5,7 @@ import 'package:toast/toast.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
 import 'package:graduation_project/gist.dart';
-
+import 'routeMap.dart';
 class MyRoutes extends StatefulWidget {
   @override
   _MyRoutesState createState() => _MyRoutesState();
@@ -125,7 +125,11 @@ class _MyRoutesState extends State<MyRoutes> {
                   iconSize: 40,
                   color: Colors.deepOrangeAccent,
                   icon: Icon(Icons.location_on_outlined),
-                  onPressed: () { //print(index);
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                          return RouteMap();
+                        }));//print(index);
                   },
                 ),
                 IconButton(

@@ -1,16 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/models/hotel.dart';
+import 'package:graduation_project/models/hotel_details.dart';
+import 'package:graduation_project/components/loading.dart';
+import 'package:graduation_project/components/error.dart';
+
+import 'map_screen.dart';
+import 'package:graduation_project/api/hotel_details_api.dart';
 
 class HotelCard extends StatelessWidget {
   Hotel hotel;
-
+  Future <HotelDetails> details;
   HotelCard({Key key, this.hotel}) : super(key: key);
+  HotelDetailsApi hotelDetailsApi = HotelDetailsApi();
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
+      onTap: ()
+      {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) {
+              print("hereeeeeeeeeeeee");
+              return
+               FutureBuilder(
+                 future: hotelDetailsApi.fetchDetails(hotel.id),
+                  builder: (BuildContext context,
+                      AsyncSnapshot snapshot){
+
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.active:
+                        return Loading();
+                        break;
+                      case ConnectionState.waiting:
+                        return Loading();
+                        break;
+                      case ConnectionState.none:
+                        return Error(errorText: 'No Internet Connection');
+                        break;
+                      case ConnectionState.done:
+                        if (snapshot.hasError) {
+                          return Error(errorText: snapshot.error.toString());
+                          break;
+                        } else if (snapshot.hasData) {
+                          return MapScreen(details: snapshot.data,
+                          hotel: hotel,);
+                          break;
+                        }
+                    }
+                    return Container();
+                  }
+              );            }));
+      },
       // onTap: TODO : make request with the id and navigate to chrome or safari with the places link
       child: Container(
         //height: size.height * 0.25,
@@ -79,5 +121,11 @@ class HotelCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future <HotelDetails> getDetails() {
+    HotelDetailsApi hotelDetailsApi=new HotelDetailsApi() ;
+    return hotelDetailsApi.fetchDetails(hotel.id);
+
   }
 }
