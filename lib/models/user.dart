@@ -1,5 +1,7 @@
 import 'locationUser.dart';
+
 class User{
+  int id;
   String name;
   String email;
   String password;
@@ -8,18 +10,20 @@ class User{
   DateTime birthday;
   LocationUser location;
 
-  User(this.name, this.email, this.password, this.token, this.country,
-      this.birthday, this.location);
+  User({this.id, this.name, this.email, this.password, this.token, this.country,
+      this.birthday, this.location});
 
-  User.fromJson(Map <String, dynamic> jsonObject){
-    this.name = jsonObject['name'].toString();
-    this.email = jsonObject['email'].toString();
-    this.password = jsonObject['password'].toString();
-    this.token = jsonObject['token'].toString();
-    this.country = jsonObject['country'].toString();
-    //this.birthday = jsonObject['birthday'];
-    //this.location =  LocationUser.fromJson(jsonObject['location']);
-
+  factory User.fromJson(Map <String, dynamic> jsonObject){
+    return User(
+      name: jsonObject['name'].toString(),
+      email: jsonObject['email'].toString(),
+      password: jsonObject['password'].toString(),
+      token: jsonObject['token'].toString(),
+      //country: jsonObject['country'].toString()
+      //this.birthday = jsonObject['birthday'];
+      //this.location =  LocationUser.fromJson(jsonObject['location']);
+      // TODO fix
+    );
   }
 
 }

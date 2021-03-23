@@ -4,9 +4,10 @@ import 'package:graduation_project/Screens/Home/home_screen.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/components/rounded_passwordfield.dart';
 import 'package:graduation_project/components/rounded_textField.dart';
-import 'package:graduation_project/services/auth.dart';
+import 'package:graduation_project/models/user.dart';
+import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:graduation_project/api/user_login_token_api.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -28,6 +29,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+
     return Form(
       autovalidate: _autovalidate,
       key: _key,
@@ -45,12 +47,15 @@ class _LoginFormState extends State<LoginForm> {
             onSaved: (String val) => _creds['password'] = val,
             validator: _validatePassword,
           ),
-          RoundedButton(
-            text: "LOGIN",
-            press: (){
-              _doRegister();
-            },
-          ),
+          Provider.of<AuthProvider>(context).loggedInStatus ==
+                  Status.Authenticating
+              ? CircularProgressIndicator()
+              : RoundedButton(
+                  text: "LOGIN",
+                  press: () {
+                    _doRegister();
+                  },
+                ),
         ],
       ),
     );
@@ -84,21 +89,22 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  void submitForm() async{
+  void submitForm() async {
+    final Future<Map<String, dynamic>> result =
+        Provider.of<AuthProvider>(context, listen: false)
+            .login(email: _creds['email'], password: _creds['password']);
 
-    bool result = await Provider.of<Auth>(context, listen: false).login(_creds);
-
-    if(result == true){
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context){
-            return HomeScreen();
-          }
-      ));
-      //Navigator.pop(context);
-    }else if(result == false){
-      print('error');
-      // TODO: pop up window to tell that your email or password are incorrect
-    }
+    result.then((response) {
+      if (response['status']) {
+        User user = response['user'];
+        Provider.of<UserProvider>(context, listen: false).setUser(user);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }));
+      } else {
+        // TODO pop up dialog
+        print(response['message'] + ' ' + response['error']);
+      }
+    });
   }
-
 }

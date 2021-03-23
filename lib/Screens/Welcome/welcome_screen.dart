@@ -1,10 +1,8 @@
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/Screens/Login/login_screen.dart';
 import 'package:graduation_project/Screens/SignUp/sign_up_screen.dart';
-import 'package:graduation_project/Screens/pageviewSignup/mainPage.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -30,9 +28,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
 
               child: CarouselSlider(
 
-
-
-                items: [                'assets/images/china.jpg',
+                items: [
+                  'assets/images/china.jpg',
                 'assets/images/pyramids.jpg',
                  'assets/images/piza.jpg', ].map((i) {
                   return Builder(
@@ -99,7 +96,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                         press: () {
                           Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return SignUpView();
+                                return SignUpScreen();
                               }
                           ));
                         },

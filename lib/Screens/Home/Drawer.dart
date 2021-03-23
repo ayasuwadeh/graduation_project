@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/bookmarks/main.dart';
 import 'package:graduation_project/Screens/EditUserProfile/main.dart';
 import 'package:graduation_project/Screens/Routes/main.dart';
-import 'package:graduation_project/services/auth.dart';
+import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:graduation_project/Screens/Welcome/welcome_screen.dart';
+import 'package:graduation_project/Screens/Login/login_screen.dart';
+
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key key}) : super(key: key);
@@ -28,11 +30,11 @@ class MainDrawer extends StatelessWidget {
                 SizedBox(
                   height: 5.0,
                 ),
-                Consumer<Auth>(
-                  builder: (context, auth, child) {
+                Consumer2<AuthProvider, UserProvider>(
+                  builder: (context, auth, user, child) {
                     return Text(
-                      (auth.isAuthenticated && auth.user != null)
-                          ? auth.user.name
+                      (auth.loggedInStatus == Status.LoggedIn && user.user != null)
+                          ? user.user.name
                           : "",
                       style: TextStyle(
                         fontSize: 22.0,
@@ -136,11 +138,18 @@ class MainDrawer extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            Provider.of<Auth>(context, listen: false).logout().then(
-                (loggedOut) => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return WelcomeScreen();
-                    })));
+            final Future<Map<String, dynamic>> result =
+            Provider.of<AuthProvider>(context, listen: false)
+                .logout();
+            result.then((response) => {
+              if(response['status']){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
+                }))
+              }else{
+                print('error logging out')
+              }
+            });
           },
           leading: Icon(
             Icons.logout,

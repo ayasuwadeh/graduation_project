@@ -14,7 +14,6 @@ class SignUpScreen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Body(),
     );
   }
@@ -25,7 +24,7 @@ class Body extends StatefulWidget {
   _BodyState createState() => _BodyState();
 }
 
-class _BodyState extends State<Body> {
+class _BodyState extends State<Body> with AutomaticKeepAliveClientMixin {
   String countryValue="Select Your Country";
   String countryValue1="Select Your Country";
   final focusNode = FocusNode();
@@ -33,6 +32,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     Size size = MediaQuery.of(context).size;
     DateTime _selectedDate;
 
@@ -40,9 +40,7 @@ class _BodyState extends State<Body> {
       setState(() {
         countryValue=countryValue1;
       });
-
     }
-
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -191,9 +189,11 @@ class _BodyState extends State<Body> {
         ],
       ),
     );
+
   }
 
-
+@override
+  bool get wantKeepAlive => true;
 
 }
 
