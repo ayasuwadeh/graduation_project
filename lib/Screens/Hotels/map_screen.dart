@@ -72,10 +72,10 @@ class _MapScreenState extends State<MapScreen> {
     startMarker = Marker(
       markerId: MarkerId('POI'),
       position: LatLng(
-          initialPosition.latitude, initialPosition.longitude),
+          widget.details.lat, widget.details.lan),
       infoWindow: InfoWindow(
-        title: 'Name',
-        snippet: widget.item.name,
+        title: widget.item.name,
+        snippet: 'provided by cockatoo',
       ),
       icon: BitmapDescriptor.defaultMarker,
     );
