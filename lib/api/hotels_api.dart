@@ -19,7 +19,9 @@ class HotelApi{
         Hotel hotel = Hotel.fromJson(item);
         hotels.add(hotel);
       }
+     // print(hotels.length);
     }
+    else print(response.statusCode);
     return hotels;
   }
 }

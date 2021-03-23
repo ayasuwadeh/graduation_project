@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/models/hotel.dart';
-import 'package:graduation_project/models/hotel_details.dart';
+import 'package:graduation_project/models/item_details.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/components/error.dart';
 
 import 'map_screen.dart';
-import 'package:graduation_project/api/hotel_details_api.dart';
+import 'package:graduation_project/api/item_details_api.dart';
 
 class HotelCard extends StatelessWidget {
   Hotel hotel;
-  Future <HotelDetails> details;
+  Future <ItemDetails> details;
   HotelCard({Key key, this.hotel}) : super(key: key);
-  HotelDetailsApi hotelDetailsApi = HotelDetailsApi();
+  ItemDetailsApi itemDetailsApi = ItemDetailsApi();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class HotelCard extends StatelessWidget {
               print("hereeeeeeeeeeeee");
               return
                FutureBuilder(
-                 future: hotelDetailsApi.fetchDetails(hotel.id),
+                 future: itemDetailsApi.fetchDetails(hotel.id),
                   builder: (BuildContext context,
                       AsyncSnapshot snapshot){
 
@@ -45,7 +45,7 @@ class HotelCard extends StatelessWidget {
                           break;
                         } else if (snapshot.hasData) {
                           return MapScreen(details: snapshot.data,
-                          hotel: hotel,);
+                          item: hotel,);
                           break;
                         }
                     }
@@ -56,7 +56,7 @@ class HotelCard extends StatelessWidget {
       // onTap: TODO : make request with the id and navigate to chrome or safari with the places link
       child: Container(
         //height: size.height * 0.25,
-        margin: EdgeInsets.all(15),
+        margin: EdgeInsets.all(10),
         child: Container(
           decoration: BoxDecoration(
               color: kPrimaryLightColor, borderRadius: BorderRadius.circular(29)),
@@ -67,6 +67,7 @@ class HotelCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
+
                 Container(
                   width: size.width * 0.7,
                   child: Column(
@@ -74,13 +75,6 @@ class HotelCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        hotel.category.name,
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
-                      //SizedBox(height: 8,),
                       Text(
                         hotel.name,
                         style: TextStyle(
@@ -123,8 +117,8 @@ class HotelCard extends StatelessWidget {
     );
   }
 
-  Future <HotelDetails> getDetails() {
-    HotelDetailsApi hotelDetailsApi=new HotelDetailsApi() ;
+  Future <ItemDetails> getDetails() {
+    ItemDetailsApi hotelDetailsApi=new ItemDetailsApi() ;
     return hotelDetailsApi.fetchDetails(hotel.id);
 
   }

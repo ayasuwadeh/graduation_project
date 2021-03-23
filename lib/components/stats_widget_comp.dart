@@ -15,8 +15,9 @@ class StatsWidget extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      children:
-      _getStars(rate),
+      children:rate!=-1?
+      _getStars(rate):
+          _getNoStars()
     )
     );
 
@@ -69,5 +70,20 @@ class StatsWidget extends StatelessWidget {
       );
     }
     return listings;
+  }
+
+  _getNoStars() {
+    List listings = List<Widget>();
+
+    for (int i=0; i < 5; i++) {
+      listings.add(
+        Icon(
+          Icons.star_outline,
+          color: Colors.grey,
+          size:36,
+        ),
+      );
+    }
+   return listings;
   }
 }
