@@ -2,6 +2,7 @@ import 'package:geolocator/geolocator.dart';
 
 class GeolocatorService {
   final Geolocator geo = Geolocator();
+  Position _currentPosition;
 
   Stream<Position> getCurrentLocation(){
     return Geolocator.getPositionStream(
@@ -13,4 +14,6 @@ class GeolocatorService {
   Future<Position> getInitialLocation() async {
     return Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
   }
+
 }
+

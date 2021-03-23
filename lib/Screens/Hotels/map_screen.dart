@@ -44,6 +44,7 @@ class _MapScreenState extends State<MapScreen> {
           children: [
           GoogleMap(
           myLocationEnabled: true,
+          myLocationButtonEnabled: true,
           mapType: MapType.normal,
            markers: markers != null ? Set<Marker>.from(markers) : null,
           initialCameraPosition: CameraPosition(

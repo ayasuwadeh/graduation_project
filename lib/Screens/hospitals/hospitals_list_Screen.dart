@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api/hospitals_api.dart';
-import 'package:graduation_project/components/loading.dart';
-import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/models/hospital.dart';
 import 'package:graduation_project/constants.dart';
 import 'hospital_card.dart';
@@ -84,7 +81,7 @@ class _HospitalsListWidgetState extends State<HospitalsListWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {//TODO: bring data here from api
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -97,7 +94,7 @@ class _HospitalsListWidgetState extends State<HospitalsListWidget> {
     );
   }
 
-  Widget searchBar() {
+  Widget searchBar() {//TODO:make it component
     Size size = MediaQuery
         .of(context)
         .size;

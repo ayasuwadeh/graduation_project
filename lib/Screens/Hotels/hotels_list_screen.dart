@@ -6,6 +6,7 @@ import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/models/hotel.dart';
 import 'package:graduation_project/constants.dart';
 import 'hotel_card.dart';
+
 import 'package:graduation_project/constants.dart';
 class HotelsListScreen extends StatelessWidget {
    List <Hotel> hotels;
@@ -70,7 +71,7 @@ class HotelsListScreen extends StatelessWidget {
 
 }
 
-class MallsListWidget extends StatefulWidget {
+class MallsListWidget extends StatefulWidget {//TODO:search bar widget
   List <Hotel> hotels;
 
    MallsListWidget({Key key, this.hotels}) : super(key: key);
