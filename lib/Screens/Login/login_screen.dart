@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/Screens/SignUp/sign_up_screen.dart';
 import 'package:graduation_project/Screens/Login/login_form.dart';
-import 'package:graduation_project/Screens/pageviewSignup/mainPage.dart';
 import 'package:graduation_project/components/already_have_an_account_check.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -16,8 +15,6 @@ class LoginScreen extends StatelessWidget {
         SingleChildScrollView(
           child: Column(
             children: [
-
-
 
              Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -45,22 +42,18 @@ class LoginScreen extends StatelessWidget {
                               image: AssetImage("assets/icons/cockatoo.png"),
                             )
                         ),
-
-
                       ),
                       LoginForm(),
                       SizedBox(height: size.height * 0.01,),
                       AlreadyHaveAnAccountCheck(login: true, press: (){
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context){
-                              return SignUpView();
+                              return SignUpScreen();
                             }
                         ));
                       },)
                     ],
                   ),
-
-
             ],),
         ),
 

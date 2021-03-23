@@ -4,6 +4,10 @@ import 'package:graduation_project/Screens/Home/home_screen.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/components/rounded_passwordfield.dart';
 import 'package:graduation_project/components/rounded_textField.dart';
+import 'package:graduation_project/models/user.dart';
+import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/services/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -11,14 +15,21 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  Map<String, String> _loginObject = Map<String, String>();
+  Map<String, String> _creds = Map<String, String>();
   String _pass1; // Your new password
   bool _autovalidate = false;
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    super.dispose();
+    _creds.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Form(
       autovalidate: _autovalidate,
       key: _key,
@@ -26,29 +37,31 @@ class _LoginFormState extends State<LoginForm> {
         children: <Widget>[
           RoundedTextFormField(
             hintText: "Email",
-            onSaved: (String val) => _loginObject['email'] = val,
+            onSaved: (String val) => _creds['email'] = val,
             validator: _validateEmail,
             autoFocus: true,
           ),
           RoundedPasswordField(
             hintText: "Password",
             //onChanged: (String val) => setState(() => _pass1 = val),
-            onSaved: (String val) => _loginObject['password'] = val,
+            onSaved: (String val) => _creds['password'] = val,
             validator: _validatePassword,
           ),
-          RoundedButton(
-            text: "LOGIN",
-            press: (){
-              _doRegister();
-            },
-          ),
+          Provider.of<AuthProvider>(context).loggedInStatus ==
+                  Status.Authenticating
+              ? CircularProgressIndicator()
+              : RoundedButton(
+                  text: "LOGIN",
+                  press: () {
+                    _doRegister();
+                  },
+                ),
         ],
       ),
     );
   }
 
   String _validateEmail(String email) {
-
     RegExp regex = RegExp(r'\w+@\w+\.\w+');
 
     if (email.isEmpty)
@@ -72,16 +85,26 @@ class _LoginFormState extends State<LoginForm> {
     if (_key.currentState.validate()) {
       // Commit the field values to their variables
       _key.currentState.save();
-      print("""
-      The user has registered with an email address of '${_loginObject['email']}' 
-      and a password of '${_loginObject['password']}'
-      """);
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context){
-            return HomeScreen();
-          }
-      ));
+      submitForm();
     }
   }
 
+  void submitForm() async {
+    final Future<Map<String, dynamic>> result =
+        Provider.of<AuthProvider>(context, listen: false)
+            .login(email: _creds['email'], password: _creds['password']);
+
+    result.then((response) {
+      if (response['status']) {
+        User user = response['user'];
+        Provider.of<UserProvider>(context, listen: false).setUser(user);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }));
+      } else {
+        // TODO pop up dialog
+        print(response['message'] + ' ' + response['error']);
+      }
+    });
+  }
 }

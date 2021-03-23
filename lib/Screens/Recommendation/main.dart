@@ -19,7 +19,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMixin {
+  // TODO make data load only once 
   NatureApi natureApi = NatureApi();
   CuisineApi cuisineApi = CuisineApi();
   CultureApi cultureApi = CultureApi();
@@ -29,6 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       child: Container(
           margin: EdgeInsets.only(top: 50),
@@ -129,6 +131,10 @@ class _MyHomePageState extends State<MyHomePage> {
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
 
   Widget _drawInterests(BuildContext context, List<Interest> natures, List<Interest> cuisines, List<Interest> cultures) {
     List<String> natureTitles = [];

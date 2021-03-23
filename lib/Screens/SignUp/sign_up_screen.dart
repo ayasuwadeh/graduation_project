@@ -1,21 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Login/login_screen.dart';
-import 'package:graduation_project/components/already_have_an_account_check.dart';
 import 'package:graduation_project/components/custom_icons_icons.dart';
 import 'package:graduation_project/components/or_divider.dart';
-import 'package:graduation_project/components/rounded_button.dart';
-import 'package:graduation_project/components/rounded_passwordfield.dart';
-import 'package:graduation_project/components/rounded_textField.dart';
 import 'package:graduation_project/components/social_icons.dart';
-import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/Screens/SignUp/signup_form.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Body(),
     );
   }
@@ -39,7 +37,6 @@ class Body extends StatelessWidget {
           children: [
             Column(
               children: [
-
                   SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -59,8 +56,8 @@ class Body extends StatelessWidget {
                             )
                         ),
                         Container(
-                          width: 150,
-                          height: 150,
+                          width: 120,
+                          height: 120,
                           decoration: new BoxDecoration(
                               shape: BoxShape.circle,
                               image: new DecorationImage(
@@ -68,24 +65,8 @@ class Body extends StatelessWidget {
                                 image: AssetImage("assets/icons/cockatoo.png"),
                               )
                           ),
-
                         ),
-
-                        RoundedTextFormField(
-                          hintText: "Your Name",
-                          icon: Icons.person,
-                        ),
-
-                        RoundedTextFormField(
-                          hintText: "Email",
-                          icon: Icons.email,
-                        ),
-                        RoundedPasswordField(
-                          hintText: "Password",
-                        ),
-                        RoundedPasswordField(
-                          hintText: "Confirm Password",
-                        ),
+                        SignUpForm(),
                         OrDivider(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -101,19 +82,10 @@ class Body extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10,),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("swipe right to continue",style: TextStyle(color: Colors.grey,fontSize: 15),),
-                            Icon(Icons.arrow_forward_outlined,color: Colors.grey,),
-                          ],
-                        ),
+                        SizedBox(height: 10,)
                       ],
                     ),
                   ),
-
               ],
             )
           ],
@@ -123,42 +95,5 @@ class Body extends StatelessWidget {
   }
 }
 
-class SignUpForm extends StatefulWidget {
-  @override
-  _SignUpFormState createState() => _SignUpFormState();
-}
-
-class _SignUpFormState extends State<SignUpForm> {
-
-  Map<String, String> _loginObject = Map<String, String>();
-  String _pass1; // Your new password
-  bool _autovalidate = false;
-
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        RoundedTextFormField(
-          hintText: "Email",
-          icon: Icons.person,
-        ),
-        RoundedPasswordField(
-          hintText: "Password",
-        ),
-        RoundedPasswordField(
-          hintText: "Confirm Password",
-        ),
-        RoundedButton(
-          text: "Sign Up",
-          color: kPrimaryColor,
-          textColor: kPrimaryLightColor,
-          press: () {},
-        ),
-      ],
-    );
-  }
-}
 
 

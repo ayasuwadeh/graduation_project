@@ -8,6 +8,11 @@ class ApiUtil{
 
   static const String ALL_CULTURES = '/cultures';
 
+  static const String login = MAIN_API_UTIL + '/auth/login';
+  static const String signUp = MAIN_API_UTIL + '/auth/register';
+  static const String logout = MAIN_API_UTIL + '/auth/logout';
+
+
   // FOR foursqaure requests
   static const String MAIN_FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/search?';
   static const String FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/';

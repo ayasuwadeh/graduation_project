@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/bookmarks/main.dart';
 import 'package:graduation_project/Screens/EditUserProfile/main.dart';
 import 'package:graduation_project/Screens/Routes/main.dart';
-import 'package:graduation_project/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/services/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:graduation_project/Screens/Login/login_screen.dart';
+
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return
-      Container(
-        color:Colors.white,
-        child: Column(
-
-          children: [
+    return Container(
+      color: Colors.white,
+      child: Column(children: [
         Container(
           child: Padding(
             padding: EdgeInsets.only(top: 50.0),
@@ -25,37 +25,46 @@ class MainDrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 65.0,
-              child: Image.asset("assets/icons/cockatoo.png"),
-                  ),
-
+                  child: Image.asset("assets/icons/cockatoo.png"),
+                ),
                 SizedBox(
                   height: 5.0,
                 ),
-                Text(
-                  "His name",
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.w800,
-                  ),
+                Consumer2<AuthProvider, UserProvider>(
+                  builder: (context, auth, user, child) {
+                    return Text(
+                      (auth.loggedInStatus == Status.LoggedIn && user.user != null)
+                          ? user.user.name
+                          : "",
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 5.0,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,//Center Column contents vertically,
-                  crossAxisAlignment: CrossAxisAlignment.center, //Center Column contents horizontally,
+                  mainAxisAlignment: MainAxisAlignment
+                      .center, //Center Column contents vertically,
+                  crossAxisAlignment: CrossAxisAlignment
+                      .center, //Center Column contents horizontally,
                   children: [
-                    Icon(Icons.location_pin,color: Colors.deepOrange,),
-
-                    Text(
-                    " Location",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
+                    Icon(
+                      Icons.location_pin,
+                      color: Colors.deepOrange,
                     ),
-                  ),
-
-                ],),
+                    Text(
+                      " Location",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -67,39 +76,51 @@ class MainDrawer extends StatelessWidget {
 
         /////taps
         ListTile(
-          onTap: () {Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-                return EditProfile();
-              }));},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return EditProfile();
+            }));
+          },
           leading: Icon(
             Icons.edit,
             color: Colors.deepOrange,
           ),
-          title: Text("Edit Your Profile",style: TextStyle(fontSize: 16),),
+          title: Text(
+            "Edit Your Profile",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
 
         ListTile(
-          onTap: () {Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-                return MyBookmarks();
-              }));},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return MyBookmarks();
+            }));
+          },
           leading: Icon(
             Icons.bookmark,
             color: Colors.deepOrange,
           ),
-          title: Text("Your Bookmarks",style: TextStyle(fontSize: 16),),
+          title: Text(
+            "Your Bookmarks",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
 
         ListTile(
-          onTap: () {Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-                return MyRoutes();
-              }));},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return MyRoutes();
+            }));
+          },
           leading: Icon(
             Icons.zoom_out_map_sharp,
-                color:Colors.deepOrange,
+            color: Colors.deepOrange,
           ),
-          title: Text("Your Routes",style: TextStyle(fontSize: 16),),
+          title: Text(
+            "Your Routes",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
         ListTile(
           onTap: () {},
@@ -107,20 +128,39 @@ class MainDrawer extends StatelessWidget {
             Icons.settings,
             color: Colors.deepOrange,
           ),
-          title: Text("Settings",style: TextStyle(fontSize: 16),),
+          title: Text(
+            "Settings",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
-             SizedBox(height: 110,),
-            ListTile(
-              onTap: () {},
-              leading: Icon(
-                Icons.logout,
-                color: Colors.deepOrange,
-              ),
-              title: Text("Logout",style: TextStyle(fontSize: 16),),
-            ),
-
-          ]),
-      );
+        SizedBox(
+          height: 110,
+        ),
+        ListTile(
+          onTap: () {
+            final Future<Map<String, dynamic>> result =
+            Provider.of<AuthProvider>(context, listen: false)
+                .logout();
+            result.then((response) => {
+              if(response['status']){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
+                }))
+              }else{
+                print('error logging out')
+              }
+            });
+          },
+          leading: Icon(
+            Icons.logout,
+            color: Colors.deepOrange,
+          ),
+          title: Text(
+            "Logout",
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ]),
+    );
   }
 }
-
