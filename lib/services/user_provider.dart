@@ -7,8 +7,11 @@ class UserProvider with ChangeNotifier {
 
   User get user => _user;
 
-  void setUser(User user) {
+  void setUser({User user, bool notify = true}) {
     _user = user;
-    notifyListeners();
+    if(notify){
+      notifyListeners();
+    }
   }
+
 }

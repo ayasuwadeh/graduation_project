@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/Home/home_screen.dart';
 import 'package:graduation_project/services/user_preferences.dart';
@@ -7,6 +6,7 @@ import 'constants.dart';
 import 'package:graduation_project/Screens/Splash/MainSplash.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/services/auth_provider.dart';
+import 'services/status_provider.dart';
 
 import 'models/user.dart';
 
@@ -15,7 +15,8 @@ void main() {
       MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => AuthProvider()),
-            ChangeNotifierProvider(create: (context) => UserProvider())
+            ChangeNotifierProvider(create: (context) => UserProvider()),
+            ChangeNotifierProvider(create: (context) => StatusProvider()),
           ],
           child: MyApp(),
       )
@@ -62,7 +63,9 @@ class MyApp extends StatelessWidget {
                   return MainSplash();
                 else if(snapshot.data.token != null){
                   //UserPreferences().removeUser();
-                  print('token ' +  snapshot.data.token);
+                  //print('token ' +  snapshot.data.token);
+                  Provider.of<UserProvider>(context, listen: false).setUser(user: snapshot.data, notify: false);
+                  Provider.of<StatusProvider>(context, listen: false).setStatus(status: true, notify: false);
                   return HomeScreen();
                 }
             }

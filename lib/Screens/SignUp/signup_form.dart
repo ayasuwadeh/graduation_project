@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Home/home_screen.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/components/rounded_passwordfield.dart';
 import 'package:graduation_project/components/rounded_textField.dart';
@@ -9,6 +8,7 @@ import 'package:graduation_project/services/auth_provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/models/user.dart';
+import 'package:graduation_project/services/status_provider.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -125,7 +125,8 @@ class _SignUpFormState extends State<SignUpForm> {
     result.then((response) {
       if (response['status']) {
         User user = response['user'];
-        Provider.of<UserProvider>(context, listen: false).setUser(user);
+        Provider.of<UserProvider>(context, listen: false).setUser(user: user);
+        Provider.of<StatusProvider>(context, listen: false).setStatus(status: true);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return SignUpView();
         }));

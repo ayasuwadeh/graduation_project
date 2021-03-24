@@ -8,6 +8,7 @@ import 'package:graduation_project/models/user.dart';
 import 'package:graduation_project/services/auth_provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:graduation_project/services/status_provider.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -97,7 +98,8 @@ class _LoginFormState extends State<LoginForm> {
     result.then((response) {
       if (response['status']) {
         User user = response['user'];
-        Provider.of<UserProvider>(context, listen: false).setUser(user);
+        Provider.of<UserProvider>(context, listen: false).setUser(user: user);
+        Provider.of<StatusProvider>(context, listen: false).setStatus(status: true);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomeScreen();
         }));

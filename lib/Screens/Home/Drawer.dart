@@ -3,6 +3,7 @@ import 'package:graduation_project/Screens/bookmarks/main.dart';
 import 'package:graduation_project/Screens/EditUserProfile/main.dart';
 import 'package:graduation_project/Screens/Routes/main.dart';
 import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/services/status_provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/Screens/Login/login_screen.dart';
@@ -30,11 +31,11 @@ class MainDrawer extends StatelessWidget {
                 SizedBox(
                   height: 5.0,
                 ),
-                Consumer2<AuthProvider, UserProvider>(
-                  builder: (context, auth, user, child) {
+                Consumer2<UserProvider, StatusProvider>(
+                  builder: (context, userProvider, statusProvider, child) {
                     return Text(
-                      (auth.loggedInStatus == Status.LoggedIn && user.user != null)
-                          ? user.user.name
+                      (statusProvider.status != null && statusProvider.status  && userProvider.user != null)
+                          ? userProvider.user.name
                           : "",
                       style: TextStyle(
                         fontSize: 22.0,

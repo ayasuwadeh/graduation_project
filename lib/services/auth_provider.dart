@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:graduation_project/api/api_util.dart';
 import 'package:graduation_project/models/user.dart';
 import 'package:graduation_project/services/user_preferences.dart';
@@ -49,10 +48,10 @@ class AuthProvider extends ChangeNotifier {
 
       var userData = responseData['data']['user'];
       var token = responseData['data']['token'];
-      print(token);
+      //print(token);
       User authUser = User.fromJson(userData);
       UserPreferences().saveUser(authUser, token);
-
+      UserPreferences().setStatusLogIn();
       _loggedInStatus = Status.LoggedIn;
       notifyListeners();
 
@@ -80,6 +79,7 @@ class AuthProvider extends ChangeNotifier {
     var result;
     if (response.statusCode == 200) {
       UserPreferences().removeUser();
+      UserPreferences().setStatusLogOut();
       _loggedInStatus = Status.LoggedOut;
       notifyListeners();
       result = { 'status': true };
@@ -121,6 +121,10 @@ class AuthProvider extends ChangeNotifier {
 
       User authUser = User.fromJson(userData);
       UserPreferences().saveUser(authUser, token);
+      UserPreferences().setStatusLogIn();
+
+      _registeredInStatus = Status.Registered;
+      notifyListeners();
 
       result = {
         'status': true,
@@ -129,6 +133,8 @@ class AuthProvider extends ChangeNotifier {
       };
 
     }else {
+      _registeredInStatus = Status.NotRegistered;
+      notifyListeners();
       final Map<String, dynamic> responseData = json.decode(response.body);
       result = {
         'status': false,
@@ -137,7 +143,6 @@ class AuthProvider extends ChangeNotifier {
       };
     }
     return result;
-
   }
 
   Map<String, String> getHeadersForLogout(String token) {

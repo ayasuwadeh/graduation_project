@@ -46,4 +46,21 @@ class UserPreferences {
     String token = prefs.getString("token");
     return token;
   }
+
+  Future<bool> setStatusLogIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('Status', true);
+    return prefs.commit();
+  }
+
+  Future<bool> setStatusLogOut() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('Status', false);
+    return prefs.commit();
+  }
+
+  Future<bool> ifLoggedIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('Status');
+  }
 }
