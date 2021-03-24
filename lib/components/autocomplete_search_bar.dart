@@ -4,7 +4,8 @@ import 'package:graduation_project/constants.dart';
 
 class SearchBar extends StatefulWidget {
   final String hint;
-  SearchBar({Key key, this.title, this.hint}) : super(key: key);
+  final List<dynamic> items;
+  SearchBar({Key key, this.title, this.hint, this.items}) : super(key: key);
   final String title;
 
   @override
@@ -13,40 +14,6 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   var _suggestionsAutoTextController=new TextEditingController();
-  List<String> suggestions = [
-    "Apple",
-    "Armidillo",
-    "Soho Grand Hotel",
-    "Arlo SoHo",
-    "America",
-    "Argentina",
-    "Australia",
-    "Antarctica",
-    "Ten Ichi Market",
-    "Cheese",
-    "Danish",
-    "Eclair",
-    "Fudge",
-    "Granola",
-    "Haz elnut",
-    "Ice Cream",
-    "Jely",
-    "Kiwi Fruit",
-    "Lamb",
-    "Macadamia",
-    "Nachos",
-    "Oatmeal",
-    "Palm Oil",
-    "Quail",
-    "Rabbit",
-    "Salad",
-    "T-Bone Steak",
-    "Urid Dal",
-    "Vanilla",
-    "Waffles",
-    "Yam",
-    "Zest"
-  ];
 
 
   @override
@@ -71,6 +38,7 @@ class _SearchBarState extends State<SearchBar> {
                 children: [
                   Expanded(
                     child: AutoCompleteTextField(
+
                         style: TextStyle(color: Colors.black,fontSize: 20,
                         ),
                         decoration: new InputDecoration(
@@ -84,7 +52,7 @@ class _SearchBarState extends State<SearchBar> {
                           _suggestionsAutoTextController.text=item;
                         },
                         key: null,
-                        suggestions: suggestions,
+                        suggestions: widget.items,
                         itemBuilder: (context,item)
                         {
                           return Container(

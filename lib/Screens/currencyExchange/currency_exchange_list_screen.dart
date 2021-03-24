@@ -9,42 +9,58 @@ import 'currency_exchange_card.dart';
 
 
 class CurrencyExchangeListScreen extends StatelessWidget {
+  List <CurrencyExchange> currencyEx;
+
+  CurrencyExchangeListScreen( this.currencyEx);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+
+          leading: IconButton(icon:Icon(Icons.arrow_back,color: Colors.deepOrange,),
+            color: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+            },),
+          backgroundColor: Colors.white,
+          title:
+          Text("Currency Exchange", style: TextStyle(color: Colors.black87,fontSize: 22),)
+      ),
+
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              margin: EdgeInsets.only(left: 29, top: 20, bottom: 20),
-              child: Row(
-                children: [
-                  InkWell(
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: kPrimaryColor,
-                        size: 30,
-                      )
-                  ),
-                  Text(
-                    '   Currency Exchange',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            CurrencyExchangeListWidget(),
+            // Container(
+            //   margin: EdgeInsets.only(left: 29, top: 20, bottom: 20),
+            //   child: Row(
+            //     children: [
+            //       InkWell(
+            //           onTap: (){
+            //             Navigator.pop(context);
+            //           },
+            //           child: Icon(
+            //             Icons.arrow_back,
+            //             color: kPrimaryColor,
+            //             size: 30,
+            //           )
+            //       ),
+            //       Text(
+            //         '   Currency Exchange',
+            //         style: TextStyle(
+            //             fontSize: 30,
+            //             fontWeight: FontWeight.bold
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
+            CurrencyExchangeListWidget(currencyEx),
           ],
         ),
       ),
@@ -53,42 +69,24 @@ class CurrencyExchangeListScreen extends StatelessWidget {
 }
 
 class CurrencyExchangeListWidget extends StatefulWidget {
+  List <CurrencyExchange> curr;
+
+  CurrencyExchangeListWidget(this.curr);
+
   @override
   _CurrencyExchangeListWidgetState createState() => _CurrencyExchangeListWidgetState();
 }
 
 class _CurrencyExchangeListWidgetState extends State<CurrencyExchangeListWidget> {
-  CurrencyExchangeApi currencyExchangeApi = CurrencyExchangeApi();
-
+//  CurrencyExchangeApi currencyExchangeApi = CurrencyExchangeApi();
+@override
+  void initState() {
+    widget.curr.sort((a, b) => a.location.distance.compareTo(b.location.distance));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: currencyExchangeApi.fetchAllCurrencyExchange(),
-        builder: (BuildContext context,
-            AsyncSnapshot snapshot){
-
-          switch (snapshot.connectionState) {
-            case ConnectionState.active:
-              return Loading();
-              break;
-            case ConnectionState.waiting:
-              return Loading();
-              break;
-            case ConnectionState.none:
-              return Error(errorText: 'No Internet Connection');
-              break;
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return Error(errorText: snapshot.error.toString());
-                break;
-              } else if (snapshot.hasData) {
-                return _buildHospitalList(snapshot.data);
-                break;
-              }
-          }
-          return Container();
-        }
-    );
+    return _buildHospitalList(widget.curr);
   }
   Widget _buildHospitalList(List<CurrencyExchange> currencyExchanges){
 
@@ -100,7 +98,7 @@ class _CurrencyExchangeListWidgetState extends State<CurrencyExchangeListWidget>
           itemCount: currencyExchanges.length,
           itemBuilder: (BuildContext context, int index){
             return CurrencyExchangeCard(
-              currencyExchange: currencyExchanges[index],
+              currencyExc: currencyExchanges[index],
             );
           },
           //children: List.from(hotelCards)
