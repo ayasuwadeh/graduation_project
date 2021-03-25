@@ -7,6 +7,8 @@ import 'package:graduation_project/Screens/EditUserProfile/widgets/Date_selector
 import 'package:graduation_project/Screens/EditUserProfile/widgets/save_discard.dart';
 import 'package:graduation_project/Screens/EditUserProfile/widgets/underliened_passwordfield.dart';
 import 'package:graduation_project/Screens/EditUserProfile/widgets/underlined_textField.dart';
+import 'package:graduation_project/services/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key key, }) : super(key: key);
@@ -57,18 +59,28 @@ class _EditProfileState extends State<EditProfile> {
               ],
             ),
             SizedBox(height: height*0.015,),
-            UnderlinedTextFormField(
-              icon: Icons.person_outline,
-              text: "Aya Suwadeh",
+            Selector<UserProvider, String>(
+              selector: (buildContext, userProvider)=> userProvider.user.name,
+              builder: (context, userName, child){
+                return UnderlinedTextFormField(
+                  icon: Icons.person_outline,
+                  text: (userName != null) ? userName : 'Name',
+                );
+              },
             ),
             SizedBox(height: 18,),
-            UnderlinedTextFormField(
-              icon: Icons.email_outlined,
-              text: "ayafrhn@gmail.com",
+            Selector<UserProvider, String>(
+              builder: (context, userEmail, child){
+                return UnderlinedTextFormField(
+                  icon: Icons.email_outlined,
+                  text: userEmail != null ? userEmail : "Email",
+                );
+              },
+              selector: (buildContext, userProvider) => userProvider.user.email,
             ),
 
             ///////////////country
-          CountrySelector(countryName: "palestine",),
+            CountrySelector(countryName: "palestine",),
             ///////////////birthday
             SizedBox(height: 5,),
             Padding(
