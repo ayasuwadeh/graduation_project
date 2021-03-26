@@ -5,16 +5,12 @@ import 'package:graduation_project/Screens/Details/page/main_page.dart';
 class AdventureCard extends StatelessWidget {
   final String text;
   final String image;
-
-  const AdventureCard({Key key, this.text, this.image}) : super(key: key);
+  final VoidCallback onTapped;
+  const AdventureCard({Key key, this.text, this.image, this.onTapped}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){Navigator.push(context, MaterialPageRoute(
-          builder: (context){
-        return MainPage();
-      }
-        ));},
+      onTap: onTapped,
       child: Padding(
         padding: const EdgeInsets.only(left: 20, top: 10),
         child: SizedBox(
@@ -35,8 +31,8 @@ class AdventureCard extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                        Color(0xFF343434).withOpacity(0.4),
-                        Color(0xFF343434).withOpacity(0.15)
+                        Color(0x19232121).withOpacity(0.9),//0.4
+                        Color(0xFF343434).withOpacity(0.2)//0.15
                       ])),
                 )),
                 Padding(

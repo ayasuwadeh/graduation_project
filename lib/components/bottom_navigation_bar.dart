@@ -67,7 +67,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           RaisedButton(
             padding: EdgeInsets.all(5.0),
-            color: kPrimaryColor,
+            color: Colors.deepOrange,
             shape: CircleBorder(),
             child: Icon(Icons.navigation,color: Colors.white,size: 40,),
             onPressed: () {

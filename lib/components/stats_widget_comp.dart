@@ -1,6 +1,6 @@
  import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:graduation_project/models/place.dart';
+import 'package:graduation_project/models/place_details.dart';
 
 class StatsWidget extends StatelessWidget {
   final double rate;

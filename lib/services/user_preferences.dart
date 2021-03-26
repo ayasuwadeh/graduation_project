@@ -6,6 +6,7 @@ class UserPreferences {
 
   Future<bool> saveUser(User user, String token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+   // SharedPreferences.setMockInitialValues({});
 
     prefs.setInt("userId", user.id);
     prefs.setString("name", user.name);

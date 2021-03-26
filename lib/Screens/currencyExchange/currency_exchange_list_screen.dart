@@ -59,7 +59,7 @@ class CurrencyExchangeListScreen extends StatelessWidget {
             //     ],
             //   ),
             // ),
-
+            
             CurrencyExchangeListWidget(currencyEx),
           ],
         ),

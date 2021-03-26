@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:async';
-import 'package:graduation_project/models/hotel.dart';
+import 'package:graduation_project/api/api_util.dart';
 import 'package:graduation_project/models/item_details.dart';
 import 'map_card.dart';
 class MapScreen extends StatefulWidget {
@@ -23,13 +23,21 @@ class _MapScreenState extends State<MapScreen> {
 
   Marker startMarker;
 
+  Position position;
+  void getLocation() async {  position =
+  await Geolocator .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  print(position); }
+
   @override
   void initState() {
+    getLocation();
     _setInitialMarker();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     print("loooooooool"+widget.details.rating.toString());
     print("loooooooool"+widget.details.image);
     print("loooooooool"+widget.details.url);
@@ -48,16 +56,49 @@ class _MapScreenState extends State<MapScreen> {
           mapType: MapType.normal,
            markers: markers != null ? Set<Marker>.from(markers) : null,
           initialCameraPosition: CameraPosition(
-              target: LatLng(widget.details.lat,
-                  widget.details.lan),
+              target: LatLng(widget.item.location.lat,
+                  widget.item.location.lan),
               zoom: 16),
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
+          // onMapCreated: (GoogleMapController controller) {
+          //   _controller.complete(controller);
+          // },
         ),
+            Positioned(
+                top:size.height*0.7,
+                left: size.width*0.06 ,
+                child:ElevatedButton(
+                    onPressed: () {
+                      ApiUtil.DIRECTION(position.latitude.toString(),
+                          position.longitude.toString(),
+                          widget.item.location.lat.toString(),
+                          widget.item.location.lan.toString());
+                      // _launchURL('https://www.google.com/maps/dir/${position.latitude},${position.longitude}/'
+                      //     '${widget.gallery.location.lat},${widget.gallery.location.lan}');
+
+                    },
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Colors.red)
+                            )
+                        )
+                    ),
+
+                    child:Row(
+
+                      children: [
+                        Text("directions  ",style: TextStyle(fontSize: 17),),
+                        Icon(Icons.directions),
+
+                      ],
+                    )
+
+                )
+            ),
 
         Positioned(
-          top: 525,
+          top: 533,
           left: -7,
             child: MapCard(hotel: widget.item,
             hotelDetails: widget.details,))
