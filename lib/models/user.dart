@@ -19,8 +19,8 @@ class User{
       email: jsonObject['email'].toString(),
       password: jsonObject['password'].toString(),
       token: jsonObject['token'].toString(),
-      //country: jsonObject['country'].toString()
-      //this.birthday = jsonObject['birthday'];
+      country: jsonObject.containsKey('country') ? jsonObject['country'].toString(): 'Select Your country',
+      birthday: jsonObject.containsKey('birthday')? DateTime.parse(jsonObject['birthday'].toString()) : DateTime.now()
       //this.location =  LocationUser.fromJson(jsonObject['location']);
       // TODO fix
     );

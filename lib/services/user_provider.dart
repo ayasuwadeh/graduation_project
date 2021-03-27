@@ -14,4 +14,14 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+  void setUserCountry ({String country}){
+    this._user.country = country;
+    notifyListeners();
+  }
+
+  void setUserBirthday({DateTime birthday}){
+    this._user.birthday = birthday;
+    notifyListeners();
+  }
+
 }

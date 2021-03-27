@@ -9,68 +9,84 @@ import 'package:graduation_project/Screens/EditUserProfile/widgets/underliened_p
 import 'package:graduation_project/Screens/EditUserProfile/widgets/underlined_textField.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:graduation_project/components/rounded_button.dart';
+import 'package:graduation_project/constants.dart';
 
 class EditProfile extends StatefulWidget {
-  EditProfile({Key key, }) : super(key: key);
+  EditProfile({
+    Key key,
+  }) : super(key: key);
 
   @override
   _EditProfileState createState() => _EditProfileState();
 }
 
 class _EditProfileState extends State<EditProfile> {
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    final controller=ScrollController();
-    void jumpTo()
-    {
-      controller.jumpTo(height*0.4);
+    final controller = ScrollController();
+    TextEditingController name ;
+    TextEditingController email ;
+    TextEditingController country ;
+
+
+    void jumpTo() {
+      controller.jumpTo(height * 0.4);
     }
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: IconButton(icon:Icon(Icons.arrow_back),
-          color: Colors.black,
-          onPressed: () {
-          Navigator.pop(context);
-          },),
-          title:Text("Edit profile", style: TextStyle(color: Colors.black87),)
-
-      ),
-      body: ListView(
-        controller: controller,
-        children: [
-          Column(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Text(
+            "Edit profile",
+            style: TextStyle(color: Colors.black87),
+          )),
+      body: ListView(controller: controller, children: [
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: height*0.01,),
+            SizedBox(
+              height: height * 0.01,
+            ),
             Row(
               children: [
-                ImageContainer(path:"assets/icons/cockatoo.png"),
-                SizedBox(width: width*0.2,),
+                ImageContainer(path: "assets/icons/cockatoo.png"),
+                SizedBox(
+                  width: width * 0.2,
+                ),
                 RaisedButtonIconText(
                   text: "Edit interests",
                   icon: Icons.edit,
                 ),
               ],
             ),
-            SizedBox(height: height*0.015,),
+            SizedBox(
+              height: height * 0.015,
+            ),
             Selector<UserProvider, String>(
-              selector: (buildContext, userProvider)=> userProvider.user.name,
-              builder: (context, userName, child){
+              selector: (buildContext, userProvider) => userProvider.user.name,
+              builder: (context, userName, child) {
                 return UnderlinedTextFormField(
                   icon: Icons.person_outline,
                   text: (userName != null) ? userName : 'Name',
                 );
               },
             ),
-            SizedBox(height: 18,),
+            SizedBox(
+              height: 18,
+            ),
             Selector<UserProvider, String>(
-              builder: (context, userEmail, child){
+              builder: (context, userEmail, child) {
                 return UnderlinedTextFormField(
                   icon: Icons.email_outlined,
                   text: userEmail != null ? userEmail : "Email",
@@ -80,38 +96,66 @@ class _EditProfileState extends State<EditProfile> {
             ),
 
             ///////////////country
-            CountrySelector(countryName: "palestine",),
+            CountrySelector(
+                countryName: Provider.of<UserProvider>(context, listen: false)
+                            .user.country !=
+                        null
+                    ? Provider.of<UserProvider>(context, listen: false).user.country
+                    : 'Select your country'),
             ///////////////birthday
-            SizedBox(height: 5,),
-            Padding(
-              padding: EdgeInsets.only(left: width*0.1),
-              child: Align(
-                alignment: Alignment.topLeft,
-                  child: Text("My Birthday is:",style: TextStyle(fontSize: 16),)),
+            SizedBox(
+              height: 5,
             ),
-            DateSelector(initialDate: new DateTime(2020, 10, 08),),
+            Padding(
+              padding: EdgeInsets.only(left: width * 0.1),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "My Birthday is:",
+                    style: TextStyle(fontSize: 16),
+                  )),
+            ),
+            DateSelector(
+              initialDate: Provider.of<UserProvider>(context, listen: false)
+                          .user.birthday !=
+                      null
+                  ? Provider.of<UserProvider>(context, listen: false).user.birthday
+                  : new DateTime.now(),
+            ),
 
+            Container(
+                width: width * 0.45,
+                child: RoundedButton(
+                  text: 'Save Changes',
+                  press: () {},
+                )),
+            SizedBox(height: 10,),
+            Container(width: width * 0.8, child: Divider(color: Colors.grey, thickness: 2 ,)),
+            SizedBox(height: 10,),
             InkWell(
-              onTap: (){
-                //print("hi");
-              jumpTo();
+              onTap: () {
+                jumpTo();
               },
               child: Container(
-                padding: EdgeInsets.only(left: width*0.05),
-                child: Row(
-                  children: [
-                    Text("Change My Password",style: GoogleFonts.lobsterTwo(
-                    fontSize: 20, color: Colors.black87
+                padding: EdgeInsets.only(left: width * 0.05),
+                child: Row(children: [
+                  Text(
+                    "Change My Password",
+                    style: GoogleFonts.lobsterTwo(
+                        fontSize: 20, color: Colors.black87),
                   ),
-                ),
-                    SizedBox(width: width*0.45,),
-                    Icon(Icons.keyboard_arrow_down_outlined,
-                        color: Colors.black54,
-                        size: 35,)
-                  ]
-                ),
+                  SizedBox(
+                    width: width * 0.45,
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_down_outlined,
+                    color: Colors.black54,
+                    size: 35,
+                  )
+                ]),
               ),
             ),
+            SizedBox(height: 20,),
             UnderlinedPasswordField(
               hintText: "Current Password",
             ),
@@ -121,17 +165,15 @@ class _EditProfileState extends State<EditProfile> {
             UnderlinedPasswordField(
               hintText: "Confirm Password",
             ),
-            SizedBox(height: height*0.06,),
-
-           Options(
-             option1:"Discard Changes",
-             option2:"save Changes",
-           ),
-
-
-
+            SizedBox(height: 20,),
+            Container(
+                width: width * 0.45,
+                child: RoundedButton(
+                  text: 'Save Changes',
+                  press: () {},
+                )),
+            SizedBox(height: 20,),
           ],
-
         ),
       ]),
     );

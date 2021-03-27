@@ -29,7 +29,7 @@ class UnderlinedTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           errorStyle: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 15
+            fontSize: 16
           ),
           prefixIcon: Icon(
             icon,

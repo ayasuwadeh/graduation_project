@@ -48,8 +48,9 @@ class AuthProvider extends ChangeNotifier {
 
       var userData = responseData['data']['user'];
       var token = responseData['data']['token'];
-      //print(token);
+      print(token);
       User authUser = User.fromJson(userData);
+      print(authUser.birthday);
       UserPreferences().saveUser(authUser, token);
       UserPreferences().setStatusLogIn();
       _loggedInStatus = Status.LoggedIn;
@@ -73,7 +74,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>> logout() async{
 
-    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeadersForLogout(token));
+    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeaders(token));
     var response = await headers.then((value) => http.post(ApiUtil.logout, headers: value));
 
     var result;
@@ -145,12 +146,39 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
-  Map<String, String> getHeadersForLogout(String token) {
+  Map<String, String> getHeaders(String token) {
     Map<String, String> headers = {
       'accept': 'application/json',
       'Authorization': 'Bearer $token'
     };
     return headers;
+  }
+
+  Future<Map<String, dynamic>> sendCountryAndBirthday(String country, DateTime birthday) async{
+    Map<String, dynamic> data = {
+      'country': country,
+      'birthday': birthday.toString()
+    };
+
+    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeaders(token));
+    var response = await headers.then((value) => http.post(ApiUtil.countryAndBirthday, headers: value, body: data));
+
+    if(response.statusCode == 200){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      var country = responseData['data']['country'];
+      var birthday = responseData['data']['birthday'];
+      UserPreferences().setCountry(country);
+      UserPreferences().setBirthday(birthday);
+      Map<String, dynamic> data ={
+        'status': 'success',
+      };
+      return data;
+    }else{
+      Map<String, dynamic> data ={
+        'status': 'failure',
+      };
+      return data;
+    }
   }
 
 }

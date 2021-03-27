@@ -11,6 +11,7 @@ class ApiUtil{
   static const String login = MAIN_API_UTIL + '/auth/login';
   static const String signUp = MAIN_API_UTIL + '/auth/register';
   static const String logout = MAIN_API_UTIL + '/auth/logout';
+  static const String countryAndBirthday = MAIN_API_UTIL + '/user/data';
 
 
   // FOR foursqaure requests

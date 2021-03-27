@@ -7,7 +7,8 @@ import 'package:graduation_project/api/cultures_api.dart';
 import 'package:graduation_project/models/interest.dart';
 import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/components/loading.dart';
-
+import 'package:graduation_project/services/user_provider.dart';
+import 'package:provider/provider.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -20,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMixin {
-  // TODO make data load only once 
+  // TODO make data load only once
   NatureApi natureApi = NatureApi();
   CuisineApi cuisineApi = CuisineApi();
   CultureApi cultureApi = CultureApi();

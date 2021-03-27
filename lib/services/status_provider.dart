@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class StatusProvider with ChangeNotifier {
+  // status = true means user is logged in
   bool _status;
 
   bool get status => _status;

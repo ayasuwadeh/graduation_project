@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/Home/home_screen.dart';
 import 'package:graduation_project/components/cockatoo_icon.dart';
+import 'package:provider/provider.dart';
+import 'package:graduation_project/services/user_provider.dart';
+import 'package:graduation_project/services/auth_provider.dart';
 
 class WelcomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Stack(children: [
         Column(children: [
@@ -16,7 +18,6 @@ class WelcomeCard extends StatelessWidget {
             margin: EdgeInsets.all(height * 0.03),
             height: height * 0.47,
             child: Column(children: [
-              // SizedBox(height: 165,),
               Card(
                 borderOnForeground: false,
                 margin: EdgeInsets.all(15),
@@ -59,10 +60,7 @@ class WelcomeCard extends StatelessWidget {
                     style: TextStyle(fontSize: 19),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return HomeScreen();
-                    }));
+                    sendUserDataToDB(context);
                   },
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
@@ -112,5 +110,31 @@ class WelcomeCard extends StatelessWidget {
         CockatooPic(path: "assets/icons/cockatoo.png"),
       ]),
     );
+  }
+
+  void sendUserDataToDB(BuildContext context) {
+    String country = Provider.of<UserProvider>(context, listen: false).user.country;
+    DateTime birthday = Provider.of<UserProvider>(context, listen: false).user.birthday;
+
+    if(country != null && birthday !=null){
+      Future<Map<String, dynamic>> response = Provider.of<AuthProvider>(context, listen: false).sendCountryAndBirthday(country, birthday);
+      response.then((result){
+        if(result['status'] == 'success'){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
+                return HomeScreen();
+              }));
+        }
+        else if(result['status'] == 'failure'){
+          // TODO dialog to tell that error occurred
+        }
+      });
+    }else if(country == null && birthday ==null){
+      // TODO dialog to tell that both are null
+    }else if(country == null){
+      // TODO dialog to tell that country is null
+    }else if(birthday == null){
+      // TODO dialog to tell that birthday is null
+    }
   }
 }

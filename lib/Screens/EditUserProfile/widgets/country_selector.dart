@@ -13,23 +13,21 @@ class CountrySelector extends StatefulWidget {
 }
 
 class _CountrySelectorState extends State<CountrySelector> {
-
   @override
   Widget build(BuildContext context) {
     String countryValue = widget.countryName;
     Size size = MediaQuery.of(context).size;
 
-
     return GestureDetector(
       child: Container(
-          width: size.width * 0.86,
+          width: size.width * 0.88,
           margin: EdgeInsets.all(15),
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: Colors.black45, width: 2),
+              bottom: BorderSide(color: Colors.black45, width: 1),
             ),
           ),
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.all(0),
           child: FlatButton(
               child: Row(children: [
                 Icon(
@@ -38,13 +36,12 @@ class _CountrySelectorState extends State<CountrySelector> {
                 ),
                 Text(
                   "  $countryValue",
-                  style: TextStyle(color: Colors.black87, fontSize: 16),
+                  style: TextStyle(fontSize: 16),
                 )
               ]),
               onPressed: () {
                 showCountryPicker(
                   context: context,
-
                   showPhoneCode:
                       false, // optional. Shows phone code before the country name.
                   onSelect: (Country country) {
