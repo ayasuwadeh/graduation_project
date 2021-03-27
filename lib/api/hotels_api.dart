@@ -7,7 +7,7 @@ class HotelApi{
 
   Future<List<Hotel>> fetchAllHotels() async{
     // TODO make location dynamic
-    String allMarkets = ApiUtil.ALL_HOTELS('40.7099', '-73.9622');
+    String allMarkets = ApiUtil.ALL_HOTELS('48.85177', '2.22139');
 
     var response = await http.get(allMarkets);
 

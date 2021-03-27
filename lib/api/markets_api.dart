@@ -6,7 +6,7 @@ import 'api_util.dart';
 class MarketsApi{
   Future<List<Market>> fetchAllMarkets() async{
     // TODO make location dynamic
-    String allMarkets = ApiUtil.ALL_MARKETS('40.7099', '-73.9622');
+    String allMarkets = ApiUtil.ALL_MARKETS('48.85177', '2.22139');
 
     //print(allMalls);
     var response = await http.get(allMarkets);

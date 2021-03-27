@@ -71,18 +71,36 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(Icons.bookmark_border,size: 35,),
-          onPressed: () {},
+        leading: Container(
+        //  margin: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+
+              color: kPrimaryColor.withAlpha(100),
+              shape: BoxShape.circle
+          ),
+
+          child: IconButton(
+            icon: Icon(Icons.bookmark_border,size: 35,),
+            onPressed: () {},
+          ),
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.close, size: 35,),
+          Container(
+          //  margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
 
-            onPressed: () {
-              Navigator.pop(context);
+                color: kPrimaryColor.withAlpha(100),
+                shape: BoxShape.circle
+            ),
 
-            },
+            child: IconButton(
+              icon: Icon(Icons.close, size: 35,),
+
+              onPressed: () {
+                Navigator.pop(context);
+
+              },
+            ),
           )
         ],
       ),

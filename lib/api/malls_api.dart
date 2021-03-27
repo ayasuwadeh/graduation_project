@@ -6,7 +6,7 @@ import 'api_util.dart';
 class MallsApi{
   Future<List<ShoppingMall>> fetchAllMalls() async{
     // TODO make location dynamic
-    String allMalls = ApiUtil.ALL_MALLS('40.7099', '-73.9622');
+    String allMalls = ApiUtil.ALL_MALLS('48.85177', '2.22139');
 
     //print(allMalls);
     var response = await http.get(allMalls);
