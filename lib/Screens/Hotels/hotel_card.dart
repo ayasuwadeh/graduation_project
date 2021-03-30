@@ -44,10 +44,11 @@ class HotelCard extends StatelessWidget {
                           return Error(errorText: snapshot.error.toString());
                           break;
                         } else if (snapshot.hasData) {
-                          return MapScreen(details: snapshot.data,
+                         { print(snapshot.data);
+                           return MapScreen(details: snapshot.data,
                           item: hotel,);
                           break;
-                        }
+                        }}
                     }
                     return Container();
                   }

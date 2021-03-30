@@ -1,8 +1,8 @@
 class Location{
   String address;
   String crossStreet;
-  String lat;
-  String lan;
+  double lat;
+  double lan;
   String distance;
   String city;
   String country;
@@ -13,8 +13,8 @@ class Location{
 
   Location.fromJson(Map<String, dynamic> jsonObject){
     this.address = jsonObject['address'].toString();
-    this.lat = jsonObject['lat'].toString();
-    this.lan = jsonObject['lan'].toString();
+    this.lat = jsonObject['lat'];
+    this.lan = jsonObject['lng'];
     this.distance = jsonObject['distance'].toString();
     this.city = jsonObject['city'].toString();
     this.country = jsonObject['country'].toString();

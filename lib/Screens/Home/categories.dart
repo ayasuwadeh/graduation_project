@@ -128,7 +128,7 @@ class Categories extends StatelessWidget {
                                 }
                               }
                           }
-                          return Container();
+                          return Container(color: Colors.white,);
                         }
                     );
                   }));

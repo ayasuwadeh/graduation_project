@@ -3,16 +3,65 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/Details/widget/panel_widget.dart';
 import 'package:graduation_project/components/bottom_navigation_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:graduation_project/Screens/Details/places.dart';
+import 'package:graduation_project/components/loading.dart';
+import 'package:graduation_project/components/error.dart';
+import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/api/places_api.dart';
+import 'package:graduation_project/models/place_details.dart';
+import 'package:graduation_project/models/gallary.dart';
+class PlaceWidget extends StatelessWidget {
+  Gallery place;
+  PlaceWidget(this.place);
+  PlaceDetails placeDetails;
+  PlaceDetailsApi placeDetailsApi = PlaceDetailsApi();
 
+  @override
+  Widget build(BuildContext context) {
+    return  FutureBuilder(
+          future: placeDetailsApi.fetchDetails(place.id),
+          builder: (BuildContext context,
+              AsyncSnapshot snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.active:
+                return Loading();
+                break;
+              case ConnectionState.waiting:
+                return Loading();
+                break;
+              case ConnectionState.none:
+                return Error(errorText: 'No Internet Connection');
+                break;
+              case ConnectionState.done:
+                if (snapshot.hasError) {
+                  return Error(errorText: snapshot.error
+                      .toString());
+                  break;
+                }
+                else if (snapshot.hasData) {
+                  {print(snapshot.data);
+                  placeDetails=snapshot.data;
+                  print("kkkk");
+                  return MainPage(placeDetails,place);
+                  }
+                }
+            }
+            return Container(color: Colors.white,);
+          }
+      );
+
+  }
+}
 
 class MainPage extends StatefulWidget {
+  PlaceDetails placeDetails;
+  Gallery gallery;
+  MainPage(this.placeDetails,this.gallery);
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  final place = places;
+ // final place = widget.placeDetails;
   final panelController = PanelController();
 
   @override
@@ -38,7 +87,8 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       body: SlidingUpPanel(
-        maxHeight: 340,
+        backdropColor: Colors.transparent,
+        maxHeight: 400,
         minHeight: 150,
         parallaxEnabled: true,
         parallaxOffset: 0.5,
@@ -54,15 +104,17 @@ class _MainPageState extends State<MainPage> {
                 dotVerticalPadding: 220,
                 dotBgColor: Colors.transparent,
                 autoplayDuration: Duration(seconds: 12),
-                images: [Image.asset('assets/images/china.jpg', fit: BoxFit.cover),
-                  Image.asset('assets/images/piza.jpg', fit: BoxFit.cover,)
-                ],
+                images: widget.placeDetails.images[0]!='not found'?
+                widget.placeDetails.images.map((e)
+                => NetworkImage(e)).toList():
+                [NetworkImage('https://piotrkowalski.pw/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png')],
               ),
             )
           ],
         ),
         panelBuilder: (ScrollController scrollController)=>PanelWidget(
-          place: place[0],
+          gallery: widget.gallery,
+          place: widget.placeDetails,
           onClickedPanel: panelController.open,
 
         ),

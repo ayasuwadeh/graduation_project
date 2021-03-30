@@ -12,6 +12,7 @@ import 'models/user.dart';
 
 void main() {
   runApp(
+
       MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => AuthProvider()),
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       home: Scaffold(
-        body: FutureBuilder(
+        body:
+        FutureBuilder(
           future: getUserData(),
           builder: (context, snapshot){
             switch(snapshot.connectionState){
