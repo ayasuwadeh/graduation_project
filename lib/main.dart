@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
                   return MainSplash();
                 else if(snapshot.data.token != null){
                   //UserPreferences().removeUser();
-                  //print('token ' +  snapshot.data.token);
+                  print('token ' +  snapshot.data.token);
                   Provider.of<UserProvider>(context, listen: false).setUser(user: snapshot.data, notify: false);
                   Provider.of<StatusProvider>(context, listen: false).setStatus(status: true, notify: false);
                   return HomeScreen();

@@ -25,7 +25,7 @@ class _UnderlinedPasswordFieldState extends State<UnderlinedPasswordField> {
           obscureText: _isHidden,
           validator: widget.validator,
           onSaved: widget.onSaved,
-          onChanged: widget.onSaved,
+          onChanged: widget.onChanged,
           decoration: InputDecoration(
             errorStyle: TextStyle(
                 fontWeight: FontWeight.bold,

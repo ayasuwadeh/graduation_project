@@ -2,19 +2,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:graduation_project/models/user.dart';
 
 class UserPreferences {
-  Future<bool> saveUser(User user, String token) async {
+  Future<bool> saveUser(User user) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-   // SharedPreferences.setMockInitialValues({});
 
     prefs.setInt("userId", user.id);
     prefs.setString("name", user.name);
     prefs.setString("email", user.email);
-    prefs.setString("token", token);
     if(user.birthday != null) prefs.setString("birthday", user.birthday.toString());
     if(user.country != null) prefs.setString("country", user.country);
 
     return prefs.commit();
   }
+
+  Future<bool> saveToken(String token) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("token", token);
+    return prefs.commit();
+  }
+
+
+
 
   Future<User> getUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,7 +41,7 @@ class UserPreferences {
         email: email,
         token: token,
         country: country,
-        //birthday: DateTime(int.parse(birthday))
+        birthday: DateTime.parse(birthday)
     );
   }
 

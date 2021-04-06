@@ -22,7 +22,6 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> with AutomaticKeepAliveClientMixin {
   String countryValue = "Select Your Country";
-  String countryValue1 = "Select Your Country";
   final focusNode = FocusNode();
 
   @override
