@@ -6,30 +6,27 @@ import 'package:graduation_project/constants.dart';
 class UnderlinedTextFormField extends StatelessWidget {
   final String text;
   final IconData icon;
-  final bool autoFocus;
   final Function onSaved;
   final Function validator;
 
   const UnderlinedTextFormField({Key key,
-    this.text,
     this.icon = Icons.person,
     this.onSaved,
     this.validator,
-    this.autoFocus = false,
-
+    this.text,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        onSaved: onSaved,
-        validator: validator,
-        autofocus: autoFocus,
         initialValue: text,
+        validator: validator,
+        onSaved: onSaved,
         decoration: InputDecoration(
           errorStyle: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 15
+            fontSize: 16
           ),
           prefixIcon: Icon(
             icon,

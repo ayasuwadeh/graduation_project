@@ -100,6 +100,9 @@ class _LoginFormState extends State<LoginForm> {
         User user = response['user'];
         Provider.of<UserProvider>(context, listen: false).setUser(user: user);
         Provider.of<StatusProvider>(context, listen: false).setStatus(status: true);
+       // Provider.of<UserProvider>(context, listen: false).setUserCountry(country: user.country);
+        //Provider.of<UserProvider>(context, listen: false).setUserBirthday(birthday: user.birthday);
+
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomeScreen();
         }));

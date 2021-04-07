@@ -48,9 +48,11 @@ class AuthProvider extends ChangeNotifier {
 
       var userData = responseData['data']['user'];
       var token = responseData['data']['token'];
-      //print(token);
+      print(token);
       User authUser = User.fromJson(userData);
-      UserPreferences().saveUser(authUser, token);
+      print(authUser.birthday);
+      UserPreferences().saveUser(authUser);
+      UserPreferences().saveToken(token);
       UserPreferences().setStatusLogIn();
       _loggedInStatus = Status.LoggedIn;
       notifyListeners();
@@ -73,7 +75,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>> logout() async{
 
-    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeadersForLogout(token));
+    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeaders(token));
     var response = await headers.then((value) => http.post(ApiUtil.logout, headers: value));
 
     var result;
@@ -120,7 +122,8 @@ class AuthProvider extends ChangeNotifier {
       var token = responseData['data']['token'];
 
       User authUser = User.fromJson(userData);
-      UserPreferences().saveUser(authUser, token);
+      UserPreferences().saveUser(authUser);
+      UserPreferences().saveToken(token);
       UserPreferences().setStatusLogIn();
 
       _registeredInStatus = Status.Registered;
@@ -145,12 +148,138 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
-  Map<String, String> getHeadersForLogout(String token) {
+  Map<String, String> getHeaders(String token) {
     Map<String, String> headers = {
       'accept': 'application/json',
       'Authorization': 'Bearer $token'
     };
     return headers;
+  }
+
+  Future<Map<String, dynamic>> sendCountryAndBirthday(String country, DateTime birthday) async{
+    Map<String, dynamic> data = {
+      'country': country,
+      'birthday': birthday.toString()
+    };
+
+    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeaders(token));
+    var response = await headers.then((value) => http.post(ApiUtil.countryAndBirthday, headers: value, body: data));
+
+    if(response.statusCode == 200){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      var country = responseData['data']['country'];
+      var birthday = responseData['data']['birthday'];
+      UserPreferences().setCountry(country);
+      UserPreferences().setBirthday(birthday);
+      Map<String, dynamic> data ={
+        'status': 'success',
+      };
+      return data;
+    }else{
+      Map<String, dynamic> data ={
+        'status': 'failure',
+      };
+      return data;
+    }
+  }
+
+  Future<Map<String, dynamic>> editInfo({String name, String country, String birthday}) async{
+    Map<String, dynamic> data = {
+      'name': name,
+      'country': country,
+      'birthday': birthday
+    };
+
+    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeaders(token));
+    var response = await headers.then((value) => http.post(ApiUtil.editInfo + '?_method=put', headers: value, body: data ));
+    var result;
+
+    if(response.statusCode == 200){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      var user = responseData['data']['user'];
+      User authUser = User.fromJson(user);
+      UserPreferences().saveUser(authUser);
+      result = {
+        'status': true,
+        'message': 'Successfully changed info',
+        'user': authUser
+      };
+
+    }else {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = {
+        'status': false,
+        'message': 'Failed',
+        'error': responseData['errors'].toString()
+      };
+    }
+    return result;
+  }
+
+  Future<Map<String, dynamic>> changeEmail({String email}) async{
+    Map<String, dynamic> data = {
+      'email': email,
+    };
+
+    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeaders(token));
+    var response = await headers.then((value) => http.post(ApiUtil.changeEmail + '?_method=put', headers: value, body: data ));
+    var result;
+
+    if(response.statusCode == 200){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      var user = responseData['data']['user'];
+      User authUser = User.fromJson(user);
+      UserPreferences().saveUser(authUser);
+
+      result = {
+        'status': true,
+        'message': 'Successfully changed info',
+        'user': authUser
+      };
+
+    }else {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = {
+        'status': false,
+        'message': 'Failed',
+        'error': responseData['errors'].toString()
+      };
+    }
+    return result;
+  }
+
+  Future<Map<String, dynamic>> changePassword({String currentPassword, String newPassword, String newPasswordConfirmation}) async{
+    Map<String, dynamic> data = {
+      'current_password': currentPassword,
+      'new_password': newPassword,
+      'new_password_confirmation': newPasswordConfirmation
+    };
+
+    Future<Map<String, String>> headers = UserPreferences().getToken().then((token) => getHeaders(token));
+    var response = await headers.then((value) => http.post(ApiUtil.changePassword , headers: value, body: data ));
+    var result;
+
+    if(response.statusCode == 200){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      var user = responseData['data']['user'];
+      User authUser = User.fromJson(user);
+      UserPreferences().saveUser(authUser);
+
+      result = {
+        'status': true,
+        'message': 'Successfully changed info',
+        'user': authUser
+      };
+
+    }else {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = {
+        'status': false,
+        'message': 'Failed',
+        'error': responseData['errors'].toString()
+      };
+    }
+    return result;
   }
 
 }

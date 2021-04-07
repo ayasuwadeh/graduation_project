@@ -6,8 +6,9 @@ import 'package:flutter_holo_date_picker/widget/date_picker_widget.dart';
 
 class DateSelector extends StatefulWidget {
   final DateTime initialDate;
+  final Function onSaved;
 
-  const DateSelector({Key key, this.initialDate}) : super(key: key);
+  const DateSelector({Key key, this.initialDate, this.onSaved}) : super(key: key);
   @override
   _DateSelectorState createState() => _DateSelectorState();
 }
@@ -39,7 +40,7 @@ class _DateSelectorState extends State<DateSelector> {
             locale: DatePicker.localeFromString('en'),
             onChange: (DateTime newDate, _) {
               _selectedDate = newDate;
-//print(_selectedDate.toString());
+              widget.onSaved(_selectedDate);
             },
             pickerTheme: DateTimePickerTheme(
               itemTextStyle: TextStyle(color: Colors.black, fontSize: 19),

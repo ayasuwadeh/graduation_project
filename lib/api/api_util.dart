@@ -13,6 +13,11 @@ class ApiUtil{
   static const String login = MAIN_API_UTIL + '/auth/login';
   static const String signUp = MAIN_API_UTIL + '/auth/register';
   static const String logout = MAIN_API_UTIL + '/auth/logout';
+  static const String countryAndBirthday = MAIN_API_UTIL + '/user';
+  static const String editInfo = MAIN_API_UTIL + '/user/edit';
+  static const String changeEmail = MAIN_API_UTIL + '/user/editEmail';
+  static const String changePassword = MAIN_API_UTIL + '/user/change-password';
+
 
 
   // FOR foursqaure requests
