@@ -17,6 +17,7 @@ class AdventureCard extends StatelessWidget {
           height: 250,
           width: 150,
           child: ClipRRect(
+
             borderRadius: BorderRadius.circular(20),
             child: Stack(
               children: <Widget>[
@@ -27,13 +28,15 @@ class AdventureCard extends StatelessWidget {
                 Positioned.fill(
                     child: Container(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                        Color(0x19232121).withOpacity(0.9),//0.4
-                        Color(0xFF343434).withOpacity(0.2)//0.15
-                      ])),
+                    color: Colors.black45.withAlpha(420)
+                      // gradient: LinearGradient(
+                      //     begin: Alignment.topCenter,
+                      //     end: Alignment.bottomCenter,
+                      //     colors: [
+                      //   Color(0x19232121).withOpacity(0.9),//0.4
+                      //   Color(0xFF343434).withOpacity(0.2)//0.15
+                      // ])
+                  ),
                 )),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),

@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:graduation_project/api/api_util.dart';
 class MapSample extends StatefulWidget {
-  final Gallery gallery;
+  final  gallery;
 
   const MapSample({Key key, this.gallery}) : super(key: key);
   @override
@@ -25,6 +25,7 @@ class MapSampleState extends State<MapSample> {
 
   @override
   void initState() {
+    print(widget.gallery.location.lat);
     getLocation();
     _setInitialMarker();
     super.initState();

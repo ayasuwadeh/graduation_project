@@ -26,6 +26,8 @@ dependencies:
   flutter_svg: ^0.18.0
   google_fonts: ^1.1.2
   flutter_swiper: ^1.1.6
+  #background_location: ^0.3.0
+  #flutter_background_geolocation: '^1.9.0'
   flutter_spinkit: ^4.1.2+1
   sliding_up_panel: ^1.0.2
   flutter_rating_bar: ^3.2.0+1

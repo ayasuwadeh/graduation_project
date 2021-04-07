@@ -46,6 +46,7 @@ class _LiveMapState extends State<LiveMap> {
 
   @override
   void initState() {
+
     _setInitialMarker(geoService.getInitialLocation());
 
     super.initState();
@@ -117,6 +118,7 @@ class _LiveMapState extends State<LiveMap> {
   }
 
   Future<void> centerScreen(Position position) async {
+
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(position.latitude, position.longitude), zoom: 18.0)));
@@ -142,6 +144,7 @@ class _LiveMapState extends State<LiveMap> {
   }
 
   void _setInitialMarker(Future<Position> initialLocation) async {
+
     // Start Location Marker
     startMarker = Marker(
       markerId: MarkerId('start'),

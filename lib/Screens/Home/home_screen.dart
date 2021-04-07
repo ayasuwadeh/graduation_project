@@ -11,8 +11,8 @@ import 'adventure_cards.dart';
 import 'categories.dart';
 import 'package:graduation_project/Screens/OCRfeature/main.dart';
 import 'Drawer.dart';
-
-
+import 'package:graduation_project/api/rests_recommendation.dart';
+import 'dart:convert';
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -20,8 +20,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey <ScaffoldState> _scaffoldState=GlobalKey <ScaffoldState>();
+  String url='';
+  String data='';
+  String back='hi';
+  RestsRecommendationApi recApi=RestsRecommendationApi();
+   @override
+  void initState() {
+     //getRec();
 
-
+     super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -101,13 +109,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(height: 30),
                   PlacesCards(),
                   SizedBox(height: 30,),
-                  RestaurantsCards()
+                  Restaurants(),
+                 // FlatButton(child: Text("press"),onPressed: getRec,),
+                  //Text(back)
                 ],
               ),
             )),
 
       );
   }
+
+  // void getRec() async{
+  //    print("heree");
+  //    data=await recApi.getData();
+  //    //var decodeData=jsonDecode(data);data
+  // }
 
 
 }
