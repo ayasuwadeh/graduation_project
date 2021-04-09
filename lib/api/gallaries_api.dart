@@ -8,26 +8,27 @@ class GalleryApi{
   Future<List<Gallery>> fetchAllGalleries(int index) async{
     //TODO : make location dynamic
     String allGalleries ='';
+
     switch (index)
     {
       case 0:
-        {allGalleries=ApiUtil.GALLARIES('40.7099', '-73.9622');
+        {allGalleries=ApiUtil.GALLARIES('48.85177', '2.22139');
         }
         break;
       case 1:
-        {allGalleries=ApiUtil.ZOOS('40.7099', '-73.9622');
+        {allGalleries=ApiUtil.ZOOS('48.85177', '2.22139');
         }
         break;
       case 2:
-        {allGalleries=ApiUtil.PARKS('40.7099', '-73.9622');
+        {allGalleries=ApiUtil.PARKS('48.85177', '2.22139');
         }
         break;
       case 3:
-        {allGalleries=ApiUtil.MUSEUM('40.7099', '-73.9622');
+        {allGalleries=ApiUtil.MUSEUM('48.85177', '2.22139');
         }
         break;
       case 4:
-        {allGalleries=ApiUtil.BEACH('40.7099', '-73.9622');
+        {allGalleries=ApiUtil.BEACH('48.85177', '2.22139');
         }
         break;
 

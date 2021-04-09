@@ -30,9 +30,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Container(
       decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.all(
-        Radius.circular(10),
-      ),
+      // borderRadius: BorderRadius.all(
+      //   Radius.circular(10),
+      // ),
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.5),
@@ -132,6 +132,7 @@ class BottomNavItem extends StatelessWidget {
         children: <Widget>[
           Icon(
             icon,
+            size: 30,
             color: isActive ? kPrimaryColor : Colors.black54,
           ),
           Text(

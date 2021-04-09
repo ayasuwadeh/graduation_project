@@ -4,10 +4,10 @@ import 'package:graduation_project/models/place_details.dart';
 
 class StatsWidget extends StatelessWidget {
   final double rate;
-
+  final double size;
    StatsWidget({
     @required this.rate,
-    Key key,
+    Key key, this.size,
   }) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class StatsWidget extends StatelessWidget {
           Icons.star_rate,
             color: Colors.amber,
 
-            size:36,
+            size:30,
         ),
       );
     }
@@ -43,7 +43,7 @@ class StatsWidget extends StatelessWidget {
         Icon(
           Icons.star_half,
           color: Colors.amber,
-          size:36,
+          size:30,
         ),
       );
         i++;
@@ -54,7 +54,7 @@ class StatsWidget extends StatelessWidget {
         Icon(
           Icons.star_rate,
           color: Colors.amber,
-          size:36,
+          size:30,
         ),
       );
       i++;
@@ -65,7 +65,7 @@ class StatsWidget extends StatelessWidget {
         Icon(
           Icons.star_outline,
           color: Colors.amber,
-          size:36,
+          size:30,
         ),
       );
     }
@@ -80,7 +80,7 @@ class StatsWidget extends StatelessWidget {
         Icon(
           Icons.star_outline,
           color: Colors.grey,
-          size:36,
+          size:30,
         ),
       );
     }

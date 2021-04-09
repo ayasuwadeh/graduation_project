@@ -3,6 +3,7 @@ import 'package:graduation_project/Screens/Home/selection_title.dart';
 import 'package:graduation_project/components/adventure_card.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/adventures/gallery/galleries.dart';
+import 'grid_adventure.dart';
 class AdventuresCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,7 +11,14 @@ class AdventuresCards extends StatelessWidget {
       children: <Widget>[
         SelectionTitle(
           text: "Adventures near you",
-          press: () {},
+          press: () {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context){
+                  return GridAdventures('Adventures');
+                }
+            ));
+
+          },
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,

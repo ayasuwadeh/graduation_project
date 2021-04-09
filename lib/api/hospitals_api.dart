@@ -7,7 +7,7 @@ class HospitalApi{
 
   Future<List<Hospital>> fetchAllHospitals() async{
     //TODO : make location dynamic
-    String allHospitals = ApiUtil.ALL_HOSPITALS('40.7099', '-73.9622');
+    String allHospitals = ApiUtil.ALL_HOSPITALS('48.85177', '2.22139');
 
     //print(allHospitals);
     var response = await http.get(allHospitals);

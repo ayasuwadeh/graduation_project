@@ -1,24 +1,24 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Details/widget/panel_widget.dart';
+import 'package:graduation_project/Screens/rest_details/widget/panel_widget.dart';
 import 'package:graduation_project/components/bottom_navigation_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/api/places_api.dart';
-import 'package:graduation_project/models/place_details.dart';
-import 'package:graduation_project/models/gallary.dart';
+import 'package:graduation_project/api/restaurant_inner.dart';
+import 'package:graduation_project/models/restaurant.dart';
+import 'package:graduation_project/models/inner_restaurant.dart';
 class PlaceWidget extends StatelessWidget {
-  Gallery place;
-  PlaceWidget(this.place);
-  PlaceDetails placeDetails;
-  PlaceDetailsApi placeDetailsApi = PlaceDetailsApi();
+  Restaurant restaurant;
+  PlaceWidget(this.restaurant);
+  InnerRest innerRest;
+  RestInnerDetails restInnerDetailsApi = RestInnerDetails();
 
   @override
   Widget build(BuildContext context) {
     return  FutureBuilder(
-          future: placeDetailsApi.fetchDetails(place.id),
+          future: restInnerDetailsApi.fetchMoreDetails(restaurant.googleID),
           builder: (BuildContext context,
               AsyncSnapshot snapshot) {
             switch (snapshot.connectionState) {
@@ -39,9 +39,9 @@ class PlaceWidget extends StatelessWidget {
                 }
                 else if (snapshot.hasData) {
                   {print(snapshot.data);
-                  placeDetails=snapshot.data;
-                  print("kkkk");
-                  return MainPage(placeDetails,place);
+                  innerRest=snapshot.data;
+                  //print("kkkk");
+                  return MainPage(innerRest,restaurant);
                   }
                 }
             }
@@ -53,9 +53,9 @@ class PlaceWidget extends StatelessWidget {
 }
 
 class MainPage extends StatefulWidget {
-  PlaceDetails placeDetails;
-  Gallery gallery;
-  MainPage(this.placeDetails,this.gallery);
+  InnerRest innerRest;
+  Restaurant restaurant;
+  MainPage(this.innerRest,this.restaurant);
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -72,49 +72,13 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        // leading: Column(
-        //   children: [
-        //     Container(
-        //     //  margin: EdgeInsets.all(10),
-        //       decoration: BoxDecoration(
-        //
-        //           color: kPrimaryColor.withAlpha(100),
-        //           shape: BoxShape.circle
-        //       ),
-        //
-        //       child: IconButton(
-        //         icon: Icon(Icons.bookmark_border,size: 35,),
-        //         onPressed: () {},
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // actions: [
-        //   Container(
-        //   //  margin: EdgeInsets.all(10),
-        //     decoration: BoxDecoration(
-        //
-        //         color: kPrimaryColor.withAlpha(100),
-        //         shape: BoxShape.circle
-        //     ),
-        //
-        //     child: IconButton(
-        //       icon: Icon(Icons.close, size: 35,),
-        //
-        //       onPressed: () {
-        //         Navigator.pop(context);
-        //
-        //       },
-        //     ),
-        //   )
-        // ],
       ),
       body: Stack(
         children: [
           SlidingUpPanel(
             backdropColor: Colors.transparent,
             maxHeight: 400,
-            minHeight: 150,
+            minHeight: 250,
             parallaxEnabled: true,
             parallaxOffset: 0.5,
             controller: panelController,
@@ -122,24 +86,24 @@ class _MainPageState extends State<MainPage> {
 
             body:PageView(
               children: [
-                SizedBox(height: 480,
+                SizedBox(height: 200,
                   width: double.infinity,
                   child: Carousel(
                     dotSize: 5,
-                    dotVerticalPadding: 220,
+                    dotVerticalPadding: 320,
                     dotBgColor: Colors.transparent,
                     autoplayDuration: Duration(seconds: 12),
-                    images: widget.placeDetails.images[0]!='not found'?
-                    widget.placeDetails.images.map((e)
-                    => NetworkImage(e)).toList():
+                    images: widget.innerRest.imageReferences!=null?
+                    widget.innerRest.imageReferences.map((e)
+                    => Image.network(e,fit: BoxFit.fill,)).toList():
                     [NetworkImage('https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg')],
                   ),
                 )
               ],
             ),
             panelBuilder: (ScrollController scrollController)=>PanelWidget(
-              gallery: widget.gallery,
-              place: widget.placeDetails,
+              restaurant: widget.restaurant,
+              innerRest: widget.innerRest,
               onClickedPanel: panelController.open,
 
             ),
