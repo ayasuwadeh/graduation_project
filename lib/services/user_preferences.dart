@@ -20,9 +20,6 @@ class UserPreferences {
     return prefs.commit();
   }
 
-
-
-
   Future<User> getUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -32,7 +29,6 @@ class UserPreferences {
     String token = prefs.getString("token");
     String country = prefs.containsKey('country')? prefs.getString('country'): 'Select Your Country';
     String birthday = prefs.containsKey('birthday')? prefs.getString('birthday'): DateTime.now().toString();
-
     //print('userId: ' + userId.toString() + ' name: ' + name + ' email: ' + email + ' token: ' + token);
 
     return User(
@@ -89,4 +85,24 @@ class UserPreferences {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('Status');
   }
+
+  Future<bool> saveCuisines(List<String> cuisines) async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('cuisines', cuisines);
+    return prefs.commit();
+  }
+
+  Future<bool> saveCultures(List<String> cultures) async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('cultures', cultures);
+    return prefs.commit();
+  }
+
+  Future<bool> saveNatures(List<String> natures) async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('natures', natures);
+    return prefs.commit();
+  }
+
+
 }

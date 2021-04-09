@@ -108,12 +108,12 @@ class _EditInterestsState extends State<EditInterests> {
                         runSpacing: 15, // gap between lines
                         children: [
                           CardN("What types of cuisines do like? ",
-                              foods.map((title) => Choice(title)).toList()),
+                              foods.map((title) => Choice(innerText: title)).toList()),
                           CardN("What types of sights do like? ",
-                              sights.map((title) => Choice(title)).toList()),
+                              sights.map((title) => Choice(innerText: title)).toList()),
 
                           CardN("What types of civilisations do like? ",
-                              civils.map((title) => Choice(title)).toList()),
+                              civils.map((title) => Choice(innerText: title)).toList()),
                         ]),
                   ),
 

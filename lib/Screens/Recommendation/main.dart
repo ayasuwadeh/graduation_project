@@ -155,11 +155,11 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
     return Column(
       children: [
         CardN("What types of sights do like? ",
-            natureTitles.map((title) => Choice(title)).toList()),
+            natureTitles.map((title) => Choice(innerText: title, type: 'nature',)).toList()),
         CardN("What types of cuisines do like? ",
-            cuisineTitles.map((title) => Choice(title)).toList()),
+            cuisineTitles.map((title) => Choice(innerText: title,type: 'cuisine',)).toList()),
         CardN("What types of cultures do like? ",
-            culturesTitles.map((title) => Choice(title)).toList()),
+            culturesTitles.map((title) => Choice(innerText: title, type: 'culture',)).toList()),
       ],
     );
   }
