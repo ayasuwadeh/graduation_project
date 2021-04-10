@@ -4,19 +4,19 @@ import 'package:graduation_project/components/place_card.dart';
 import 'restaurant_card.dart';
 import '../../constants.dart';
 import 'package:graduation_project/models/restaurant.dart';
-import 'package:graduation_project/api/rests_recommendation.dart';
+import 'package:graduation_project/api/restaurant_recommendation.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/components/error.dart';
 import 'package:flutter/material.dart';
 class Restaurants extends StatelessWidget {
-  List<Restaurant> galleries= new List<Restaurant>();
+  List<Restaurant> restaurants= new List<Restaurant>();
 
-  RestsRecommendationApi galleryApi = RestsRecommendationApi();
+  RestsRecommendationApi restApi = RestsRecommendationApi();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: galleryApi.getData(),
+        future: restApi.getData(),
         builder: (BuildContext context,
             AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
@@ -37,9 +37,9 @@ class Restaurants extends StatelessWidget {
               }
               else if (snapshot.hasData) {
                 {print(snapshot.data);
-                galleries=snapshot.data;
+                restaurants=snapshot.data;
                // galleries.sort((a, b) => a.location.distance.compareTo(b.location.distance));
-                return RestaurantsCards(galleries);
+                return RestaurantsCards(restaurants);
                 }
               }
           }
@@ -51,8 +51,8 @@ class Restaurants extends StatelessWidget {
 
 
 class RestaurantsCards extends StatefulWidget {
-  List<Restaurant> galleries= new List<Restaurant>();
-  RestaurantsCards(this.galleries);
+  List<Restaurant> restaurants= new List<Restaurant>();
+  RestaurantsCards(this.restaurants);
 
   @override
   _RestaurantsCardsState createState() => _RestaurantsCardsState();
@@ -74,8 +74,8 @@ class _RestaurantsCardsState extends State<RestaurantsCards> {
           scrollDirection: Axis.horizontal,
           child: Row(
              children: [
-               for(int i=0;i<widget.galleries.length;i++)
-                     widget.galleries[i].location.lat!=-0.0?RestCard(widget.galleries[i])
+               for(int i=0;i<widget.restaurants.length;i++)
+                     widget.restaurants[i].location.lat!=-0.0?RestCard(widget.restaurants[i])
                          :Container()
 
              ],

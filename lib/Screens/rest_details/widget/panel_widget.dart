@@ -83,21 +83,21 @@ class PanelWidget extends StatelessWidget {
     children: [
       Text(//TODO:redesign this section & if a restaurant not found to delete & doing see more with search
         restaurant.cus,
-        style: TextStyle(fontStyle: FontStyle.italic,fontSize: 18),
+        style: TextStyle(fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,fontSize: 18),
       ),
       SizedBox(height: 10),
       Text('_________'),
       SizedBox(height: 7),
-      Text(innerRest.isOpen?"Opened":"Closed",style: TextStyle(fontSize: 18,color:innerRest.isOpen?Colors.green:Colors.red ),),
-      SizedBox(height: 10),
+      Text(innerRest.isOpen?"Opened":"Closed",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color:innerRest.isOpen?Colors.green:Colors.red ),),
+      SizedBox(height: 7),
       Text('_________'),
       innerRest.priceLevel!=-1?
       Text(innerRest.priceLevel==0?"Free":
       innerRest.priceLevel==1? "Inexpensive":
       innerRest.priceLevel==2? "Moderate":
       innerRest.priceLevel==3? "Expensive":
-       "Very Expensive"
-      ):Container(),
+       "Very Expensive",style: TextStyle(fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,fontSize: 14),
+      ):Container(height: 9,),
 
 
   SizedBox(height: 12),
@@ -140,7 +140,6 @@ class PanelWidget extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 14,),
         ],
       )
     ],

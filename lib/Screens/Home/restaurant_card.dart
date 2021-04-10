@@ -48,6 +48,9 @@ class _RestCardState extends State<RestCard> {
                     SizedBox(height: size.height*0.02,),
                     Column(
                       children: [
+                        // Container(
+                        //   child: Image.asset("assets/images/rest.jpg"),
+                        // ),
                         Row(children: [
                           Text("     "),
                           Container(

@@ -1,13 +1,13 @@
 import 'package:graduation_project/models/category.dart';
 import 'package:graduation_project/models/rest_details.dart';
-import 'package:graduation_project/api/rest_details_second.dart';
-import 'package:graduation_project/models/rest_location.dart';
+import 'package:graduation_project/api/restaurant_details.dart';
+import 'package:graduation_project/models/general_location.dart';
 class Restaurant{
   String id;
   String name;
   double rating;
   String googleID;
-  RestLocation location=RestLocation(-100,-200);
+  GeneralLocation location=GeneralLocation(-100,-200);
   double score;
   String cus;
   Restaurant(this.id, this.name, );

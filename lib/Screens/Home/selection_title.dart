@@ -22,7 +22,7 @@ class SelectionTitle extends StatelessWidget {
           ),
           InkWell(
             onTap: press,
-            child: Text("See more"),
+            child: Text("See all"),
             borderRadius: BorderRadius.circular(15),
           )
         ],

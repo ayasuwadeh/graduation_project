@@ -7,7 +7,7 @@ class ApiUtilRecommendation{
   static const String MAIN_GOOGLE_REQUEST_RESTAURANT='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.85470813453966, 2.347739392438203&radius=15000&type=restaurant&name=';
   static const String MAIN_DETAILS_REQUEST_GOOGLE='https://maps.googleapis.com/maps/api/place/details/json?place_id=';
   static const String FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/';
-  static const String FLASK_MAIN_REQUEST="http://10.0.2.2:5000/restaurants?keywords=";
+  static const String FLASK_MAIN_REQUEST="http://10.0.2.2:5000/";
   static const String CLIENT_ID = 'client_id=2RPMC1UN4IL12SVLGQPDFUMYWJHBU10MCRR1BDBQPCIVK5MG';
   static const String CLIENT_SECRET = 'client_secret=YEOS2I23JAM05F420R0JHD1XUV5Z2JQXCO5LA1GTCKVNUS22';
   static const String GOOGLE_KEY="AIzaSyD0r9-PDf_iRZH1Kkf6LqyuSnUkw1bJBJ8";
@@ -15,8 +15,13 @@ class ApiUtilRecommendation{
 
 
   static String GET_ALL_RESTAURANTS_RECOMMENDATION(String keywords){
-    return FLASK_MAIN_REQUEST +keywords ;
+    return FLASK_MAIN_REQUEST + 'restaurants?keywords='+ keywords ;
   }
+
+  static String GET_ALL_PLACES_RECOMMENDATION(String keywords){
+    return FLASK_MAIN_REQUEST + 'places?keywords='+ keywords ;
+  }
+
 
   static String GET_GOOGLE_DETAILS(String name){
 
@@ -29,7 +34,7 @@ class ApiUtilRecommendation{
   }
 
   static String ALL_MARKETS(String latitude, String longitude){
-    return MAIN_FOURSQUARE_REQUEST + CLIENT_ID + '&' + CLIENT_SECRET + '&' + V + '&' + 'll=' + latitude + ',' + longitude + '&' + 'intent=checkin&radius=5000&limit=50' + '&' ;
+    return MAIN_FOURSQUARE_REQUEST + CLIENT_ID + '&' + CLIENT_SECRET + '&' + V + '&' + 'll=' + latitude + ',' + longitude + '&' + 'intent=checkin&radius=100000&limit=50' + '&' ;
   }
 
   static String ALL_HOTELS(String latitude, String longitude){

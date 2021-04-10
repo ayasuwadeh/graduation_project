@@ -18,8 +18,8 @@ class RestDetailsSecondApi{
         print(hotelDetails.lat);
       }
       else
-        {hotelDetails.lat=0;
-        hotelDetails.lan=0;
+        {hotelDetails.lat=-100;
+        hotelDetails.lan=-200;
         }
     }
     else print (response.statusCode);
