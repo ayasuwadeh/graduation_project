@@ -4,8 +4,16 @@ import 'package:graduation_project/components/cockatoo_icon.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/components/loading.dart';
 
-class WelcomeCard extends StatelessWidget {
+class WelcomeCard extends StatefulWidget {
+  @override
+  _WelcomeCardState createState() => _WelcomeCardState();
+}
+
+class _WelcomeCardState extends State<WelcomeCard> {
+  bool tapped = false;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -51,7 +59,8 @@ class WelcomeCard extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.all(10),
-                child: RaisedButton(
+                child: tapped? Loading():
+                RaisedButton(
                   padding: EdgeInsets.all(12),
                   textColor: Colors.white,
                   color: Colors.deepOrange,
@@ -60,14 +69,16 @@ class WelcomeCard extends StatelessWidget {
                     style: TextStyle(fontSize: 19),
                   ),
                   onPressed: () {
-                    sendUserDataToDB(context);
+                    setState(() {
+                      tapped = true;
+                    });
+                    sendRequests(context);
                   },
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
                   ),
                 ),
               ),
-
               SizedBox(
                 height: height * 0.01,
               ),
@@ -112,29 +123,44 @@ class WelcomeCard extends StatelessWidget {
     );
   }
 
-  void sendUserDataToDB(BuildContext context) {
-    String country = Provider.of<UserProvider>(context, listen: false).user.country;
-    DateTime birthday = Provider.of<UserProvider>(context, listen: false).user.birthday;
+  void sendRequests(BuildContext context) async {
+    List<String> cuisines =
+        Provider.of<UserProvider>(context, listen: false).cuisines;
+    List<String> cultures =
+        Provider.of<UserProvider>(context, listen: false).cultures;
+    List<String> natures =
+        Provider.of<UserProvider>(context, listen: false).natures;
+    String country =
+        Provider.of<UserProvider>(context, listen: false).user.country;
+    DateTime birthday =
+        Provider.of<UserProvider>(context, listen: false).user.birthday;
 
-    if(country != null && birthday !=null){
-      Future<Map<String, dynamic>> response = Provider.of<AuthProvider>(context, listen: false).sendCountryAndBirthday(country, birthday);
-      response.then((result){
-        if(result['status'] == 'success'){
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-                return HomeScreen();
-              }));
-        }
-        else if(result['status'] == 'failure'){
-          // TODO dialog to tell that error occurred
-        }
-      });
-    }else if(country == null && birthday ==null){
-      // TODO dialog to tell that both are null
-    }else if(country == null){
-      // TODO dialog to tell that country is null
-    }else if(birthday == null){
-      // TODO dialog to tell that birthday is null
+    if(country != null && birthday != null && cuisines != null && cultures != null && natures != null ){
+      final results = await Future.wait([
+        Provider.of<AuthProvider>(context, listen: false).storeCultures(cultures: cultures),
+        Provider.of<AuthProvider>(context, listen: false).storeCuisines(cuisines: cuisines),
+        Provider.of<AuthProvider>(context, listen: false).storeNatures(natures: natures),
+        Provider.of<AuthProvider>(context, listen: false).sendCountryAndBirthday(country, birthday)
+      ]);
+      // success
+      if(results[0]['status'] && results[1]['status'] && results[2]['status'] && results[3]['status'])
+      {
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context){
+              return HomeScreen();
+            }
+        ));
+      }else{
+        // TODO dialog to tell that sth is wrong
+        print('error');
+      }
+
+    }else{
+      // TODO dialog to tell that sth is empty
+      print('sth is empty');
     }
+    setState(() {
+      tapped = false;
+    });
   }
 }

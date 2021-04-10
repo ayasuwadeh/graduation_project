@@ -13,10 +13,14 @@ class ApiUtil{
   static const String login = MAIN_API_UTIL + '/auth/login';
   static const String signUp = MAIN_API_UTIL + '/auth/register';
   static const String logout = MAIN_API_UTIL + '/auth/logout';
-  static const String countryAndBirthday = MAIN_API_UTIL + '/user';
+  static const String countryAndBirthday = MAIN_API_UTIL + '/user/data';
   static const String editInfo = MAIN_API_UTIL + '/user/edit';
   static const String changeEmail = MAIN_API_UTIL + '/user/editEmail';
   static const String changePassword = MAIN_API_UTIL + '/user/change-password';
+  static const String storeCuisines = MAIN_API_UTIL + '/user/cuisines';
+  static const String storeCultures = MAIN_API_UTIL + '/user/cultures';
+  static const String storeNatures = MAIN_API_UTIL + '/user/natures';
+
 
 
 
@@ -38,6 +42,7 @@ class ApiUtil{
   static const String PARK_CATEGORY_ID = 'categoryId=4bf58dd8d48988d163941735';
   static const String BEACH_CATEGORY_ID = 'categoryId=4bf58dd8d48988d1e2941735';
   static const String MUSEUMS_CATEGORY_ID = 'categoryId=4bf58dd8d48988d181941735';
+
 
 
   static String ALL_HOSPITALS(String latitude, String longitude){
