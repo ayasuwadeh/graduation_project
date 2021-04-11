@@ -24,7 +24,7 @@ class RecommendationPlace{
     this.location.lat=jsonObject['lat'];
     this.location.lan=jsonObject['lng'];
     this.address=jsonObject['formatted_address'].toString();
-    this.phoneNumber=jsonObject['phone'].toString();
+    this.phoneNumber='tel:'+jsonObject['phone'].toString();
     this.category=jsonObject['category'];
     this.description=jsonObject['description'];
     this.url=jsonObject['url'];
@@ -32,7 +32,8 @@ class RecommendationPlace{
     if(jsonObject['rate']!=null)
       this.rating=jsonObject['rate'];
     else rating=-1;
-    this.score=jsonObject['score'];
+    if(jsonObject['score']!=null)
+      this.score=jsonObject['score'];
 
   }
 

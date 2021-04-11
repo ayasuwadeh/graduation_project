@@ -3,7 +3,7 @@ import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/models/recommendation_place.dart';
 import 'package:graduation_project/components/stats_widget_comp.dart';
 import 'package:graduation_project/Screens/Map/map_screen.dart';
-import 'package:graduation_project/Screens/rest_details/page/main_page.dart';
+import 'package:graduation_project/Screens/place_details/page/main_page.dart';
 class RestCard extends StatefulWidget {
   RecommendationPlace recommendationPlace;
   RestCard(this.recommendationPlace);
@@ -20,11 +20,11 @@ class _RestCardState extends State<RestCard> {
       child:
       InkWell(
         onTap: (){
-          // Navigator.push(context, MaterialPageRoute(
-          //     builder: (context){
-          //       return PlaceWidget(widget.recommendationPlace);
-          //     }
-          // ));
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context){
+                return PlaceWidget(widget.recommendationPlace);
+              }
+          ));
         },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),

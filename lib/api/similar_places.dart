@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'api_util_recommendation.dart';
 import 'package:graduation_project/models/recommendation_place.dart';
 import 'package:graduation_project/models/rest_details.dart';
-class PlacesRecommendationApi {
-  Future <List<RecommendationPlace>> getData( ) async {
-    String request=ApiUtilRecommendation.GET_ALL_PLACES_RECOMMENDATION('fast food');
+class SimilarPlacesRecommendationApi {
+  Future <List<RecommendationPlace>> getData( String placeId) async {
+    String request=ApiUtilRecommendation.GET_ALL_SIMILAR_PLACES(placeId);
     http.Response response = await http.get(request);
 
     List<RecommendationPlace> places = [];
