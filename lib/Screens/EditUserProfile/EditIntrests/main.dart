@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Recommendation/Choice.dart';
-import 'package:graduation_project/Screens/Recommendation/card.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:graduation_project/components/interests.dart';
+import 'package:provider/provider.dart';
+import 'package:graduation_project/services/user_provider.dart';
+import 'package:graduation_project/services/auth_provider.dart';
 
 class EditInterests extends StatefulWidget {
   EditInterests({Key key, this.title}) : super(key: key);
@@ -13,143 +15,134 @@ class EditInterests extends StatefulWidget {
 }
 
 class _EditInterestsState extends State<EditInterests> {
-  List<String> foods = {
-    "Chinese",
-    "Mexican",
-    "Italian",
-    "Indian",
-    "Japanese",
-   "sushi",
-    "Greek",
-    "French",
-    "Spanish",
-    "Arabian",
-    "Mediterranean",
-
-    "Thai"
-
-  }.toList();
-  List<String> sights = {
-    "Beach",
-    "Desert",
-    "Mountains",
-    "wildlife",
-    "forests",
-    "old cities",
-  }.toList();
-  List<String> civils = {
-    "Canaanites",
-    "Romanians ",
-    "Greeks",
-    "old egyptians",
-    "Japanese",
-    "Islamic culture",
-    "Ottomans"
-  }.toList();
-
-  List<Choice> options;
 
   int id;
-
-
   @override
   Widget build(BuildContext context) {
-    final controller=ScrollController();
     return Scaffold(
-      appBar:  AppBar(
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
           color: Colors.black,
-          onPressed: () {              Navigator.pop(context);
-          },),
+          onPressed: () {
+            discard();
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: Colors.white,
         title: Align(
             alignment: Alignment.topLeft,
-            child:
-            Text("My Interests", style: TextStyle(color: Colors.black87),)
-
-        ),
+            child: Text(
+              "My Interests",
+              style: TextStyle(color: Colors.black87),
+            )),
       ),
       body: SingleChildScrollView(
         child: Container(
-
-
-          child:
-          Container(
-             // margin: EdgeInsets.only(top: 35),
-              child:Column(
+          child: Container(
+              // margin: EdgeInsets.only(top: 35),
+              child: Column(
             children: [
               const SizedBox(height: 26),
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Align(
                   alignment: Alignment.topLeft,
-                  child: Text("Check and uncheck based on your interests",
+                  child: Text(
+                    "Check and uncheck based on your interests",
                     style: GoogleFonts.lobsterTwo(
-                      fontSize: 20, color: Colors.black87
-                  ),),
+                        fontSize: 20, color: Colors.black87),
+                  ),
                 ),
               ),
-              SizedBox(height: 10,),
-              Align(
-              alignment: Alignment(.5,-7),
-              child: Column(
-                children: <Widget>[
-                  // Text(
-                  //
-                  //   'what kinds of foods do you like?',
-                  //   style: TextStyle(fontStyle: FontStyle.normal, fontSize: 18),
-                  //
-                  // ),
-                  Container(
-                    margin: EdgeInsets.all(10.0),
-
-                    child: Wrap(
-                        spacing: 8.0, // gap between adjacent chips
-                        runSpacing: 15, // gap between lines
-                        children: [
-                          CardN("What types of cuisines do like? ",
-                              foods.map((title) => Choice(innerText: title)).toList()),
-                          CardN("What types of sights do like? ",
-                              sights.map((title) => Choice(innerText: title)).toList()),
-
-                          CardN("What types of civilisations do like? ",
-                              civils.map((title) => Choice(innerText: title)).toList()),
-                        ]),
-                  ),
-
-                ],
+              SizedBox(
+                height: 40,
               ),
-            ),
-              SizedBox(height: 40,),
-
+              Interests(save: false,),
+              SizedBox(
+                height: 30,
+              ),
               Padding(
                 padding: EdgeInsets.only(left: 100),
                 child: IntrinsicHeight(
                   child: Row(
                     children: [
-                      FlatButton(onPressed: (){},
-                          child: Text("Discard Changes",style: TextStyle(fontSize: 16),)),
+                      FlatButton(
+                          onPressed: () {
+                            discard();
+                            setState(() {
+                            });
+                          },
+                          child: Text(
+                            "Discard Changes",
+                            style: TextStyle(fontSize: 16),
+                          )),
                       VerticalDivider(
                         thickness: 2,
-                        width: 20,
+                        width: 5,
                         color: Colors.black45,
                       ),
-
-                      FlatButton(onPressed: (){},
-                          child: Text("Save Changes",style: TextStyle(fontSize: 16),)),
-
+                      FlatButton(
+                          onPressed: () {
+                            Provider.of<UserProvider>(context, listen: false).setCuisinesFromTempCuisines();
+                            Provider.of<UserProvider>(context, listen: false).setCulturesFromTempCultures();
+                            Provider.of<UserProvider>(context, listen: false).setNaturesFromTempNatures();
+                            sendRequests(context);
+                          },
+                          child: Text(
+                            "Save Changes",
+                            style: TextStyle(fontSize: 16),
+                          )),
                     ],
                   ),
                 ),
               )
-
-
-            ],)
-          ),
-
-          // This trailing comma makes auto-formatting nicer for build methods.
+            ],
+          )),
         ),
       ),
+    );
+  }
+
+  void sendRequests(BuildContext context) async {
+    List<String> cuisines =
+        Provider.of<UserProvider>(context, listen: false).cuisines;
+    List<String> cultures =
+        Provider.of<UserProvider>(context, listen: false).cultures;
+    List<String> natures =
+        Provider.of<UserProvider>(context, listen: false).natures;
+
+    if(cuisines != null && cultures != null && natures != null ){
+      final results = await Future.wait([
+        Provider.of<AuthProvider>(context, listen: false).storeCultures(cultures: cultures),
+        Provider.of<AuthProvider>(context, listen: false).storeCuisines(cuisines: cuisines),
+        Provider.of<AuthProvider>(context, listen: false).storeNatures(natures: natures),
+      ]);
+      // success
+      if(results[0]['status'] && results[1]['status'] && results[2]['status'])
+      {
+       // TODO dialog to tell user everything is done successfully
+        print('success');
+      }else{
+        // TODO dialog to tell that sth is wrong
+        print('error');
+      }
+    }else{
+      // TODO dialog to tell that sth is empty
+      print('sth is empty');
+    }
+  }
+
+  void discard() {
+    Provider.of<UserProvider>(context, listen: false).tempCuisines.clear();
+    Provider.of<UserProvider>(context, listen: false).tempCultures.clear();
+    Provider.of<UserProvider>(context, listen: false).tempNatures.clear();
+    Provider.of<UserProvider>(context, listen: false).tempCuisines.addAll(
+        Provider.of<UserProvider>(context, listen: false).cuisines);
+    Provider.of<UserProvider>(context, listen: false).tempCultures.addAll(
+        Provider.of<UserProvider>(context, listen: false).cultures);
+    Provider.of<UserProvider>(context, listen: false).tempNatures.addAll(
+        Provider.of<UserProvider>(context, listen: false).natures
     );
   }
 }

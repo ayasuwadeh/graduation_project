@@ -36,7 +36,7 @@ class MainDrawer extends StatelessWidget {
                     return Text(
                       (statusProvider.status != null && statusProvider.status  && userProvider.user != null)
                           ? userProvider.user.name
-                          : "",
+                          : "Name",
                       style: TextStyle(
                         fontSize: 22.0,
                         fontWeight: FontWeight.w800,
@@ -144,6 +144,7 @@ class MainDrawer extends StatelessWidget {
                 .logout();
             result.then((response) => {
               if(response['status']){
+                Provider.of<UserProvider>(context, listen: false).deleteData(),
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return LoginScreen();
                 }))
