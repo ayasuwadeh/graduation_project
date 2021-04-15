@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/place_details/widget/panel_header_widget.dart';
 //import 'package:graduation_project/Screens/Details/widget/stats_widget.dart';
-import 'package:graduation_project/models/inner_restaurant.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:graduation_project/models/recommendation_place.dart';
 import 'package:graduation_project/components/stats_widget_comp.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:graduation_project/constants.dart';
 class PanelWidget extends StatelessWidget {
   final VoidCallback onClickedPanel;
+  final Function onScrolledPanel;
+
   final RecommendationPlace recommendationPlace;
-  const PanelWidget({
+   ScrollController _scrollController = ScrollController();
+
+   PanelWidget({
     @required this.onClickedPanel,
-    Key key, this.recommendationPlace,
+    Key key, this.recommendationPlace, this.onScrolledPanel,
   }) : super(key: key);
 
   @override
@@ -78,12 +82,24 @@ class PanelWidget extends StatelessWidget {
   Widget buildProfileDetails( RecommendationPlace recommendationPlace) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(//TODO:redesign this section & if a restaurant not found to delete & doing see more with search
-        recommendationPlace.description,
-        style: TextStyle(fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,fontSize: 18),
+      
+      Container(
+
+        height: 100,
+        child: FadingEdgeScrollView.fromSingleChildScrollView(
+          gradientFractionOnEnd: 0.5,
+
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Text(//TODO:redesign this section & if a restaurant not found to delete & doing see more with search
+              recommendationPlace.description,
+              style: TextStyle(fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,fontSize: 18),
+            ),
+          ),
+        ),
       ),
       SizedBox(height: 10),
-      Text('_________'),
+      // Text('_________'),
 
 
 

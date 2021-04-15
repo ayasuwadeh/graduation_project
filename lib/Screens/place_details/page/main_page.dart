@@ -1,5 +1,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:graduation_project/Screens/place_details/widget/panel_widget.dart';
 import 'package:graduation_project/components/bottom_navigation_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -64,14 +66,18 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
  // final place = widget.placeDetails;
+  final ScrollController _scrollController = ScrollController();
+  ScrollController controller=ScrollController();
   final panelController = PanelController();
   bool isBooked=false;
   bool isLiked=false;
   bool isSimilarOpened=false;
+  bool isPanelClosedPlaces=false;
 
   @override
   void initState() {
-   // print(widget.similarPlacesList[0].description);
+    controller = ScrollController()..addListener(_scrollListener);
+
     super.initState();
   }
   @override
@@ -114,11 +120,16 @@ class _MainPageState extends State<MainPage> {
                 ],
               ),
             ),
-            panelBuilder: (ScrollController scrollController)=>PanelWidget(
-              recommendationPlace: widget.recommendationPlace,
-              onClickedPanel: panelController.open,
+            panelBuilder: (controller )
+              {ScrollController controllerIn=ScrollController(initialScrollOffset: 0);
+              controllerIn=controller;
+              return PanelWidget(
+                  onScrolledPanel:checkScrolling(controllerIn),
+                  recommendationPlace: widget.recommendationPlace,
+                  onClickedPanel: checkController,
 
-            ),
+                );
+              }
           ),
           Positioned(
             left: 358,
@@ -174,11 +185,12 @@ class _MainPageState extends State<MainPage> {
           Positioned(
             top: 170,
             child: Visibility(
-              visible: isLiked&&isSimilarOpened,
-              child: Container(
+              visible: isLiked&&isSimilarOpened&&!isPanelClosedPlaces,
+              child: AnimatedContainer(
                 color: Colors.transparent,
                 height: 200,
                 width: width,
+                duration: Duration(milliseconds: 200),
                 child: Column(
                   children: [
                     Align(
@@ -187,7 +199,7 @@ class _MainPageState extends State<MainPage> {
                         onPressed: () {
                           _toggleClose();
                         },
-                        icon: Icon(Icons.close,color: Colors.deepOrange, size: 25,),
+                        icon: Icon(Icons.close_rounded,color: Colors.deepOrange, size: 25,),
 
 
                       )
@@ -240,4 +252,23 @@ class _MainPageState extends State<MainPage> {
   }
 
 
+
+  void checkController() {
+    setState(() {
+       panelController.open();
+       isPanelClosedPlaces=!isPanelClosedPlaces;
+    });
+  }
+  void _scrollListener() {
+    if (controller.position.userScrollDirection == ScrollDirection.reverse) {
+      print("hi");
+    }
+    if (controller.position.userScrollDirection == ScrollDirection.forward) {
+      print("hi");
+  }}
+
+   checkScrolling(ScrollController controller) {
+     if (controller.hasClients)
+print("hii scrolling");
+  }
 }

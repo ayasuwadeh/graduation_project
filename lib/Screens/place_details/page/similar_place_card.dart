@@ -34,15 +34,6 @@ class _SimilarPlaceCardState extends State<SimilarPlaceCard> {
           height: height * 0.2,
           margin: EdgeInsets.all(7),
           decoration: BoxDecoration(
-            boxShadow: [
-
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 3,
-                blurRadius: 5,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
             borderRadius: BorderRadius.circular(20),
           ),
           child: Stack(

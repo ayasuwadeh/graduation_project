@@ -121,7 +121,7 @@ class _TextRecognitionWidgetState extends State<TextRecognitionWidget> {
     } else if (Platform.isAndroid && status.isPermanentlyDenied) {
       showLocationIsNeededDialog(false);
     } else {
-      print('cannot use gallery');
+      print(status.toString());
     }
     updateStatus(status);
   }

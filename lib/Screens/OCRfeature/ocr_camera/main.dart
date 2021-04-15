@@ -121,9 +121,10 @@ class _MainCameraState extends State<MainCamera> {
       showLocationIsNeededDialog(true);
     } else if (Platform.isAndroid && status.isPermanentlyDenied) {
       showLocationIsNeededDialog(false);
-    } else {
-      print('cannot use camera');
+    } else if(Platform.isAndroid&&status.isGranted){
+      print('granted');
     }
+    else print(status.toString());
     updateStatus(status);
   }
 
