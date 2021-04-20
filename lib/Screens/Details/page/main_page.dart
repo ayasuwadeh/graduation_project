@@ -146,7 +146,7 @@ class _MainPageState extends State<MainPage> {
           ),
           Positioned(
             left: 358,
-              top:50,
+              top:70,
               child: Column(
                 children: [
                   Container(

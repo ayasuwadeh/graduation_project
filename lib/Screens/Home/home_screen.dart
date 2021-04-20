@@ -11,7 +11,7 @@ import 'adventure_cards.dart';
 import 'categories.dart';
 import 'package:graduation_project/Screens/OCRfeature/main.dart';
 import 'Drawer.dart';
-import 'package:graduation_project/api/rests_recommendation.dart';
+import 'package:graduation_project/api/restaurant_recommendation.dart';
 import 'dart:convert';
 class HomeScreen extends StatefulWidget {
   @override
@@ -107,10 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(height: 30),
                   Categories(),
                   SizedBox(height: 30),
-                  PlacesCards(),
+                  Places(),
                   SizedBox(height: 30,),
                   Restaurants(),
-                 // FlatButton(child: Text("press"),onPressed: getRec,),
+
+                  // FlatButton(child: Text("press"),onPressed: getRec,),
                   //Text(back)
                 ],
               ),

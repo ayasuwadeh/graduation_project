@@ -61,27 +61,55 @@ class _LiveMapState extends State<LiveMap> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       // ignore: missing_required_param
-      body: Center(
-        child: GoogleMap(
-          polylines: Set<Polyline>.of(_mapPolylines.values),
-          myLocationEnabled: true,
-          mapType: MapType.normal,
-          markers: markers != null ? Set<Marker>.from(markers) : null,
-          initialCameraPosition: CameraPosition(
-              target: LatLng(widget.initialPosition.latitude,
-                  widget.initialPosition.longitude),
-              zoom: 18),
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        ),
+      body: Stack(
+        children: [
+          Center(
+            child: GoogleMap(
+              polylines: Set<Polyline>.of(_mapPolylines.values),
+              myLocationEnabled: true,
+              mapType: MapType.normal,
+              markers: markers != null ? Set<Marker>.from(markers) : null,
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(widget.initialPosition.latitude,
+                      widget.initialPosition.longitude),
+                  zoom: 18),
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+          ),
+          Positioned(
+            top: height*0.87,
+            left: width*0.6,
+            child: InkWell(
+              onTap: (){
+
+              },
+              child: Container(
+                height: 73,
+                width: 73,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey.shade500, //                   <--- border color
+                    width: 7.0,
+                  ),
+                  shape: BoxShape.circle,
+                  color: Colors.grey.shade300,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
       floatingActionButton: Container(
-        margin: EdgeInsets.only(left: 28),
+        margin: EdgeInsets.only(left: 40),
         child: Align(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.bottomLeft,
           child: RaisedButton(
             padding: EdgeInsets.all(12),
             textColor: Colors.white,

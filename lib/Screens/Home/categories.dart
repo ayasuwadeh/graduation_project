@@ -162,7 +162,17 @@ class CategorieCard extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1,
               child: Container(
-                decoration: BoxDecoration(
+
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(5, 5), // changes position of shadow
+                      ),
+                    ],
+
                   color: Color(0xFFFFECDF),
                   borderRadius: BorderRadius.circular(15),
                 ),

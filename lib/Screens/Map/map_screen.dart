@@ -25,9 +25,9 @@ class MapSampleState extends State<MapSample> {
 
   @override
   void initState() {
-    print(widget.gallery.location.lat);
+   // print(widget.gallery.location.lat);
     getLocation();
-    _setInitialMarker();
+    if(widget.gallery.location.lat!=-100)_setInitialMarker();
     super.initState();
   }
   @override

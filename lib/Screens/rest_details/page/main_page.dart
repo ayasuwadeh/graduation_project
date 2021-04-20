@@ -6,7 +6,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/api/restaurant_inner.dart';
+import 'package:graduation_project/api/restaurant_details_inner.dart';
 import 'package:graduation_project/models/restaurant.dart';
 import 'package:graduation_project/models/inner_restaurant.dart';
 class PlaceWidget extends StatelessWidget {
@@ -17,7 +17,8 @@ class PlaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  FutureBuilder(
+
+    return  restaurant.googleID!=null?FutureBuilder(
           future: restInnerDetailsApi.fetchMoreDetails(restaurant.googleID),
           builder: (BuildContext context,
               AsyncSnapshot snapshot) {
@@ -47,6 +48,49 @@ class PlaceWidget extends StatelessWidget {
             }
             return Container(color: Colors.white,);
           }
+      ):Scaffold(
+      appBar: AppBar(
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+
+        leading: IconButton(icon:Icon(Icons.arrow_back,size: 22,),
+            color: Colors.deepOrange,
+            onPressed: () {
+              Navigator.pop(context);
+            },),
+          backgroundColor: Colors.transparent,
+      ),
+
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+
+                      "No details provided yet",
+                      style: TextStyle(fontSize: 25,color: Colors.grey),
+                    ),
+                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Image.asset(
+                      "assets/images/sad.png"
+                    ),
+                  )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+    ),
       );
 
   }
@@ -84,22 +128,26 @@ class _MainPageState extends State<MainPage> {
             controller: panelController,
             color: Colors.transparent,
 
-            body:PageView(
-              children: [
-                SizedBox(height: 200,
-                  width: double.infinity,
-                  child: Carousel(
-                    dotSize: 5,
-                    dotVerticalPadding: 320,
-                    dotBgColor: Colors.transparent,
-                    autoplayDuration: Duration(seconds: 12),
-                    images: widget.innerRest.imageReferences!=null?
-                    widget.innerRest.imageReferences.map((e)
-                    => Image.network(e,fit: BoxFit.fill,)).toList():
-                    [NetworkImage('https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg')],
-                  ),
-                )
-              ],
+            body:Container(
+              height: 100,
+              child: PageView(
+                //reverse: true,
+                children: [
+                  SizedBox(height: 100,
+                    width: double.infinity,
+                    child: Carousel(
+                      dotSize: 5,
+                      dotVerticalPadding: 320,
+                      dotBgColor: Colors.transparent,
+                      autoplayDuration: Duration(seconds: 12),
+                      images: widget.innerRest.imageReferences!=null?
+                      widget.innerRest.imageReferences.map((e)
+                      => Image.network(e,fit: BoxFit.fill,)).toList():
+                      [NetworkImage('https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg')],
+                    ),
+                  )
+                ],
+              ),
             ),
             panelBuilder: (ScrollController scrollController)=>PanelWidget(
               restaurant: widget.restaurant,
@@ -110,7 +158,7 @@ class _MainPageState extends State<MainPage> {
           ),
           Positioned(
             left: 358,
-              top:50,
+              top:60,
               child: Column(
                 children: [
                   Container(

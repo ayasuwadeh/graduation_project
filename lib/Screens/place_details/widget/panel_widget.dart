@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/rest_details/widget/panel_header_widget.dart';
+import 'package:graduation_project/Screens/place_details/widget/panel_header_widget.dart';
 //import 'package:graduation_project/Screens/Details/widget/stats_widget.dart';
-import 'package:graduation_project/models/inner_restaurant.dart';
-import 'package:graduation_project/models/restaurant.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
+import 'package:graduation_project/models/recommendation_place.dart';
 import 'package:graduation_project/components/stats_widget_comp.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:graduation_project/constants.dart';
 class PanelWidget extends StatelessWidget {
-  final InnerRest innerRest;
   final VoidCallback onClickedPanel;
-  final Restaurant restaurant;
-  const PanelWidget({
-    @required this.innerRest,
+  final Function onScrolledPanel;
+
+  final RecommendationPlace recommendationPlace;
+   ScrollController _scrollController = ScrollController();
+
+   PanelWidget({
     @required this.onClickedPanel,
-    Key key, this.restaurant,
+    Key key, this.recommendationPlace, this.onScrolledPanel,
   }) : super(key: key);
 
   @override
@@ -66,38 +68,39 @@ class PanelWidget extends StatelessWidget {
             ),
           ),
           PanelHeaderWidget(
-            innerRest: innerRest,
-            restaurant: restaurant,
+            recommendationPlace: recommendationPlace,
 
             //onClickedFollowing: onClickedFollowing,
           ),
           SizedBox(height: 24),
-          Expanded(child: buildProfileDetails(innerRest,restaurant)),
+          Expanded(child: buildProfileDetails(recommendationPlace)),
         ],
       ),
     ),
   );
 
-  Widget buildProfileDetails(InnerRest innerRest, Restaurant restaurant) => Column(
+  Widget buildProfileDetails( RecommendationPlace recommendationPlace) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(//TODO:redesign this section & if a restaurant not found to delete & doing see more with search
-        restaurant.cus,
-        style: TextStyle(fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,fontSize: 18),
+      
+      Container(
+
+        height: 100,
+        child: FadingEdgeScrollView.fromSingleChildScrollView(
+          gradientFractionOnEnd: 0.5,
+
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Text(//TODO:redesign this section & if a restaurant not found to delete & doing see more with search
+              recommendationPlace.description,
+              style: TextStyle(fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,fontSize: 18),
+            ),
+          ),
+        ),
       ),
       SizedBox(height: 10),
-      Text('_________'),
-      SizedBox(height: 7),
-      Text(innerRest.isOpen?"Opened":"Closed",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color:innerRest.isOpen?Colors.green:Colors.red ),),
-      SizedBox(height: 7),
-      Text('_________'),
-      innerRest.priceLevel!=-1?
-      Text(innerRest.priceLevel==0?"Free":
-      innerRest.priceLevel==1? "Inexpensive":
-      innerRest.priceLevel==2? "Moderate":
-      innerRest.priceLevel==3? "Expensive":
-       "Very Expensive",style: TextStyle(fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,fontSize: 14),
-      ):Container(height: 9,),
+      // Text('_________'),
+
 
 
   SizedBox(height: 12),
@@ -108,7 +111,7 @@ class PanelWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
 
         children: [
-          StatsWidget(rate: restaurant.rating,),
+          StatsWidget(rate: recommendationPlace.rating,),
         ],
       ),
       Row(
@@ -136,7 +139,7 @@ class PanelWidget extends StatelessWidget {
               icon: Icon(Icons.call_rounded, color: Colors.deepOrange),
               color: Colors.grey[200],
               onPressed: (){
-                _makePhoneCall(innerRest.phoneNumber);
+                _makePhoneCall(recommendationPlace.phoneNumber);
               },
             ),
           ),
