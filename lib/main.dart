@@ -7,6 +7,7 @@ import 'package:graduation_project/Screens/Splash/MainSplash.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/services/auth_provider.dart';
 import 'services/status_provider.dart';
+import 'services/forgot_password_provider.dart';
 
 import 'models/user.dart';
 
@@ -18,6 +19,7 @@ void main() {
             ChangeNotifierProvider(create: (context) => AuthProvider()),
             ChangeNotifierProvider(create: (context) => UserProvider()),
             ChangeNotifierProvider(create: (context) => StatusProvider()),
+            ChangeNotifierProvider(create: (context) => ForgotPasswordProvider()),
           ],
           child: MyApp(),
       )

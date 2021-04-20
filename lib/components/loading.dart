@@ -6,8 +6,11 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+          ),
         ),
       ),
     );

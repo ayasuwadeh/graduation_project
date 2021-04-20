@@ -5,9 +5,7 @@ class ApiUtil{
   static const String MAIN_API_UTIL = 'http://10.0.2.2:8000/api';
 
   static const String ALL_NATURES = '/natures';
-
   static const String ALL_CUISINES = '/cuisines';
-
   static const String ALL_CULTURES = '/cultures';
 
   static const String login = MAIN_API_UTIL + '/auth/login';
@@ -20,7 +18,9 @@ class ApiUtil{
   static const String storeCuisines = MAIN_API_UTIL + '/user/cuisines';
   static const String storeCultures = MAIN_API_UTIL + '/user/cultures';
   static const String storeNatures = MAIN_API_UTIL + '/user/natures';
-
+  static const String sendResetPasswordCode = MAIN_API_UTIL + '/forgot-password';
+  static const String validatePasswordResetToken = MAIN_API_UTIL + '/forgot-password/code';
+  static const String resetPassword = MAIN_API_UTIL + '/reset-password';
 
 
 

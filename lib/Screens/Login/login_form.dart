@@ -9,6 +9,10 @@ import 'package:graduation_project/services/auth_provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/services/status_provider.dart';
+import 'package:graduation_project/components/loading.dart';
+import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/Screens/forgotPassword/forgot_password_screen.dart';
+
 
 class LoginForm extends StatefulWidget {
   @override
@@ -48,9 +52,30 @@ class _LoginFormState extends State<LoginForm> {
             onSaved: (String val) => _creds['password'] = val,
             validator: _validatePassword,
           ),
+          Padding(
+            padding: const EdgeInsets.only(right: 50, top: 10, bottom: 5),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ForgotPasswordScreen();
+                  }));
+                },
+                child: Text(
+                  'Forgot password? ',
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+          ),
           Provider.of<AuthProvider>(context).loggedInStatus ==
                   Status.Authenticating
-              ? CircularProgressIndicator()
+              ? Loading()
               : RoundedButton(
                   text: "LOGIN",
                   press: () {
