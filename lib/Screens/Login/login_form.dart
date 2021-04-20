@@ -12,6 +12,7 @@ import 'package:graduation_project/services/status_provider.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/Screens/forgotPassword/forgot_password_screen.dart';
+import 'package:graduation_project/components/dialog.dart';
 
 
 class LoginForm extends StatefulWidget {
@@ -130,7 +131,12 @@ class _LoginFormState extends State<LoginForm> {
           return HomeScreen();
         }));
       } else {
-        // TODO pop up dialog
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Login Failed',
+            text: 'Email or password are incorrect.',
+          );
+        });
         print(response['message'] + ' ' + response['error']);
       }
     });

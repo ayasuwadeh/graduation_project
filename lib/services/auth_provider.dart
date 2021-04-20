@@ -263,7 +263,7 @@ class AuthProvider extends ChangeNotifier {
       result = {
         'status': false,
         'message': 'Failed',
-        'error': responseData['errors'].toString()
+        'error': responseData['errors']['email'].toString()
       };
     }
     return result;
@@ -301,7 +301,7 @@ class AuthProvider extends ChangeNotifier {
       result = {
         'status': false,
         'message': 'Failed',
-        'error': responseData['errors'].toString()
+        'error': responseData['errors']['current_password'].toString()
       };
     }
     return result;

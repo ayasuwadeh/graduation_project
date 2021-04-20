@@ -4,6 +4,7 @@ import 'package:graduation_project/components/interests.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/components/dialog.dart';
 
 class EditInterests extends StatefulWidget {
   EditInterests({Key key, this.title}) : super(key: key);
@@ -112,7 +113,8 @@ class _EditInterestsState extends State<EditInterests> {
     List<String> natures =
         Provider.of<UserProvider>(context, listen: false).natures;
 
-    if(cuisines != null && cultures != null && natures != null ){
+    if(cuisines != null && cultures != null && natures != null &&
+        cuisines.isNotEmpty && cultures.isNotEmpty && natures.isNotEmpty ){
       final results = await Future.wait([
         Provider.of<AuthProvider>(context, listen: false).storeCultures(cultures: cultures),
         Provider.of<AuthProvider>(context, listen: false).storeCuisines(cuisines: cuisines),
@@ -121,15 +123,27 @@ class _EditInterestsState extends State<EditInterests> {
       // success
       if(results[0]['status'] && results[1]['status'] && results[2]['status'])
       {
-       // TODO dialog to tell user everything is done successfully
-        print('success');
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Interests Change',
+            text: 'Your interests have been successfully changed',
+          );
+        });
       }else{
-        // TODO dialog to tell that sth is wrong
-        print('error');
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Interests Change',
+            text: 'Something went wrong. Please try again later',
+          );
+        });
       }
     }else{
-      // TODO dialog to tell that sth is empty
-      print('sth is empty');
+      showDialog(context: context, builder: (BuildContext context){
+        return InfoDialog(
+          title: 'Interests Change',
+          text: 'Please select at least one interest in each field.',
+        );
+      });
     }
   }
 

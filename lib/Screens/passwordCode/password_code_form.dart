@@ -6,6 +6,7 @@ import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/services/forgot_password_provider.dart';
 import 'package:graduation_project/Screens/resetPassword/reset_password_screen.dart';
+import 'package:graduation_project/components/dialog.dart';
 
 class PasswordCodeForm extends StatefulWidget {
   PasswordCodeForm();
@@ -77,7 +78,12 @@ class _PasswordCodeFormState extends State<PasswordCodeForm> {
           return PasswordResetScreen();
         }));
       } else {
-        // TODO pop up dialog
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Failed',
+            text: response['message'].toString() + '. Please try resetting your password again.',
+          );
+        });
         print(response['message']);
       }
     });

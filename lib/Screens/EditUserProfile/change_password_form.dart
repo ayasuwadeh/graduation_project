@@ -6,7 +6,7 @@ import 'package:graduation_project/components/rounded_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
-
+import 'package:graduation_project/components/dialog.dart';
 
 class ChangePasswordForm extends StatefulWidget {
   @override
@@ -103,11 +103,26 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
         User user = response['user'];
         Provider.of<UserProvider>(context, listen: false).setUser(user: user);
         print('changed password successfully');
-        // TODO pop up to tell user that info has changed successfully
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Password Change',
+            text: 'Your password has been successfully changed',
+          );
+        });
       } else {
-        // TODO pop up dialog
-        print(response['message'] + ' ' + response['error']);
-        print('fail');
+        String msg = '';
+        if(response['error'] == '[The current password does not match with old password.]'){
+          msg = 'Current password is incorrect.';
+        }else{
+          msg = 'Something went wrong. Please try again later.';
+        }
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Password Change',
+            text: msg,
+          );
+        });
+        print(response['error']);
       }
     });
   }

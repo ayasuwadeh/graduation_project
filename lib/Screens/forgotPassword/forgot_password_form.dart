@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/Screens/passwordCode/password_code_screen.dart';
 import 'package:graduation_project/services/forgot_password_provider.dart';
+import 'package:graduation_project/components/dialog.dart';
 
 
 class ForgotPasswordForm extends StatefulWidget {
@@ -85,14 +86,24 @@ class _ForgotPasswordForm extends State<ForgotPasswordForm> {
 
     result.then((response) {
       if (!response['errorStatus']) {
-       //TODO: dialog to tell user that en email has been sent
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Code sent',
+            text: 'Please check your email. A code has been sent to you.',
+          );
+        });
         Provider.of<ForgotPasswordProvider>(context, listen: false).setEmail(_creds['email']);
         print(response['message']);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return PasswordCodeScreen();
         }));
       } else {
-        // TODO pop up dialog
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Email is invalid',
+            text: 'The email provided is invalid.',
+          );
+        });
         print(response['message']);
       }
     });

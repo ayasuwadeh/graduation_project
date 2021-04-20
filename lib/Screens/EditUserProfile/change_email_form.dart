@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/components/dialog.dart';
 import 'widgets/underlined_textField.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
@@ -80,10 +81,26 @@ class _ChangeEmailState extends State<ChangeEmail> {
       if (response['status']) {
         User user = response['user'];
         Provider.of<UserProvider>(context, listen: false).setUser(user: user);
-        // TODO pop up to tell user that info has changed successfully
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Email Change',
+            text: 'Your email has been successfully changed',
+          );
+        });
       } else {
-        // TODO pop up dialog
-        print(response['message'] + ' ' + response['error']);
+        String msg ='';
+        if(response['error'] == '[The email has already been taken.]'){
+          msg = 'The email is already taken';
+        }else{
+          msg = 'Something went wrong, please try again later.';
+        }
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Email Change',
+            text: msg,
+          );
+        });
+        //print(response['message'] + ' ' + response['error']);
       }
     });
   }

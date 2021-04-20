@@ -12,7 +12,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMixin {
-  // TODO make data load only once
 
   @override
   Widget build(BuildContext context) {

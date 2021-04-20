@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:graduation_project/services/auth_provider.dart';
 import 'package:graduation_project/components/loading.dart';
+import 'package:graduation_project/components/dialog.dart';
 
 class WelcomeCard extends StatefulWidget {
   @override
@@ -151,12 +152,22 @@ class _WelcomeCardState extends State<WelcomeCard> {
             }
         ));
       }else{
-        // TODO dialog to tell that sth is wrong
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Something is wrong',
+            text: 'Please try again later.',
+          );
+        });
         print('error');
       }
 
     }else{
-      // TODO dialog to tell that sth is empty
+      showDialog(context: context, builder: (BuildContext context){
+        return InfoDialog(
+          title: 'Field is empty',
+          text: 'Please fill all fields',
+        );
+      });
       print('sth is empty');
     }
     setState(() {

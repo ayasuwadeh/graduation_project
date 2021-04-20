@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:graduation_project/models/user.dart';
 import 'package:graduation_project/services/status_provider.dart';
 import 'package:graduation_project/components/loading.dart';
+import 'package:graduation_project/components/dialog.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -133,8 +134,21 @@ class _SignUpFormState extends State<SignUpForm> {
           return SignUpView();
         }));
       } else {
-        // TODO pop up dialog
-        print(response['message'] + ' ' + response['error']);
+        if(response['error']['email'][0] == 'The email has already been taken.'){
+          showDialog(context: context, builder: (BuildContext context){
+            return InfoDialog(
+              title: 'Email is invalid',
+              text: 'The email has already been taken',
+            );
+          });
+        }else{
+          showDialog(context: context, builder: (BuildContext context){
+            return InfoDialog(
+              title: 'Sign up',
+              text: 'Something went wrong. Please try again later.',
+            );
+          });
+        }
       }
     });
   }

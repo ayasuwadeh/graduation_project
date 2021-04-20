@@ -7,6 +7,8 @@ import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/components/rounded_button.dart';
 import 'package:graduation_project/models/user.dart';
+import 'package:graduation_project/components/dialog.dart';
+
 
 class EditInfoForm extends StatefulWidget {
   @override
@@ -93,10 +95,19 @@ class _EditInfoFormState extends State<EditInfoForm> {
       if (response['status']) {
         User user = response['user'];
         Provider.of<UserProvider>(context, listen: false).setUser(user: user);
-        // TODO pop up to tell user that info has changed successfully
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Info Change',
+            text: 'Your information has been successfully changed',
+          );
+        });
       } else {
-        // TODO pop up dialog
-        print(response['message'] + ' ' + response['error']);
+        showDialog(context: context, builder: (BuildContext context){
+          return InfoDialog(
+            title: 'Info Change',
+            text: 'Something went wrong. Please try again later.',
+          );
+        });
       }
     });
   }
