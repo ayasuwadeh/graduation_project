@@ -35,30 +35,6 @@ class HotelsListScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Container(
-            //   margin: EdgeInsets.only(left: 29, top: 20, bottom: 20),
-            //   child: Row(
-            //     children: [
-            //       InkWell(
-            //           onTap: (){
-            //             Navigator.pop(context);
-            //           },
-            //           child: Icon(
-            //             Icons.arrow_back,
-            //             color: kPrimaryColor,
-            //             size: 30,
-            //           )
-            //       ),
-            //       Text(
-            //         '   Hotels',
-            //         style: TextStyle(
-            //             fontSize: 30,
-            //             fontWeight: FontWeight.bold
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             SizedBox(height: size.height*0.034,),
 
             MallsListWidget(hotels:hotels),

@@ -36,6 +36,13 @@ dependencies:
   carousel_slider: ^3.0.0
   flutter_mobile_vision: ^0.1.4
   url_launcher: ^5.7.10
+  camera: ^0.7.0+2
+  image_gallery_saver:
+  share: ^0.6.5+4
+  keyboard_visibility: ^0.5.6
+  path:
+  path_provider:
+  esys_flutter_share:
 
   #icons
   flutter_icons: ^1.1.0
@@ -57,6 +64,9 @@ dependencies:
   flutter_slidable: ^0.5.7
   toast: ^0.1.5
   prompt_dialog: ^0.1.4
+  flutter_staggered_grid_view: ^0.3.3
+  transparent_image: ^1.0.0
+
   autocomplete_textfield: ^1.7.3
   flutter_datetime_picker: ^1.5.0
   flutter_holo_date_picker: ^0.3.1+2
@@ -75,6 +85,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   carousel_pro: ^1.0.0
 dev_dependencies:
+  gallery_saver:
   flutter_test:
     sdk: flutter
 

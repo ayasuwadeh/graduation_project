@@ -98,6 +98,7 @@ class _MyRoutesState extends State<MyRoutes> {
     return  Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
           leading: IconButton(icon:Icon(Icons.arrow_back),
             color: Colors.black,
             onPressed: () {

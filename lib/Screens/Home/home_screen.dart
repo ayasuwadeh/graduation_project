@@ -106,10 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   AdventuresCards(),
                   SizedBox(height: 30),
                   Categories(),
-                  SizedBox(height: 30),
-                  Places(),
-                  SizedBox(height: 30,),
-                  Restaurants(),
+                  // SizedBox(height: 30),
+                  // Places(),
+                  // SizedBox(height: 30,),
+                  // Restaurants(),
 
                   // FlatButton(child: Text("press"),onPressed: getRec,),
                   //Text(back)

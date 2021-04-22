@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:graduation_project/Screens/StoryImagesView/gridview-images.dart';
 
 class RouteCard extends StatefulWidget {
   final AssetImage image;
@@ -24,6 +24,12 @@ class _RouteCardState extends State<RouteCard> {
     return InkWell(
       onTap: ()
       {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) {
+              return StoryGridView();
+            }));//print(index);
+
+
       },
       child: Padding(
         padding: EdgeInsets.only(left:15,right: 15),

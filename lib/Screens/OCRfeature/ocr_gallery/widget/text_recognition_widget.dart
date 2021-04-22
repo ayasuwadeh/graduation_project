@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:clipboard/clipboard.dart';
@@ -6,7 +7,7 @@ import 'package:graduation_project/Screens/OCRfeature/ocr_gallery/widget/text_ar
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:graduation_project/api/api_util_ocr.dart';
 import 'controls_widget.dart';
 
 class TextRecognitionWidget extends StatefulWidget {
@@ -81,8 +82,12 @@ class _TextRecognitionWidgetState extends State<TextRecognitionWidget> {
         child: CircularProgressIndicator(),
       ),
     );
+    // final bytes = image.readAsBytesSync();
+    // String img64 = base64Encode(bytes);
 
     final text = await FirebaseMLApi.recogniseText(image);
+   // final text =  ApiUtilOCR.GET_ALL_RESTAURANTS_RECOMMENDATION(img64);
+
     setText(text);
 
     Navigator.of(context).pop();

@@ -4,9 +4,11 @@ import 'package:graduation_project/services/geolocator_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'save_route_dialog.dart';
 import 'dart:async';
-
+import 'package:graduation_project/Screens/routeTracking/camera/main.dart';
 import '../../gist.dart';
-
+import 'package:graduation_project/models/story-image.dart';
+import 'package:graduation_project/models/path-point.dart';
+import 'package:graduation_project/models/general_location.dart';
 class LiveMap extends StatefulWidget {
   final Position initialPosition;
 
@@ -28,22 +30,9 @@ class _LiveMapState extends State<LiveMap> {
   StreamSubscription streamSubscription;
   bool startedTracking = false;
   bool emptyRouteNameField = false;
-
-
-// Destination Location Marker
-//   Marker destinationMarker = Marker(
-//     markerId: MarkerId('destination'),
-//     position: LatLng(
-//       destinationCoordinates.latitude,
-//       destinationCoordinates.longitude,
-//     ),
-//     infoWindow: InfoWindow(
-//       title: 'Destination',
-//       snippet: _destinationAddress,
-//     ),
-//     icon: BitmapDescriptor.defaultMarker,
-//   );
-
+  Position currentLocation;
+  List<StoryImage> images=[];
+  List<PathPoint> pathPoints=[];
   @override
   void initState() {
 
@@ -55,6 +44,10 @@ class _LiveMapState extends State<LiveMap> {
   void addPointToPolylines(Position position) {
      points.add(LatLng(position.latitude, position.longitude));
     seq.add(_pointId);
+    GeneralLocation location=new GeneralLocation(position.latitude, position.longitude);
+    PathPoint point= PathPoint(location,_pointId);
+    pathPoints.add(point);
+
     if (_pointId > 0) draw();
     _pointId++;
   }
@@ -86,20 +79,24 @@ class _LiveMapState extends State<LiveMap> {
           Positioned(
             top: height*0.87,
             left: width*0.6,
-            child: InkWell(
-              onTap: (){
-
-              },
-              child: Container(
-                height: 73,
-                width: 73,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey.shade500, //                   <--- border color
-                    width: 7.0,
+            child:
+            Visibility(
+              visible: startedTracking,
+              child: InkWell(
+                onTap: () {
+                  navigateToCamera(context);
+                },
+                child: Container(
+                  height: 73,
+                  width: 73,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey.shade500, //                   <--- border color
+                      width: 7.0,
+                    ),
+                    shape: BoxShape.circle,
+                    color: Colors.grey.shade300,
                   ),
-                  shape: BoxShape.circle,
-                  color: Colors.grey.shade300,
                 ),
               ),
             ),
@@ -189,6 +186,10 @@ class _LiveMapState extends State<LiveMap> {
 
   startTracking() {
     streamSubscription = geoService.getCurrentLocation().listen((position) {
+      setState(() {
+        currentLocation=position;
+        print(currentLocation.toString()+"hello");
+      });
       centerScreen(position);
       addPointToPolylines(position);
     });
@@ -204,6 +205,19 @@ class _LiveMapState extends State<LiveMap> {
         context: context,
         child: RouteNameDialog()
     );
+  }
+
+  void navigateToCamera(BuildContext context)async {
+    final List<StoryImage> result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CameraApp(
+
+      ),),
+    );
+    if(result!=null) {
+      this.images.addAll(result);
+      print(images.toString());
+    }
   }
 
 }

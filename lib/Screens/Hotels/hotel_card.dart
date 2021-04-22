@@ -54,7 +54,6 @@ class HotelCard extends StatelessWidget {
                   }
               );            }));
       },
-      // onTap: TODO : make request with the id and navigate to chrome or safari with the places link
       child: Container(
         //height: size.height * 0.25,
         margin: EdgeInsets.all(10),
