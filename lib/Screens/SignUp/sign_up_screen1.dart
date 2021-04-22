@@ -116,7 +116,7 @@ class _BodyState extends State<Body> with AutomaticKeepAliveClientMixin {
                           looping: false, // default is not looping
                           firstDate: DateTime(1940, 01, 01),
                           lastDate: DateTime.now(),
-                          initialDate: DateTime(1991, 10, 12),
+                          initialDate: DateTime.now(),
                           dateFormat: "dd-MMM-yyyy",
                           locale: DatePicker.localeFromString('en'),
                           onChange: (DateTime newDate, _) {

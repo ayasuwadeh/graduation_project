@@ -31,63 +31,52 @@ class Body extends StatelessWidget {
          elevation: 0,
         backgroundColor: Colors.transparent,
          ),
-      body: SingleChildScrollView
-        (
+      body: SingleChildScrollView(
         child: Column(
-          children: [
-            Column(
-              children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: size.height * 0.07,
-                        ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: size.height * 0.07,
+            ),
 
-                        Text(
-                            "Sign Up",
-                            style: GoogleFonts.raleway(
-                              textStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),
-                            )
-                        ),
-                        Container(
-                          width: 120,
-                          height: 120,
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                fit: BoxFit.fill,
-                                image: AssetImage("assets/icons/cockatoo.png"),
-                              )
-                          ),
-                        ),
-                        SignUpForm(),
-                        OrDivider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SocialIcon(
-                              icon: CustomIcons.facebook,
-                            ),
-                            SocialIcon(
-                              icon: CustomIcons.twitter,
-                            ),
-                            SocialIcon(
-                              icon: CustomIcons.gplus,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10,)
-                      ],
-                    ),
+            Text(
+                "Sign Up",
+                style: GoogleFonts.raleway(
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
                   ),
+                )
+            ),
+            Container(
+              width: 120,
+              height: 120,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("assets/icons/cockatoo.png"),
+                  )
+              ),
+            ),
+            SignUpForm(),
+            OrDivider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SocialIcon(
+                  icon: CustomIcons.facebook,
+                ),
+                SocialIcon(
+                  icon: CustomIcons.twitter,
+                ),
+                SocialIcon(
+                  icon: CustomIcons.gplus,
+                ),
               ],
-            )
+            ),
+            SizedBox(height: 10,)
           ],
         ),
       )
