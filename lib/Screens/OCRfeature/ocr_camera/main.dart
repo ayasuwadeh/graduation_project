@@ -66,7 +66,7 @@ class _MainCameraState extends State<MainCamera> {
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(icon:Icon(Icons.arrow_back),
-            color: Colors.black,
+            color: Colors.deepOrange,
             onPressed: () {
               Navigator.pop(context);
             },),

@@ -5,7 +5,7 @@ import 'package:graduation_project/models/general_location.dart';
 class RecommendationPlace{
   String id;
   String name;
-  GeneralLocation location=GeneralLocation(-100,-200);
+  GeneralLocation location=GeneralLocation((-100).toString(),(-200).toString());
   double rating;
   //String googleID;
   String address;
@@ -21,8 +21,8 @@ class RecommendationPlace{
   RecommendationPlace.fromJson(Map<String, dynamic> jsonObject)  {
     this.id = jsonObject['id'].toString();
     this.name = jsonObject['name'];
-    this.location.lat=jsonObject['lat'];
-    this.location.lan=jsonObject['lng'];
+    this.location.lat=jsonObject['lat'].toString();
+    this.location.lan=jsonObject['lng'].toString();
     this.address=jsonObject['formatted_address'].toString();
     this.phoneNumber='tel:'+jsonObject['phone'].toString();
     this.category=jsonObject['category'];

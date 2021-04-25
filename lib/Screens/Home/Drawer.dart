@@ -110,8 +110,9 @@ class MainDrawer extends StatelessWidget {
 
         ListTile(
           onTap: () {
+            createSory();
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return MyRoutes();
+              return Stories();
             }));
           },
           leading: Icon(
@@ -165,4 +166,20 @@ class MainDrawer extends StatelessWidget {
       ]),
     );
   }
+
+  void createSory() {}
+  // void showStories() async {
+  //
+  //   final allRows = await StoryFunctions.queryAllRows();
+  //   print('query all rows:');
+  //   allRows.forEach((row)
+  //   {
+  //     UserStory userStory=UserStory.fromJson(row);
+  //     this.stories.add(userStory);
+  //
+  //   });
+  //   print(stories.toString());
+  //
+  // }
+
 }

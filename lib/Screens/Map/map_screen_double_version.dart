@@ -25,7 +25,7 @@ class MapSampleState extends State<MapSample> {
 
   @override
   void initState() {
-   // print(widget.gallery.location.lat);
+    // print(widget.gallery.location.lat);
     getLocation();
     if(widget.gallery.location.lat!=-100)_setInitialMarker();
     super.initState();
@@ -41,40 +41,40 @@ class MapSampleState extends State<MapSample> {
             markers: markers,
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: LatLng(double.parse(widget.gallery.location.lat), double.parse(widget.gallery.location.lan)),
+              target: LatLng(widget.gallery.location.lat, widget.gallery.location.lan),
               zoom: 15,
             ),
           ),
           Positioned(
-            top:size.height*0.9 ,
-            left: size.width*0.54 ,
-            child:ElevatedButton(
-              onPressed: () {
-                ApiUtil.DIRECTION(position.latitude.toString(),
-                    position.longitude.toString(),
-                    widget.gallery.location.lat.toString(),
-                    widget.gallery.location.lan.toString());
+              top:size.height*0.9 ,
+              left: size.width*0.54 ,
+              child:ElevatedButton(
+                  onPressed: () {
+                    ApiUtil.DIRECTION(position.latitude.toString(),
+                        position.longitude.toString(),
+                        widget.gallery.location.lat.toString(),
+                        widget.gallery.location.lan.toString());
 
-              },
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.red)
-                        )
-                    )
-                ),
+                  },
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.red)
+                          )
+                      )
+                  ),
 
-                child:Row(
+                  child:Row(
 
-                  children: [
-                    Text("directions  ",style: TextStyle(fontSize: 17),),
-                    Icon(Icons.directions),
+                    children: [
+                      Text("directions  ",style: TextStyle(fontSize: 17),),
+                      Icon(Icons.directions),
 
-                  ],
-                )
+                    ],
+                  )
 
-            )
+              )
           )
         ],
       ),
@@ -84,7 +84,7 @@ class MapSampleState extends State<MapSample> {
     startMarker = Marker(
       markerId: MarkerId('POI'),
       position: LatLng(
-          double.parse(widget.gallery.location.lat), double.parse(widget.gallery.location.lan)),
+          widget.gallery.location.lat, widget.gallery.location.lan),
       infoWindow: InfoWindow(
         title: widget.gallery.name,
         snippet: 'provided by cockatoo',
