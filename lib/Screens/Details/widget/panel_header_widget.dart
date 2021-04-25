@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Map/map_screen.dart';
+import 'package:graduation_project/Screens/Map/map_screen_double_version.dart';
 import 'package:graduation_project/models/place_details.dart';
 //import 'package:details_screen/widget/follow_button_widget.dart';
 import 'package:graduation_project/models/gallary.dart';

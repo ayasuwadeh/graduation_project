@@ -3,21 +3,25 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'image-reviewer.dart';
+import 'package:graduation_project/models/story-image.dart';
 class StoryGridView extends StatefulWidget {
+  final List<StoryImage> images;
+
+  const StoryGridView({Key key, this.images}) : super(key: key);
   @override
   _StoryGridViewState createState() => _StoryGridViewState();
 }
 
 class _StoryGridViewState extends State<StoryGridView> {
-  List<String> imageList = [
-    'http://10.0.2.2:80/story_images/CAP1200635995888124012.jpg',
-    'https://www.outlookindia.com/outlooktraveller/resizer.php?src=https://www.outlookindia.com/outlooktraveller/public/uploads/articles/explore/shutterstock_777102832_(1).jpg&w=500&h=400',
-    'https://www.outlookindia.com/outlooktraveller/resizer.php?src=https://www.outlookindia.com/outlooktraveller/public/uploads/articles/explore/shutterstock_777102832_(1).jpg&w=500&h=400',
-    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
-  ];
+  // List<String> imageList = [
+  //   //'http://10.0.2.2:80/story_images/CAP1200635995888124012.jpg',
+  //   'https://www.outlookindia.com/outlooktraveller/resizer.php?src=https://www.outlookindia.com/outlooktraveller/public/uploads/articles/explore/shutterstock_777102832_(1).jpg&w=500&h=400',
+  //   'https://www.outlookindia.com/outlooktraveller/resizer.php?src=https://www.outlookindia.com/outlooktraveller/public/uploads/articles/explore/shutterstock_777102832_(1).jpg&w=500&h=400',
+  //   'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
+  //   'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
+  //   'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
+  //   'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
+  // ];
 
   bool editingStoryName = false;
   String storyName='';
@@ -104,8 +108,9 @@ class _StoryGridViewState extends State<StoryGridView> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  itemCount: imageList.length,
+                  itemCount: widget.images.length,
                   itemBuilder: (context, index) {
+
                     return Container(
                       decoration: BoxDecoration(
                         color: Colors.transparent,
@@ -118,11 +123,11 @@ class _StoryGridViewState extends State<StoryGridView> {
                           {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return ImageReview(imagePath:imageList[index],);
+                                  return ImageReview(image:widget.images[index],);
                                 }));//print(index);
                           },
                           child: FadeInImage.memoryNetwork(
-                            image: imageList[index],
+                            image: widget.images[index].path,
                             placeholder: kTransparentImage,
                             fit: BoxFit.cover,
                           ),
@@ -141,10 +146,12 @@ class _StoryGridViewState extends State<StoryGridView> {
   }
 
   toggleEditingStory() {
+
     setState(() {
       storyName=textFieldController.text;
       editingStoryName=!editingStoryName;
     });
+
     print(storyName);
   }
 

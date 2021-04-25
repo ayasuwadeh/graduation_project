@@ -44,8 +44,9 @@ class _LiveMapState extends State<LiveMap> {
   void addPointToPolylines(Position position) {
      points.add(LatLng(position.latitude, position.longitude));
     seq.add(_pointId);
-    GeneralLocation location=new GeneralLocation(position.latitude, position.longitude);
-    PathPoint point= PathPoint(location,_pointId);
+    GeneralLocation location=new GeneralLocation(position.latitude.toString(),
+        position.longitude.toString());
+    PathPoint point= PathPoint('',location,_pointId.toString());
     pathPoints.add(point);
 
     if (_pointId > 0) draw();
@@ -203,7 +204,7 @@ class _LiveMapState extends State<LiveMap> {
   void showSaveRouteDialog(BuildContext context){
     showDialog(
         context: context,
-        child: RouteNameDialog()
+        child: RouteNameDialog(this.images,this.pathPoints)
     );
   }
 

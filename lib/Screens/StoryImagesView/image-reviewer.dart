@@ -7,11 +7,11 @@ import 'package:share/share.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:graduation_project/services/geolocator_service.dart';
 import 'package:transparent_image/transparent_image.dart';
-
+import 'package:graduation_project/models/story-image.dart';
 class ImageReview extends StatefulWidget {
-  final String imagePath;
+  final StoryImage image;
 
-  ImageReview({Key key, this.imagePath}) : super(key: key);
+  ImageReview({Key key, this.image}) : super(key: key);
 
   @override
   _ImageReviewState createState() => _ImageReviewState();
@@ -44,7 +44,7 @@ class _ImageReviewState extends State<ImageReview> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    print(widget.imagePath);
+    print(widget.image.path);
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -73,7 +73,7 @@ class _ImageReviewState extends State<ImageReview> {
                // origin: Offset(20, 20),
                 child: Container(
                     child: Image.network(
-                      widget.imagePath,
+                      widget.image.path,
                       height:height,
                       width: width,
                       fit: BoxFit.cover,
@@ -89,7 +89,7 @@ class _ImageReviewState extends State<ImageReview> {
                   height: 50,
                   child: IconButton(
                       onPressed: () {
-                        Share.shareFiles([widget.imagePath], text: shareText);
+                        Share.shareFiles([widget.image.path], text: shareText);
                       },
                       color: Colors.white,
                       icon: Icon(
@@ -105,7 +105,7 @@ class _ImageReviewState extends State<ImageReview> {
                   height: 50,
                   child: IconButton(
                       onPressed: () {
-                        Share.shareFiles([widget.imagePath], text: shareText);
+                        Share.shareFiles([widget.image.path], text: shareText);
                       },
                       color: Colors.white,
                       icon: Icon(
@@ -210,7 +210,7 @@ class _ImageReviewState extends State<ImageReview> {
       '${DateTime.now()}.png',
     );
 
-    final newFile = await File(widget.imagePath).copy(path);
+    final newFile = await File(widget.image.path).copy(path);
 
     await GallerySaver.saveImage(newFile.path).then((value) {
       print('saved successfluutt');

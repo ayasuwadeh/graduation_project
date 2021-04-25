@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/gist.dart';
-
+import 'package:graduation_project/services/sql_lite/sqlflite_services.dart';
+import 'package:graduation_project/services/sql_lite/image_functions.dart';
+import 'package:graduation_project/services/sql_lite/story_functions.dart';
+import 'package:graduation_project/services/sql_lite/point_functions.dart';
+import 'package:graduation_project/models/story-image.dart';
+import 'package:graduation_project/models/path-point.dart';
+import 'package:graduation_project/Screens/Home/home_screen.dart';
 class RouteNameDialog extends StatefulWidget {
+    List<StoryImage> images;
+    List <PathPoint> points;
+    RouteNameDialog(this.images,this.points);
   @override
   _RouteNameDialogState createState() => _RouteNameDialogState();
 }
@@ -70,8 +79,11 @@ class _RouteNameDialogState extends State<RouteNameDialog> {
       );
     }
 
-  saveRouteToDB() {
-    //TODO
+  saveRouteToDB() async{
+    final sqlLiteInstance = SQLService.instance;
+    createStory();
+    Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   makeErrorBrder() {
@@ -79,6 +91,61 @@ class _RouteNameDialogState extends State<RouteNameDialog> {
       emptyRouteNameField = true;
     });
   }
+
+  void createStory() async{
+    Map<String, dynamic> row = {
+      'name':routeName.text,
+      'city':'Paris',
+      'country':'France'
+    };
+    final id = await StoryFunctions.insert(row);
+    print('inserted row id in story: $id');
+    addImages(id);
+    addPoints(id);
+    final allRows = await StoryFunctions.queryAllRows();
+    print('query all rows:');
+    allRows.forEach((row) => print(row));
   }
+
+  void addImages(int id) async{
+    for (var item in widget.images)
+      {
+        Map<String, dynamic> row = {
+          'description':item.caption,
+          'path':item.path,
+          'lat':item.location.lat,
+          'lng':item.location.lan,
+          'story_id': id
+        };
+        final idImage = await ImageFunctions.insert(row);
+        print('inserted row id in images: $idImage');
+      }
+    // final allRows = await ImageFunctions.queryAllRows();
+    // print('query all rows:');
+    // allRows.forEach((row) => print(row));
+
+
+  }
+
+  void addPoints(int id) async{
+    for (var item in widget.points)
+    {
+      Map<String, dynamic> row = {
+        'lat':item.location.lat,
+        'lng':item.location.lan,
+        'seq':item.sequence,
+        'story_id':id
+      };
+      final idPoint = await PointFunctions.insert(row);
+      print('inserted row id in points: $idPoint');
+
+    }
+      // final allRows = await PointFunctions.queryAllRows();
+      // print('query all rows:');
+      // allRows.forEach((row) => print(row));
+
+  }
+
+}
 
 

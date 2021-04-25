@@ -35,6 +35,7 @@ class _RouteWelcomeScreenState extends State<RouteWelcomeScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,

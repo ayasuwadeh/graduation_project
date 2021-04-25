@@ -246,8 +246,8 @@ class _ImageReviewState extends State<ImageReview> {
   void backToCamera(BuildContext context) {
     print(this.textController.text+"nothing");
     serverFileName='http://10.0.2.2:80/story_images/'+serverFileName;
-    GeneralLocation generalLocation=new GeneralLocation(this.currentLocation.latitude,this.currentLocation.longitude);
-    StoryImage image=new StoryImage(this.serverFileName,this.textController.text, generalLocation);
+    GeneralLocation generalLocation=new GeneralLocation(this.currentLocation.latitude.toString(),this.currentLocation.longitude.toString());
+    StoryImage image=new StoryImage('no id',this.serverFileName,this.textController.text, generalLocation);
 
     Navigator.pop(context, image);
 

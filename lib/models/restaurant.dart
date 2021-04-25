@@ -7,7 +7,7 @@ class Restaurant{
   String name;
   double rating;
   String googleID;
-  GeneralLocation location=GeneralLocation(-100,-200);
+  GeneralLocation location=GeneralLocation((-100).toString(),(-200).toString());
   double score;
   String cus;
   Restaurant(this.id, this.name, );
@@ -28,8 +28,8 @@ class Restaurant{
   {    RestDetailsSecondApi detailsApi=RestDetailsSecondApi();
 
   RestDetails rest= await detailsApi.fetchDetails(this.name);
-  this.location.lat=rest.lat;
-  this.location.lan=rest.lan;
+  this.location.lat=rest.lat.toString();
+  this.location.lan=rest.lan.toString();
   this.googleID=rest.id;
 
 

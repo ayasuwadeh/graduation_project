@@ -5,7 +5,7 @@ import 'package:graduation_project/models/restaurant.dart';
 import 'package:graduation_project/models/rest_details.dart';
 class RestsRecommendationApi {
    Future <List<Restaurant>> getData( ) async {
-    String request=ApiUtilRecommendation.GET_ALL_RESTAURANTS_RECOMMENDATION('fast food, thai');
+    String request=ApiUtilRecommendation.GET_ALL_RESTAURANTS_RECOMMENDATION('french, european, vegetarian friendly,fast food');
     http.Response response = await http.get(request);
 
     List<Restaurant> rests = [];

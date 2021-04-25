@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/StoryImagesView/gridview-images.dart';
-
+import 'package:graduation_project/models/story-image.dart';
 class RouteCard extends StatefulWidget {
-  final AssetImage image;
+  final NetworkImage image;
   final String name;
+  final String city;
   final String country;
+  final List<StoryImage> images;
   final bool isOpend;
-   RouteCard({Key key,@required this.image,@required this.name, @required this.country, this.isOpend}) :
+   RouteCard({Key key,@required this.image,@required this.name, @required this.country, this.isOpend, this.images, this.city}) :
         super(key: key);
   @override
   _RouteCardState createState() => _RouteCardState();
@@ -26,7 +28,7 @@ class _RouteCardState extends State<RouteCard> {
       {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) {
-              return StoryGridView();
+              return StoryGridView(images: widget.images,);
             }));//print(index);
 
 
@@ -78,13 +80,27 @@ class _RouteCardState extends State<RouteCard> {
                     child: Align(
 
                       alignment: Alignment.bottomLeft,
-                      child: Row(children:[
-                        Text("   "),
-                        Icon(Icons.location_pin,color: Colors.black54,),
-                        Text(widget.name+", "+widget.country,
-                          style: TextStyle(fontSize: 17
+                      child: Column(
+                        children: [
+                          SizedBox(height: height*0.046,),
+
+                          Row(
+                            children: [//TODO:faded text
+                              Text(widget.name,style: TextStyle(fontSize: 25
                               ,fontWeight: FontWeight.bold,
-                          color: Color(0xC1090A0A)),),]),
+                              color: Colors.deepOrange.withAlpha(150)),),
+                            ],
+                          ),
+                          SizedBox(height: height*0.04,),
+                          Row(children:[
+                            Text("   "),
+                            Icon(Icons.location_pin,color: Colors.black54,),
+                            Text(widget.city+", "+widget.country,
+                              style: TextStyle(fontSize: 17
+                                  ,fontWeight: FontWeight.bold,
+                              color: Color(0xC1090A0A)),),]),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(width: width*0.43,),
