@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/components/loading.dart';
-
+import 'dart:convert';
+import 'package:image_fade/image_fade.dart';
 import 'image-reviewer.dart';
 import 'package:graduation_project/models/user-story.dart';
 import 'package:graduation_project/api/story-sql-api.dart';
@@ -80,6 +81,7 @@ class _StoryGridViewState extends State<StoryGridView> {
                                     color: Colors.grey.shade700,
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold)),
+
                             // onChanged: (text) {
                             //   text = text.toLowerCase();
                             //   setState(() {
@@ -210,9 +212,9 @@ class _StoryGridViewState extends State<StoryGridView> {
                       reloadImages(result);
 
                     },
-                    child: FadeInImage.memoryNetwork(
-                      image: list[index].path,
-                      placeholder: kTransparentImage,
+                    child: ImageFade(
+                     image: MemoryImage(base64Decode(list[index].path)),
+                     // placeholder: base64Decode(list[index].path),
                       fit: BoxFit.cover,
                     ),
                   ),

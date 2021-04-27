@@ -138,7 +138,7 @@ final _myListKey=GlobalKey<AnimatedListState>();
   }
 
   void showStories() {
-    print(widget.stories[0].storyImages);
+   // print(widget.stories[0].storyImages);
   }
 
   void deleteStory(int index) {

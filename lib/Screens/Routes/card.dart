@@ -7,6 +7,8 @@ import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/services/sql_lite/image_functions.dart';
 import 'package:graduation_project/api/story-sql-api.dart';
+import 'dart:convert';
+
 class RouteCard extends StatefulWidget {
   final UserStory story;
   final bool isOpend;
@@ -187,14 +189,16 @@ _isSaved=!_isSaved;
       child: Container(
         decoration: new BoxDecoration(
           borderRadius: BorderRadius.circular(20),
+
           image: DecorationImage(
             image:storyList[0].storyImages.length>0?
-            NetworkImage(storyList[0].storyImages[0].path):
+            MemoryImage(base64Decode(storyList[0].storyImages[0].path)):
             NetworkImage('https://t4.ftcdn.net/jpg/01/38/09/45/360_F_138094550_tDdrNPWdyycckV81QF75ov7U2OdE7WSr.jpg'),
 
             fit: BoxFit.cover,
           ),
         ),
+        // child: Image.memory(base64Decode(storyList[0].storyImages[0].path),fit: BoxFit.contain,),
       ),
     );
 
