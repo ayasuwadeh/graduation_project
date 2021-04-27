@@ -49,6 +49,7 @@ class SQLService {
     await db.execute('''
           CREATE TABLE $storyTable (
             id INTEGER PRIMARY KEY,
+            time Text NOT NULL, 
             name TEXT NOT NULL,
             city TEXT NOT NULL,
             country TEXT NOT NULL
@@ -58,7 +59,8 @@ class SQLService {
     await db.execute('''
           CREATE TABLE $imageTable (
             id INTEGER PRIMARY KEY,
-            description TEXT NOT NULL,
+            time Text NOT NULL, 
+            description TEXT,
             path TEXT NOT NULL,
             lat DOUBLE NOT NULL,
             lng DOUBLE NOT NULL,
@@ -75,6 +77,7 @@ class SQLService {
             story_id INTEGER NOT NULL,
             FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE ON UPDATE CASCADE)
           ''');
+
   }
 
 // Helper methods

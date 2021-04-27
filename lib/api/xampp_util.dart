@@ -6,15 +6,18 @@ class XamppUtilAPI {
 
 
 
-  static Future<String> UPLOAD_IMAGE(String fileName,String base64Image) {
-    http.post(XAMPP_MAIN_REQUEST+UPLOAD_FILE_FUNCTION, body: {
+  // ignore: non_constant_identifier_names
+  static Future<int> UPLOAD_IMAGE(String fileName,String base64Image) async {
+    bool done=false;
+    var response= await http.post(XAMPP_MAIN_REQUEST+UPLOAD_FILE_FUNCTION, body: {
       "image": base64Image,
       "name": fileName,
-    }).then((result) {
-      return(result.statusCode == 200 ? result.body : "error uploading image");
-    }).catchError((error) {
-      return("error uploading image");
     });
+    if(response.statusCode==200)
+      done=true;
+    else done=false;
+
+    return done?1:0;
   }
 
   }

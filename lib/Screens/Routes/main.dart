@@ -206,13 +206,8 @@ final _myListKey=GlobalKey<AnimatedListState>();
       key: ValueKey(index),
       //controller: slidableController,
       child: RouteCard(
-        image:
-        NetworkImage(widget.stories[index].storyImages[0].path),
-        name: widget.stories[index].name,
-        city: widget.stories[index].city,
-        country: widget.stories[index].country,
+        story: widget.stories[index],
         isOpend: false,
-        images: widget.stories[index].storyImages,
       ),
       actionPane: SlidableDrawerActionPane(),
       secondaryActions: <Widget>[

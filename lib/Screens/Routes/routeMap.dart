@@ -16,8 +16,8 @@ class RouteMap extends StatefulWidget {
 }
 
 class _RouteMapState extends State<RouteMap> {
-  final Position initialPosition=new Position(latitude: 32.227522,longitude:35.223183 ) ;
-  final Position finalPosition=new Position(latitude: 32.2226678,longitude:35.2621461 );
+  final Position initialPosition=new Position( ) ;
+  final Position finalPosition=new Position( );
 
   final GeolocatorService geoService = GeolocatorService();
   List<LatLng> points = [];
@@ -35,8 +35,10 @@ class _RouteMapState extends State<RouteMap> {
   bool emptyRouteNameField = false;
 
   void initState() {
+
     _setInitialMarker(Position(latitude:double.parse(widget.pathPoints.first.location.lat),
         longitude:double.parse(widget.pathPoints.first.location.lan)));
+    if(widget.pathPoints.length>1)
     draw();
     _setFinalMarker(Position(latitude:double.parse(widget.pathPoints.last.location.lat),
         longitude:double.parse(widget.pathPoints.last.location.lan)));
@@ -44,12 +46,6 @@ class _RouteMapState extends State<RouteMap> {
     super.initState();
   }
 
-  // void addPointToPolylines(Position position) {
-  //   points.add(LatLng(position.latitude, position.longitude));
-  //   seq.add(_pointId);
-  //   if (_pointId > 0) draw();
-  //   _pointId++;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +58,8 @@ class _RouteMapState extends State<RouteMap> {
           mapType: MapType.normal,
           markers: markers != null ? Set<Marker>.from(markers) : null,
           initialCameraPosition: CameraPosition(
-              target: LatLng(initialPosition.latitude,
-                  initialPosition.longitude),
+              target: LatLng(double.parse(widget.pathPoints.first.location.lat),
+                  double.parse(widget.pathPoints.first.location.lan)),
               zoom: 12),
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);

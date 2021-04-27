@@ -95,16 +95,17 @@ class _RouteNameDialogState extends State<RouteNameDialog> {
   void createStory() async{
     Map<String, dynamic> row = {
       'name':routeName.text,
+      'time':DateTime.now().toString(),
       'city':'Paris',
       'country':'France'
     };
     final id = await StoryFunctions.insert(row);
-    print('inserted row id in story: $id');
+    // print('inserted row id in story: $id');
     addImages(id);
     addPoints(id);
     final allRows = await StoryFunctions.queryAllRows();
-    print('query all rows:');
-    allRows.forEach((row) => print(row));
+    // print('query all rows:');
+    // allRows.forEach((row) => print(row));
   }
 
   void addImages(int id) async{
@@ -112,17 +113,18 @@ class _RouteNameDialogState extends State<RouteNameDialog> {
       {
         Map<String, dynamic> row = {
           'description':item.caption,
+          'time':item.time.toString(),
           'path':item.path,
           'lat':item.location.lat,
           'lng':item.location.lan,
           'story_id': id
         };
         final idImage = await ImageFunctions.insert(row);
-        print('inserted row id in images: $idImage');
+        // print('inserted row id in images: $idImage');
       }
-    // final allRows = await ImageFunctions.queryAllRows();
-    // print('query all rows:');
-    // allRows.forEach((row) => print(row));
+    final allRows = await ImageFunctions.queryAllRows();
+    print('query all rows:');
+    allRows.forEach((row) => print(row));
 
 
   }
@@ -137,7 +139,7 @@ class _RouteNameDialogState extends State<RouteNameDialog> {
         'story_id':id
       };
       final idPoint = await PointFunctions.insert(row);
-      print('inserted row id in points: $idPoint');
+       print('inserted row id in points: $idPoint');
 
     }
       // final allRows = await PointFunctions.queryAllRows();

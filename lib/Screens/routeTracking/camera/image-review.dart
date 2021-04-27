@@ -113,6 +113,7 @@ class _ImageReviewState extends State<ImageReview> {
                   child: IconButton(
                       onPressed: () async{
                            downloadImage();
+                           //TODO:toast says done or not
                       },
                       color:Colors.white,
                       icon: Icon(Icons.arrow_downward,size: 30)),
@@ -179,12 +180,15 @@ class _ImageReviewState extends State<ImageReview> {
                           Icons.done,
                           size: 35,color: Colors.white,),
 
-                        onPressed: () {
+                        onPressed: () async{
                           FocusScope.of(context).unfocus();
                           if(counter>0|| !isWriting)
                             {
-                              saveImageToServer();
+                              int result=await saveImageToServer();
+                              if(result==1)
                               backToCamera(context);
+
+                              //TODO:toast says error in image
 
                             }
                           else if (counter<1)
@@ -206,6 +210,8 @@ class _ImageReviewState extends State<ImageReview> {
   }
 
   void downloadImage() async{
+    base64Image = base64Encode(File(widget.imagePath).readAsBytesSync());
+
     final path = join(
         (await getTemporaryDirectory()).path,
     '${DateTime.now()}.png',
@@ -226,28 +232,24 @@ class _ImageReviewState extends State<ImageReview> {
     });
   }
 
-  void saveImageToServer() async{
+  Future<int> saveImageToServer() async{
     base64Image = base64Encode(File(widget.imagePath).readAsBytesSync());
     if (null == widget.imagePath) {
-      return;
+      return -1;
     }
     setState(() {
       serverFileName = widget.imagePath.split('/').last;
 
     });
      serverFileName = widget.imagePath.split('/').last;
-    String result=await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, base64Image);
-    if(result==null)
-      {
-        print(base64Image);
-      }
+    int result=await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, base64Image);
+    return result;
   }
 
   void backToCamera(BuildContext context) {
-    print(this.textController.text+"nothing");
     serverFileName='http://10.0.2.2:80/story_images/'+serverFileName;
     GeneralLocation generalLocation=new GeneralLocation(this.currentLocation.latitude.toString(),this.currentLocation.longitude.toString());
-    StoryImage image=new StoryImage('no id',this.serverFileName,this.textController.text, generalLocation);
+    StoryImage image=new StoryImage('no id',DateTime.now(),this.base64Image,this.textController.text, generalLocation,'');
 
     Navigator.pop(context, image);
 

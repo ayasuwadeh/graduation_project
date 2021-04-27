@@ -46,7 +46,7 @@ class _LiveMapState extends State<LiveMap> {
     seq.add(_pointId);
     GeneralLocation location=new GeneralLocation(position.latitude.toString(),
         position.longitude.toString());
-    PathPoint point= PathPoint('',location,_pointId.toString());
+    PathPoint point= PathPoint('',location,_pointId.toString(),'');
     pathPoints.add(point);
 
     if (_pointId > 0) draw();
@@ -217,7 +217,7 @@ class _LiveMapState extends State<LiveMap> {
     );
     if(result!=null) {
       this.images.addAll(result);
-      print(images.toString());
+     // print(images.toString());
     }
   }
 

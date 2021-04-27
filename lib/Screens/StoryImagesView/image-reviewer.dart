@@ -8,6 +8,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:graduation_project/services/geolocator_service.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:graduation_project/models/story-image.dart';
+import 'package:graduation_project/services/sql_lite/image_functions.dart';
+import 'package:toast/toast.dart';
+
 class ImageReview extends StatefulWidget {
   final StoryImage image;
 
@@ -29,7 +32,10 @@ class _ImageReviewState extends State<ImageReview> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    if(widget.image.caption!=null)
+    textController.text=widget.image.caption;
+    else     textController.text='';
+
     geoService.getInitialLocation().then((value) {
       setState(() {
         currentLocation = value;
@@ -39,6 +45,12 @@ class _ImageReviewState extends State<ImageReview> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -88,8 +100,9 @@ class _ImageReviewState extends State<ImageReview> {
                 Container(
                   height: 50,
                   child: IconButton(
-                      onPressed: () {
-                        Share.shareFiles([widget.image.path], text: shareText);
+                      onPressed: () 
+                      {
+                        showDeleteDialog(context);
                       },
                       color: Colors.white,
                       icon: Icon(
@@ -155,6 +168,7 @@ class _ImageReviewState extends State<ImageReview> {
                             shareText = text;
                           });
                           toggleWriting();
+
                         },
                         style: TextStyle(
                             fontSize: 30,
@@ -188,6 +202,9 @@ class _ImageReviewState extends State<ImageReview> {
                     onPressed: () {
                       FocusScope.of(context).unfocus();
                       toggleWriting();
+
+                      Navigator.pop(context,1);
+                      editCaption();
                       //    Navigator.pop(context);
                     },
                   ),
@@ -222,5 +239,46 @@ class _ImageReviewState extends State<ImageReview> {
     setState(() {
       isWriting = !isWriting;
     });
+
   }
+
+  void deleteStoryImage(BuildContext context) {
+    ImageFunctions.delete(int.parse(widget.image.id));
+    Navigator.pop(context,1);
+    Navigator.pop(context,1);
+
+
+  }
+
+  bool showDeleteDialog(BuildContext context) {
+    bool deletingDone=false;
+   // print(index.toString()+"index");
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            title: new Text("are sure you want to delete this image?"),
+            content: new Text("you can confirm by pressing ok"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  deletingDone=true;
+                  deleteStoryImage(context);
+                },
+              ),
+            ],
+          );
+        });
+    return deletingDone;
+  }
+
+  void editCaption() async{
+    int t=await ImageFunctions.update(int.parse(widget.image.id), textController.text);
+
+  }
+
 }

@@ -3,14 +3,14 @@ class PathPoint{
   String id;
   GeneralLocation location;
   String sequence;
-
-  PathPoint(this.id,this.location,this.sequence);
+  String storyID;
+  PathPoint(this.id,this.location,this.sequence,this.storyID);
   PathPoint.fromJson(Map<String, dynamic> jsonObject)
   {
     this.id=jsonObject['id'].toString();
     this.location = GeneralLocation(jsonObject['lat'].toString(),jsonObject['lng'].toString());
     this.sequence=jsonObject['seq'].toString();
-
+    this.storyID=jsonObject['story_id'].toString();
   }
 
 }

@@ -134,10 +134,10 @@ class _CameraPageState extends State<CameraPage> {
                         ),
                         GestureDetector(
                           onLongPress: () async {
-                            _startVideoRecording();
+                          //  _startVideoRecording();
                           },
                           onLongPressEnd: (details) async {
-                            doneRecordingVideo(context);
+                         //   doneRecordingVideo(context);
                           },
                           onTap: () async {
                             try {
@@ -259,8 +259,8 @@ class _CameraPageState extends State<CameraPage> {
         imagePath: (image.path),
       ),),
     );
+    if(result!=null)
     images.add(result);
-    print(result.caption.toString()+"back");
 
   }
 }
