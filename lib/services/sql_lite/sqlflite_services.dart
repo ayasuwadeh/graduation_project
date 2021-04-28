@@ -49,6 +49,7 @@ class SQLService {
     await db.execute('''
           CREATE TABLE $storyTable (
             id INTEGER PRIMARY KEY,
+            synced TEXT NOT NULL,
             time Text NOT NULL, 
             name TEXT NOT NULL,
             city TEXT NOT NULL,

@@ -29,6 +29,11 @@ class StoryFunctions {
     Database db = await SQLService.instance.database;
     return await db.update('story',{'name':name}, where: 'id = ?', whereArgs: [id]);
   }
+  static Future<int> updateSync( int id,String name) async {
+    Database db = await SQLService.instance.database;
+    return await db.update('story',{'synced':name}, where: 'id = ?', whereArgs: [id]);
+  }
+
 
   static Future<int> delete(int id) async {
     Database db = await SQLService.instance.database;

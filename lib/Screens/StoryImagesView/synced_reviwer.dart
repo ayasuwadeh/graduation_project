@@ -33,7 +33,7 @@ class _ImageReviewState extends State<ImageReview> {
   @override
   void initState() {
     if(widget.image.caption!=null)
-    textController.text=widget.image.caption;
+      textController.text=widget.image.caption;
     else     textController.text='';
 
     // geoService.getInitialLocation().then((value) {
@@ -81,15 +81,15 @@ class _ImageReviewState extends State<ImageReview> {
             left: 0,
             child: GestureDetector(
               // onTap: toggleWriting,
-               // scale: 1,
-               // origin: Offset(20, 20),
-                child: Container(
-                    child: Image.memory(
-                      base64Decode(widget.image.path),
-                      height:height,
-                      width: width,
-                      fit: BoxFit.cover,
-                    ),),
+              // scale: 1,
+              // origin: Offset(20, 20),
+              child: Container(
+                child: Image.memory(
+                  base64Decode(widget.image.path),
+                  height:height,
+                  width: width,
+                  fit: BoxFit.cover,
+                ),),
             ),
           ),
           Positioned(
@@ -100,7 +100,7 @@ class _ImageReviewState extends State<ImageReview> {
                 Container(
                   height: 50,
                   child: IconButton(
-                      onPressed: () 
+                      onPressed: ()
                       {
                         showDeleteDialog(context);
                       },
@@ -147,43 +147,43 @@ class _ImageReviewState extends State<ImageReview> {
             child: Row(
               children: [
                 InkWell(
-                    //visible:isWriting ,
+                  //visible:isWriting ,
                     child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: width * 0.82,
-                  height: height * 0.17,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: SingleChildScrollView(
-                      child: TextField(
-                        maxLines: null,
-                        onTap: toggleWriting,
-                        controller: textController,
-                        onSubmitted: (text) {
-                          setState(() {
-                            shareText = text;
-                          });
-                          toggleWriting();
-
-                        },
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.deepOrange.withAlpha(200)),
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Aa',
-                            hintStyle: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontSize: 40,
-                                color: Colors.deepOrange.withAlpha(150))),
+                      padding: EdgeInsets.all(10),
+                      width: width * 0.82,
+                      height: height * 0.17,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
                       ),
-                    ),
-                  ),
-                )),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: SingleChildScrollView(
+                          child: TextField(
+                            maxLines: null,
+                            onTap: toggleWriting,
+                            controller: textController,
+                            onSubmitted: (text) {
+                              setState(() {
+                                shareText = text;
+                              });
+                              toggleWriting();
+
+                            },
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.deepOrange.withAlpha(200)),
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Aa',
+                                hintStyle: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 40,
+                                    color: Colors.deepOrange.withAlpha(150))),
+                          ),
+                        ),
+                      ),
+                    )),
                 SizedBox(
                   width: width * 0.015,
                 ),
@@ -252,7 +252,7 @@ class _ImageReviewState extends State<ImageReview> {
 
   bool showDeleteDialog(BuildContext context) {
     bool deletingDone=false;
-   // print(index.toString()+"index");
+    // print(index.toString()+"index");
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -285,8 +285,8 @@ class _ImageReviewState extends State<ImageReview> {
     final path = join(
       // Store the picture in the temp directory.
       // Find the temp directory using the `path_provider` plugin.
-        (await getTemporaryDirectory()).path,
-    '${DateTime.now().microsecondsSinceEpoch}.png',
+      (await getTemporaryDirectory()).path,
+      '${DateTime.now().microsecondsSinceEpoch}.png',
     );
 
     final newFile = await File(path).writeAsBytes(base64Decode(widget.image.path));

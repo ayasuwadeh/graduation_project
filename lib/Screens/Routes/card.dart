@@ -66,35 +66,7 @@ class _RouteCardState extends State<RouteCard> {
           ),
           child: Stack(
             children: [
-              FutureBuilder(
-                  key: ValueKey(changed) ,
-                  future: storySQLApi.fetchStory(int.parse(widget.story.id)),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.active:
-                        return Loading();
-                        break;
-                      case ConnectionState.waiting:
-                        return Loading();
-                        break;
-                      case ConnectionState.none:
-                        return Error(errorText: 'No Internet Connection');
-                        break;
-                      case ConnectionState.done:
-                        if (snapshot.hasError) {
-                          return Error(errorText: snapshot.error.toString());
-                          break;
-                        } else if (snapshot.hasData) {
-                          {
-                            print(snapshot.data);
-                            return opacityWidget(snapshot.data);
-                          }
-                        }
-                    }
-                    return Container(
-                      color: Colors.white,
-                    );
-                  }),
+               opacityWidget(widget.story),
 
               Row(
                 children: [
@@ -106,41 +78,13 @@ class _RouteCardState extends State<RouteCard> {
                       child: Column(
                         children: [
                           SizedBox(height: height*0.046,),
-                          FutureBuilder(
-                              key: ValueKey(changed) ,
-                              future: storySQLApi.fetchStory(int.parse(widget.story.id)),
-                              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                switch (snapshot.connectionState) {
-                                  case ConnectionState.active:
-                                    return Container();
-                                    break;
-                                  case ConnectionState.waiting:
-                                    return Container();
-                                    break;
-                                  case ConnectionState.none:
-                                    return Error(errorText: 'No Internet Connection');
-                                    break;
-                                  case ConnectionState.done:
-                                    if (snapshot.hasError) {
-                                      return Error(errorText: snapshot.error.toString());
-                                      break;
-                                    } else if (snapshot.hasData) {
-                                      {
-                                        print(snapshot.data);
-                                        return Row(
-                                          children: [//TODO:faded text
-                                            Text(snapshot.data[0].name,style: TextStyle(fontSize: 25
-                                                ,fontWeight: FontWeight.bold,
-                                                color: Colors.deepOrange.withAlpha(150)),),
-                                          ],
-                                        );
-                                      }
-                                    }
-                                }
-                                return Container(
-                                  color: Colors.white,
-                                );
-                              }),
+                     Row(
+                       children: [//TODO:faded text
+                         Text(widget.story.name,style: TextStyle(fontSize: 25
+                             ,fontWeight: FontWeight.bold,
+                             color: Colors.deepOrange.withAlpha(150)),),
+                       ],
+                     ),
 
                           SizedBox(height: height*0.02,),
                           Row(children:[
@@ -154,17 +98,17 @@ class _RouteCardState extends State<RouteCard> {
                         ],
                       ),
                     ),
-                  SizedBox(width: width*0.3,),
-                  widget.isOpend?Icon(
-                    Icons.double_arrow_rounded,
-                    color: Colors.deepOrange.withOpacity(0.50),
-                    size: 30,
-                  ):
-                  Icon(
-                    Icons.double_arrow_rounded,
-                    color: Colors.deepOrange.withOpacity(0.60),
-                    size: 30,
-                  ),
+                  // SizedBox(width: width*0.3,),
+                  // widget.isOpend?Icon(
+                  //   Icons.double_arrow_rounded,
+                  //   color: Colors.deepOrange.withOpacity(0.50),
+                  //   size: 30,
+                  // ):
+                  // Icon(
+                  //   Icons.double_arrow_rounded,
+                  //   color: Colors.deepOrange.withOpacity(0.60),
+                  //   size: 30,
+                  // ),
 
 
 
@@ -183,7 +127,7 @@ _isSaved=!_isSaved;
     });
   }
 
-  Widget opacityWidget(var storyList)
+  Widget opacityWidget(UserStory story)
   {
     return Opacity(opacity: 0.5,
       child: Container(
@@ -191,8 +135,9 @@ _isSaved=!_isSaved;
           borderRadius: BorderRadius.circular(20),
 
           image: DecorationImage(
-            image:storyList[0].storyImages.length>0?
-            MemoryImage(base64Decode(storyList[0].storyImages[0].path)):
+            image:story.storyImages.length>0?
+            story.synced=='false'?MemoryImage(base64Decode(story.storyImages[0].path)):
+            NetworkImage(story.storyImages[0].path):
             NetworkImage('https://t4.ftcdn.net/jpg/01/38/09/45/360_F_138094550_tDdrNPWdyycckV81QF75ov7U2OdE7WSr.jpg'),
 
             fit: BoxFit.cover,

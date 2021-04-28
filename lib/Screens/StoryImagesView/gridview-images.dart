@@ -213,8 +213,9 @@ class _StoryGridViewState extends State<StoryGridView> {
 
                     },
                     child: ImageFade(
+                      fadeDuration: Duration(milliseconds:index.isEven ? 500 : 1000 ),
                      image: MemoryImage(base64Decode(list[index].path)),
-                     // placeholder: base64Decode(list[index].path),
+                     // placeholder: Image( image: MemoryImage(base64Decode(kTransparentImage.toString()))),
                       fit: BoxFit.cover,
                     ),
                   ),

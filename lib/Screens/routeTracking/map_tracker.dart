@@ -59,6 +59,7 @@ class _LiveMapState extends State<LiveMap> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+
       // ignore: missing_required_param
       body: Stack(
         children: [
@@ -189,7 +190,7 @@ class _LiveMapState extends State<LiveMap> {
     streamSubscription = geoService.getCurrentLocation().listen((position) {
       setState(() {
         currentLocation=position;
-        print(currentLocation.toString()+"hello");
+       // print(currentLocation.toString()+"hello");
       });
       centerScreen(position);
       addPointToPolylines(position);

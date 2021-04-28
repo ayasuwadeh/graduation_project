@@ -12,6 +12,7 @@ class MapScreen extends StatelessWidget {
     return FutureProvider(
       create: ( context)=> geoService.getInitialLocation() ,
       child: Scaffold(
+
         body:Consumer<Position>(
           builder: (context, position, widget) {
             return (position != null)
