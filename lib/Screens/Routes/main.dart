@@ -19,7 +19,7 @@ import 'package:graduation_project/services/auth_provider.dart';
 
 
 class Stories extends StatelessWidget {
-  StorySQLApi storySQLApi = new StorySQLApi();
+  final StorySQLApi storySQLApi = new StorySQLApi();
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class Stories extends StatelessWidget {
 }
 
 class MyRoutes extends StatefulWidget {
-  List<UserStory> stories;
+  final List<UserStory> stories;
 
   MyRoutes(this.stories);
 
@@ -117,8 +117,7 @@ class _MyRoutesState extends State<MyRoutes> {
 
   @override
   Widget build(BuildContext context) {
-    String f = "";
-    String f1 = "";
+
     final mq = MediaQuery.of(context);
     return Scaffold(
       key: ValueKey(changed),
@@ -196,7 +195,6 @@ class _MyRoutesState extends State<MyRoutes> {
 
   bool showSyncDialog(BuildContext context, UserStory story, index) {
     bool syncingDone = false;
-    //print(index.toString()+"index");
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -218,7 +216,7 @@ class _MyRoutesState extends State<MyRoutes> {
                   Toast.show("route has been synced", context,
                       duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
 
-                  reflectDeleting(story, index);
+                  //reflectDeleting(story, index);
                 },
               ),
             ],
@@ -316,7 +314,7 @@ class _MyRoutesState extends State<MyRoutes> {
   }
 
   void syncFunction(UserStory story,int index)  async {
-    StorySQLApi storySQLApi=new StorySQLApi();
+    StorySQLApi storySQLApi = new StorySQLApi();
     UserStory.fetchImagesOfStory(story.id).then((value) {
       for (var item in value) {
         uploadImageToServer(item);
@@ -341,9 +339,8 @@ class _MyRoutesState extends State<MyRoutes> {
     final Future<Map<String, dynamic>> result =
     Provider.of<AuthProvider>(context, listen: false)
         .saveStory(story: storyToBackEnd, images: imagesToBackEnd, points: pointsOfPathToBackEnd);
-
-
-    deleteStory(index);
+    result.then((value) => print(value));
+    //deleteStory(index);
 
   }
 
