@@ -30,6 +30,7 @@ class _ImageReviewState extends State<ImageReview> {
   final GeolocatorService geoService = GeolocatorService();
   Position currentLocation;
   int counter=0;
+  final img = '';
 
   @override
   void initState() {
@@ -37,12 +38,6 @@ class _ImageReviewState extends State<ImageReview> {
     textController.text=widget.image.caption;
     else     textController.text='';
 
-    // geoService.getInitialLocation().then((value) {
-    //   setState(() {
-    //     currentLocation = value;
-    //    // print(currentLocation.toString() + "hiii");
-    //   });
-    // });
     super.initState();
   }
 

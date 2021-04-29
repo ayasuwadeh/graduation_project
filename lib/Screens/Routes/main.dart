@@ -4,20 +4,17 @@ import 'package:graduation_project/Screens/bookmarks/date_divider.dart';
 import 'package:graduation_project/models/story-image.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:prompt_dialog/prompt_dialog.dart';
-import 'package:graduation_project/gist.dart';
 import 'routeMap.dart';
 import 'package:graduation_project/models/user-story.dart';
 import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/services/sql_lite/story_functions.dart';
 import 'package:graduation_project/services/sql_lite/image_functions.dart';
-import 'package:graduation_project/services/sql_lite/point_functions.dart';
-import 'dart:convert';
 import 'package:graduation_project/api/story-sql-api.dart';
 import 'package:graduation_project/api/xampp_util.dart';
 import 'stories.dart';
 import 'package:graduation_project/models/path-point.dart';
+import 'package:graduation_project/api/story-sql-api.dart';
 class Stories extends StatelessWidget {
   StorySQLApi storySQLApi = new StorySQLApi();
 
@@ -306,25 +303,28 @@ class _MyRoutesState extends State<MyRoutes> {
   void modifyImagePath(StoryImage image, String serverFileName) async {
 
     serverFileName = 'http://10.0.2.2:80/story_images/' + serverFileName;
-    int result =
-        await ImageFunctions.updatePath(int.parse(image.id), serverFileName);
-    //print(ImageFunctions.queryRow(image.id).toString());
+    int result = await ImageFunctions.updatePath(int.parse(image.id), serverFileName);
   }
 
-  void syncFunction(UserStory story,int index)  {
-    //showSyncDialog(context, story, index);
-
-    StoryFunctions.updateSync(int.parse(story.id), 'true');
-
-    for (var item in story.storyImages) {
+  void syncFunction(UserStory story,int index)  async {
+    StorySQLApi storySQLApi=new StorySQLApi();
+    storySQLApi.fetchStory(int.parse(story.id)).then((value)
+    {
+      for (var item in value[0].storyImages) {
       uploadImageToServer(item);
     }
-    deleteStory(index);
-    UserStory storyToBackEnd=story;
+    sendStoryToBackend(value,index);
+    });
+
+  }
+
+  void sendStoryToBackend(List<UserStory> story, int index) {
+    UserStory storyToBackEnd=story[0];
     List<StoryImage> imagesToBackEnd=[];
     List<PathPoint> pointsOfPathToBackEnd=[];
-    imagesToBackEnd.addAll(story.storyImages);
-    pointsOfPathToBackEnd.addAll(story.userPath);
+    imagesToBackEnd.addAll(story[0].storyImages);
+    pointsOfPathToBackEnd.addAll(story[0].userPath);
+    deleteStory(index);
 
   }
 
