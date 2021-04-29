@@ -11,6 +11,7 @@ import 'package:graduation_project/models/story-image.dart';
 import 'package:graduation_project/services/sql_lite/image_functions.dart';
 import 'package:toast/toast.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 class ImageReview extends StatefulWidget {
   final StoryImage image;
 
@@ -24,24 +25,12 @@ class _ImageReviewState extends State<ImageReview> {
   GlobalKey globalKey = GlobalKey();
   AnimationController _controller;
   var textController = new TextEditingController();
-  bool isWriting = false;
-  String inputNote = '';
-  String shareText = '';
-  final GeolocatorService geoService = GeolocatorService();
-  Position currentLocation;
 
   @override
   void initState() {
     if(widget.image.caption!=null)
       textController.text=widget.image.caption;
     else     textController.text='';
-
-    // geoService.getInitialLocation().then((value) {
-    //   setState(() {
-    //     currentLocation = value;
-    //    // print(currentLocation.toString() + "hiii");
-    //   });
-    // });
     super.initState();
   }
 
@@ -84,8 +73,8 @@ class _ImageReviewState extends State<ImageReview> {
               // scale: 1,
               // origin: Offset(20, 20),
               child: Container(
-                child: Image.memory(
-                  base64Decode(widget.image.path),
+                child: Image.network(
+                  widget.image.path,
                   height:height,
                   width: width,
                   fit: BoxFit.cover,
@@ -97,22 +86,6 @@ class _ImageReviewState extends State<ImageReview> {
             right: 10,
             child: Column(
               children: [
-                Container(
-                  height: 50,
-                  child: IconButton(
-                      onPressed: ()
-                      {
-                        showDeleteDialog(context);
-                      },
-                      color: Colors.white,
-                      icon: Icon(
-                        Icons.delete_outlined,
-                        size: 30,
-                      )),
-                ),
-                SizedBox(
-                  height: 14,
-                ),
 
                 Container(
                   height: 50,
@@ -142,7 +115,7 @@ class _ImageReviewState extends State<ImageReview> {
             ),
           ),
           Positioned(
-            top: isWriting ? height * 0.4 : height * 0.8,
+            top:  height * 0.8,
             left: width * 0.035,
             child: Row(
               children: [
@@ -161,13 +134,13 @@ class _ImageReviewState extends State<ImageReview> {
                         child: SingleChildScrollView(
                           child: TextField(
                             maxLines: null,
-                            onTap: toggleWriting,
+                            //onTap: toggleWriting,
                             controller: textController,
                             onSubmitted: (text) {
                               setState(() {
-                                shareText = text;
+                                // shareText = text;
                               });
-                              toggleWriting();
+                             // toggleWriting();
 
                             },
                             style: TextStyle(
@@ -187,28 +160,6 @@ class _ImageReviewState extends State<ImageReview> {
                 SizedBox(
                   width: width * 0.015,
                 ),
-                Container(
-                  //  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.deepOrange.withAlpha(100),
-                      shape: BoxShape.circle),
-
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.done,
-                      size: 35,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      toggleWriting();
-
-                      Navigator.pop(context,1);
-                      editCaption();
-                      //    Navigator.pop(context);
-                    },
-                  ),
-                ),
 
               ],
             ),
@@ -226,8 +177,13 @@ class _ImageReviewState extends State<ImageReview> {
       (await getTemporaryDirectory()).path,
       '${DateTime.now()}.png',
     );
+    String encode3='';
+    http.Response response = await http.get(widget.image.path);
+    final bytes = response?.bodyBytes;
+    encode3=base64Encode(bytes);
 
-    final newFile = await File(path).writeAsBytes(base64Decode(widget.image.path));
+
+    final newFile = await File(path).writeAsBytes(base64Decode(encode3));
 
     await GallerySaver.saveImage(newFile.path).then((value) {
       print('saved successfluutt');
@@ -235,51 +191,6 @@ class _ImageReviewState extends State<ImageReview> {
     print('noo');
   }
 
-  void toggleWriting() {
-    setState(() {
-      isWriting = !isWriting;
-    });
-
-  }
-
-  void deleteStoryImage(BuildContext context) {
-    ImageFunctions.delete(int.parse(widget.image.id));
-    Navigator.pop(context,1);
-    Navigator.pop(context,1);
-
-
-  }
-
-  bool showDeleteDialog(BuildContext context) {
-    bool deletingDone=false;
-    // print(index.toString()+"index");
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            title: new Text("are sure you want to delete this image?"),
-            content: new Text("you can confirm by pressing ok"),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text("OK"),
-                onPressed: () {
-                  deletingDone=true;
-                  deleteStoryImage(context);
-                },
-              ),
-            ],
-          );
-        });
-    return deletingDone;
-  }
-
-  void editCaption() async{
-    int t=await ImageFunctions.update(int.parse(widget.image.id), textController.text);
-
-  }
 
   void shareImage() async{
     final path = join(
@@ -288,10 +199,14 @@ class _ImageReviewState extends State<ImageReview> {
       (await getTemporaryDirectory()).path,
       '${DateTime.now().microsecondsSinceEpoch}.png',
     );
+    String encode3='';
+    http.Response response = await http.get('http://10.0.2.2:80/story_images/31619654820573831.jpg');
+    final bytes = response?.bodyBytes;
+    encode3=base64Encode(bytes);
 
-    final newFile = await File(path).writeAsBytes(base64Decode(widget.image.path));
+    final newFile = await File(path).writeAsBytes(base64Decode(encode3));
 
-    Share.shareFiles([newFile.path], text: shareText);
+    Share.shareFiles([newFile.path]);
 
   }
 

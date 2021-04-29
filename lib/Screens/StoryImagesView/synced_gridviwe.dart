@@ -6,7 +6,7 @@ import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'dart:convert';
 import 'package:image_fade/image_fade.dart';
-import 'image-reviewer.dart';
+import 'synced_reviewer.dart';
 import 'package:graduation_project/models/user-story.dart';
 import 'package:graduation_project/api/story-sql-api.dart';
 import 'package:graduation_project/models/story-image.dart';
@@ -63,21 +63,11 @@ class _StoryGridViewState extends State<SyncedGridview> {
               left: 40,
               child: Row(
                 children: [
-                  SizedBox(
-                      width: 200,
-                      child: TextFormField(
-                        controller: textFieldController,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
-                        decoration: new InputDecoration(
-                            hintText: 'search...',
-                            hintStyle: TextStyle(
-                                color: Colors.grey.shade700,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold)),
-                      ))
+                  Container(
+                    child: Text(textFieldController.text+"    ",
+                        style: GoogleFonts.lobsterTwo(
+                            fontSize: 32, color: Colors.black)),
+                  ),
                 ],
               )),
           FutureBuilder(
@@ -151,13 +141,12 @@ class _StoryGridViewState extends State<SyncedGridview> {
                       })); //print(index);
                       reloadImages(result);
                     },
-                    child: ImageFade(
-                      fadeDuration:
-                          Duration(milliseconds: index.isEven ? 500 : 1000),
-                      image: MemoryImage(base64Decode(list[index].path)),
-                      // placeholder: Image( image: MemoryImage(base64Decode(kTransparentImage.toString()))),
+                    child: FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
                       fit: BoxFit.cover,
+                      image: list[index].path,
                     ),
+
                   ),
                 ),
               );

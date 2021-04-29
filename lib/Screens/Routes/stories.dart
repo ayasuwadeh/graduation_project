@@ -4,8 +4,54 @@ import 'package:toast/toast.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'card.dart';
 import 'package:graduation_project/models/story-image.dart';
-
+import 'package:graduation_project/components/loading.dart';
+import 'package:graduation_project/components/error.dart';
 import 'routeMap.dart';
+import 'package:graduation_project/api/story-sql-api.dart';
+import 'package:graduation_project/services/sql_lite/story_functions.dart';
+import 'package:graduation_project/Screens/StoryImagesView/synced_gridviwe.dart';
+class Routes extends StatelessWidget {
+  StorySQLApi storySQLApi=new StorySQLApi();
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: storySQLApi.fetchAllStories(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.active:
+              return Loading();
+              break;
+            case ConnectionState.waiting:
+              return Loading();
+              break;
+            case ConnectionState.none:
+              return Error(errorText: 'No Internet Connection');
+              break;
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return Error(errorText: snapshot.error.toString());
+                break;
+              } else if (snapshot.hasData) {
+                {
+                  { List <UserStory>list =[];
+                  for(var item in snapshot.data)
+                  {
+                    if(item.synced=='true')
+                      list.add(item);
+                  }
+                  return MyRoutes(list);
+                  }                }
+              }
+          }
+          return Container(
+            color: Colors.white,
+          );
+        });
+
+  }
+}
+
+
 class MyRoutes extends StatefulWidget {
   List<UserStory> stories;
 
@@ -18,6 +64,7 @@ class MyRoutes extends StatefulWidget {
 class _MyRoutesState extends State<MyRoutes> {
   bool deleted = false;
   final _myListKey = GlobalKey<AnimatedListState>();
+  StorySQLApi storySQLApi=new StorySQLApi();
 
   @override
   void initState() {
@@ -53,7 +100,36 @@ class _MyRoutesState extends State<MyRoutes> {
           padding: EdgeInsets.only(top: 20),
           initialItemCount: widget.stories.length,
           itemBuilder: (context, index, animation) {
-            return _buildItem( widget.stories[index],index);
+
+            return FutureBuilder(
+                future: storySQLApi.fetchAllStories(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.active:
+                      return Container();
+                      break;
+                    case ConnectionState.waiting:
+                      return Container();
+                      break;
+                    case ConnectionState.none:
+                      return Error(errorText: 'No Internet Connection');
+                      break;
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return Error(errorText: snapshot.error.toString());
+                        break;
+                      } else if (snapshot.hasData) {
+                        {
+
+                         // if(snapshot.data[index].synced!='false')
+                            return _buildItem(snapshot.data[index], index);
+                        }
+                      }
+                  }
+                  return Container(
+                    color: Colors.white,
+                  );
+                });
 
             //  return _buildItem(index);
           }),
@@ -65,7 +141,7 @@ class _MyRoutesState extends State<MyRoutes> {
   }
 
   void deleteStory(int index) {
-   // StoryFunctions.delete(int.parse(widget.stories[index].id));
+    StoryFunctions.delete(int.parse(widget.stories[index].id));
   }
 
   bool showDeleteDialog(BuildContext context, UserStory story, index) {

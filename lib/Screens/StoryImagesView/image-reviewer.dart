@@ -29,6 +29,7 @@ class _ImageReviewState extends State<ImageReview> {
   String shareText = '';
   final GeolocatorService geoService = GeolocatorService();
   Position currentLocation;
+  int counter=0;
 
   @override
   void initState() {
@@ -56,7 +57,7 @@ class _ImageReviewState extends State<ImageReview> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    print(widget.image.path);
+    // print(widget.image.path);
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -161,7 +162,11 @@ class _ImageReviewState extends State<ImageReview> {
                     child: SingleChildScrollView(
                       child: TextField(
                         maxLines: null,
-                        onTap: toggleWriting,
+                        onTap: ()
+                        {
+                          counter=0;
+                          toggleWriting();
+                        },
                         controller: textController,
                         onSubmitted: (text) {
                           setState(() {
@@ -199,13 +204,22 @@ class _ImageReviewState extends State<ImageReview> {
                       size: 35,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      toggleWriting();
 
-                      Navigator.pop(context,1);
-                      editCaption();
-                      //    Navigator.pop(context);
+                    onPressed: () {
+                      if(!isWriting||counter>0) {
+                        FocusScope.of(context).unfocus();
+                        //toggleWriting();
+                        editCaption();
+                        Navigator.pop(context, 1);
+                        //
+                      }
+                      else if(counter<1)
+                        {
+                          FocusScope.of(context).unfocus();
+
+                          incrementCounter();
+
+                        }
                     },
                   ),
                 ),
@@ -218,6 +232,10 @@ class _ImageReviewState extends State<ImageReview> {
       ),
     );
   }
+  void incrementCounter() {
+    this.counter++;
+    toggleWriting();
+  }
 
   void downloadImage() async {
     final path = join(
@@ -226,7 +244,6 @@ class _ImageReviewState extends State<ImageReview> {
       (await getTemporaryDirectory()).path,
       '${DateTime.now()}.png',
     );
-
     final newFile = await File(path).writeAsBytes(base64Decode(widget.image.path));
 
     await GallerySaver.saveImage(newFile.path).then((value) {

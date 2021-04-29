@@ -8,6 +8,7 @@ import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/services/sql_lite/image_functions.dart';
 import 'package:graduation_project/api/story-sql-api.dart';
 import 'dart:convert';
+import 'package:graduation_project/Screens/StoryImagesView/synced_gridviwe.dart';
 
 class RouteCard extends StatefulWidget {
   final UserStory story;
@@ -34,7 +35,9 @@ class _RouteCardState extends State<RouteCard> {
       {
         int result =await Navigator.push(context,
             MaterialPageRoute(builder: (context) {
-              return StoryGridView( widget.story,);
+              return widget.story.synced=='false'?
+              StoryGridView( widget.story,):
+                  SyncedGridview(widget.story);
             }));//print(index);
 
 
@@ -66,7 +69,39 @@ class _RouteCardState extends State<RouteCard> {
           ),
           child: Stack(
             children: [
-               opacityWidget(widget.story),
+              FutureBuilder(
+                key: ValueKey(changed),
+                  future: storySQLApi.fetchStory(int.parse(widget.story.id)),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.active:
+                        return Container();
+                        break;
+                      case ConnectionState.waiting:
+                        return Container();
+                        break;
+                      case ConnectionState.none:
+                        return Error(errorText: 'No Internet Connection');
+                        break;
+                      case ConnectionState.done:
+                        if (snapshot.hasError) {
+                          return Error(errorText: snapshot.error.toString());
+                          break;
+                        } else if (snapshot.hasData) {
+                          {
+
+                            if(snapshot.data.length>0)
+                            return opacityWidget(snapshot.data[0]);
+
+                          }
+                        }
+                    }
+                    return Container(
+                      color: Colors.white,
+                    );
+                  }),
+
+
 
               Row(
                 children: [
@@ -78,13 +113,41 @@ class _RouteCardState extends State<RouteCard> {
                       child: Column(
                         children: [
                           SizedBox(height: height*0.046,),
-                     Row(
-                       children: [//TODO:faded text
-                         Text(widget.story.name,style: TextStyle(fontSize: 25
-                             ,fontWeight: FontWeight.bold,
-                             color: Colors.deepOrange.withAlpha(150)),),
-                       ],
-                     ),
+                          FutureBuilder(
+                            key: ValueKey(changed),
+                              future: storySQLApi.fetchStory(int.parse(widget.story.id)),
+                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.active:
+                                    return Container();
+                                    break;
+                                  case ConnectionState.waiting:
+                                    return Container();
+                                    break;
+                                  case ConnectionState.none:
+                                    return Error(errorText: 'No Internet Connection');
+                                    break;
+                                  case ConnectionState.done:
+                                    if (snapshot.hasError) {
+                                      return Error(errorText: snapshot.error.toString());
+                                      break;
+                                    } else if (snapshot.hasData) {
+                                      {
+                                        return Row(
+                                          children: [//TODO:faded text
+                                            Text(snapshot.data[0].name,style: TextStyle(fontSize: 25
+                                                ,fontWeight: FontWeight.bold,
+                                                color: Colors.deepOrange.withAlpha(150)),),
+                                          ],
+                                        );
+
+                                      }
+                                    }
+                                }
+                                return Container(
+                                  color: Colors.white,
+                                );
+                              }),
 
                           SizedBox(height: height*0.02,),
                           Row(children:[
@@ -136,7 +199,7 @@ _isSaved=!_isSaved;
 
           image: DecorationImage(
             image:story.storyImages.length>0?
-            story.synced=='false'?MemoryImage(base64Decode(story.storyImages[0].path)):
+            story.synced!='false'?MemoryImage(base64Decode(story.storyImages[0].path)):
             NetworkImage(story.storyImages[0].path):
             NetworkImage('https://t4.ftcdn.net/jpg/01/38/09/45/360_F_138094550_tDdrNPWdyycckV81QF75ov7U2OdE7WSr.jpg'),
 

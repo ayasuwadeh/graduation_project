@@ -76,7 +76,7 @@ class _StoryGridViewState extends State<StoryGridView> {
                               fontSize: 20,
                             ),
                             decoration: new InputDecoration(
-                                hintText: 'search...',
+                                // hintText: 'search...',
                                 hintStyle: TextStyle(
                                     color: Colors.grey.shade700,
                                     fontSize: 17,
@@ -89,11 +89,19 @@ class _StoryGridViewState extends State<StoryGridView> {
                             // },
                           ),
                       )
-                      : Container(
-                          child: Text(textFieldController.text+"    ",
-                              style: GoogleFonts.lobsterTwo(
-                                  fontSize: 32, color: Colors.black)),
-                        ),
+                      : GestureDetector(
+                    onTap: ()
+                    {
+                      setState(() {
+                        editingStoryName=true;
+                      });
+                    },
+                        child: Container(
+                            child: Text(textFieldController.text+"    ",
+                                style: GoogleFonts.lobsterTwo(
+                                    fontSize: 32, color: Colors.black)),
+                          ),
+                      ),
                   IconButton(
                     icon: editingStoryName?Icon(Icons.done_outline,color: Colors.deepOrange,):
                     Icon(Icons.edit_outlined,color: Colors.black,),

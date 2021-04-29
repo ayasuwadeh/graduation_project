@@ -16,7 +16,8 @@ import 'package:graduation_project/services/sql_lite/point_functions.dart';
 import 'dart:convert';
 import 'package:graduation_project/api/story-sql-api.dart';
 import 'package:graduation_project/api/xampp_util.dart';
-
+import 'stories.dart';
+import 'package:graduation_project/models/path-point.dart';
 class Stories extends StatelessWidget {
   StorySQLApi storySQLApi = new StorySQLApi();
 
@@ -72,7 +73,7 @@ class Stories extends StatelessWidget {
                         break;
                       } else if (snapshot.hasData) {
                         {
-                          // print(snapshot.data);
+
                           return MyRoutes(snapshot.data);
                         }
                       }
@@ -81,7 +82,7 @@ class Stories extends StatelessWidget {
                     color: Colors.white,
                   );
                 }),
-            Text("hii")
+            Routes()
           ]
         ),
       ),
@@ -102,9 +103,14 @@ class _MyRoutesState extends State<MyRoutes> {
   bool deleted = false;
   StorySQLApi storySQLApi = new StorySQLApi();
   final _myListKey = GlobalKey<AnimatedListState>();
+  bool sync=false;
+  List<UserStory> storiesInUse=[];
+  bool changed=false;
 
   @override
   void initState() {
+     storiesInUse=widget.stories;
+
     super.initState();
     // showStories();
   }
@@ -114,8 +120,8 @@ class _MyRoutesState extends State<MyRoutes> {
     String f = "";
     String f1 = "";
     final mq = MediaQuery.of(context);
-
     return Scaffold(
+      key: ValueKey(changed),
       backgroundColor: Colors.white,
       body: widget.stories.length == 0
           ? Column(
@@ -140,45 +146,20 @@ class _MyRoutesState extends State<MyRoutes> {
               padding: EdgeInsets.only(top: 20),
               initialItemCount: widget.stories.length,
               itemBuilder: (context, index, animation) {
-                return FutureBuilder(
-                    future: storySQLApi.fetchAllStories(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.active:
-                          return Container();
-                          break;
-                        case ConnectionState.waiting:
-                          return Container();
-                          break;
-                        case ConnectionState.none:
-                          return Error(errorText: 'No Internet Connection');
-                          break;
-                        case ConnectionState.done:
-                          if (snapshot.hasError) {
-                            return Error(errorText: snapshot.error.toString());
-                            break;
-                          } else if (snapshot.hasData) {
-                            {
-                              if(snapshot.data[index].synced!='true')
-                              return _buildItem(snapshot.data[index], index);
-                            }
-                          }
-                      }
-                      return Container(
-                        color: Colors.white,
-                      );
-                    });
+                return _buildItem(widget.stories[index], index);
+
                 //  return _buildItem(index);
               }),
     );
   }
 
-  void showStories() {
-    // print(widget.stories[0].storyImages);
-  }
 
   void deleteStory(int index) {
     StoryFunctions.delete(int.parse(widget.stories[index].id));
+    widget.stories.removeAt(index);
+    setState(() {
+      changed=!changed;
+    });
   }
 
   bool showDeleteDialog(BuildContext context, UserStory story, index) {
@@ -214,7 +195,7 @@ class _MyRoutesState extends State<MyRoutes> {
   }
 
   bool showSyncDialog(BuildContext context, UserStory story, index) {
-    bool deletingDone = false;
+    bool syncingDone = false;
     //print(index.toString()+"index");
     showDialog(
         context: context,
@@ -229,12 +210,12 @@ class _MyRoutesState extends State<MyRoutes> {
             actions: <Widget>[
               new FlatButton(
                 child: new Text("OK"),
-                onPressed: ()async {
+                onPressed: () {
                   Navigator.pop(context);
 
-                  deletingDone = true;
+                  syncingDone = true;
                  syncFunction(story,index);
-                  Toast.show("route has been deleted", context,
+                  Toast.show("route has been synced", context,
                       duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
 
                   reflectDeleting(story, index);
@@ -243,14 +224,12 @@ class _MyRoutesState extends State<MyRoutes> {
             ],
           );
         });
-    return deletingDone;
+    return syncingDone;
   }
 
 
   void reflectDeleting(UserStory story, int index) {
-    setState(() {
-      widget.stories.removeAt(index);
-    });
+    //  widget.stories.removeAt(index);
     _myListKey.currentState.removeItem(
       index,
       (BuildContext context, Animation<double> animation) {
@@ -296,7 +275,7 @@ class _MyRoutesState extends State<MyRoutes> {
           color: Colors.deepOrangeAccent,
           icon: Icon(Icons.upload_outlined),
           onPressed: () {
-            bool sync=showSyncDialog(context, story, index);
+             sync=showSyncDialog(context, story, index);
             },
         ),
         IconButton(
@@ -311,15 +290,6 @@ class _MyRoutesState extends State<MyRoutes> {
     );
   }
 
-  void syncFunction(UserStory story,int index)  {
-    bool sync=showSyncDialog(context, story, index);
-
-     StoryFunctions.updateSync(int.parse(story.id), 'true');
-
-    for (var item in story.storyImages) {
-       uploadImageToServer(item);
-    }
-  }
 
   Future<int> uploadImageToServer(StoryImage image) async {
     String serverFileName = '';
@@ -340,4 +310,22 @@ class _MyRoutesState extends State<MyRoutes> {
         await ImageFunctions.updatePath(int.parse(image.id), serverFileName);
     //print(ImageFunctions.queryRow(image.id).toString());
   }
+
+  void syncFunction(UserStory story,int index)  {
+    //showSyncDialog(context, story, index);
+
+    StoryFunctions.updateSync(int.parse(story.id), 'true');
+
+    for (var item in story.storyImages) {
+      uploadImageToServer(item);
+    }
+    deleteStory(index);
+    UserStory storyToBackEnd=story;
+    List<StoryImage> imagesToBackEnd=[];
+    List<PathPoint> pointsOfPathToBackEnd=[];
+    imagesToBackEnd.addAll(story.storyImages);
+    pointsOfPathToBackEnd.addAll(story.userPath);
+
+  }
+
 }

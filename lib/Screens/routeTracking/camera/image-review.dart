@@ -232,19 +232,6 @@ class _ImageReviewState extends State<ImageReview> {
     });
   }
 
-  // Future<int> saveImageToServer() async{
-  //   base64Image = base64Encode(File(widget.imagePath).readAsBytesSync());
-  //   if (null == widget.imagePath) {
-  //     return -1;
-  //   }
-  //   setState(() {
-  //     serverFileName = widget.imagePath.split('/').last;
-  //
-  //   });
-  //    serverFileName = widget.imagePath.split('/').last;
-  //   int result=await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, base64Image);
-  //   return result;
-  // }
 
   void backToCamera(BuildContext context) {
   //  serverFileName='http://10.0.2.2:80/story_images/'+serverFileName;

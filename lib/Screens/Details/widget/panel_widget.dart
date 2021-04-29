@@ -82,7 +82,7 @@ class PanelWidget extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        placeIn.description,
+        placeIn.description!='a gallery'?placeIn.description:"",
         style: TextStyle(fontStyle: FontStyle.italic),
       ),
       SizedBox(height: 10),
@@ -123,10 +123,11 @@ class PanelWidget extends StatelessWidget {
 
             child: IconButton(
               icon: Icon(Icons.call_rounded, color: Colors.deepOrange),
-              color: Colors.grey[200],
+              color:placeIn.phoneNumber=='tel:0'? Colors.grey:Colors.deepOrange,
               onPressed: (){
+
                 _makePhoneCall(placeIn.phoneNumber);
-              },
+              }
             ),
           ),
           SizedBox(width: 14,),
