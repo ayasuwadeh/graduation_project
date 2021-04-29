@@ -559,54 +559,43 @@ class AuthProvider extends ChangeNotifier {
       'city': story.city,
       'country': story.country,
       'images': jsonEncode(images),
-      'points': points.toString()
+      //'points': points.toString()
     };
+    final body = jsonEncode(data);
 
-    print(data);
+    print(body.toString());
 
     Future<Map<String, String>> headers = UserPreferences()
         .getToken()
         .then((token) => getHeadersForJsonContent(token));
 
 
+    var response = await headers.then((header) => http.post(ApiUtil.saveStory,
+        headers: header, body: body));
 
-    return {
-      'hi': 'jkbnjk'
-    };
-
-
-
-    /*
-
-    var response = await http.post(ApiUtil.saveStory,
-        headers: headers, body: data);
     var result;
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
-      var error = responseData['error'];
-      var message = responseData['message'];
-
-      result = {
-        'errorStatus': error,
-        'message': message
-      };
-
+      if(responseData['success']){
+        result = {
+          'success': true,
+          'story': story,
+          'images': images,
+          'points': points
+        };
+      }else{
+        result = {
+          'success': false,
+        };
+      }
     } else {
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      var error = responseData['error'];
-      var message = responseData['message'];
-
+      print(response.statusCode);
       result = {
-        'errorStatus': error,
-        'message': message
+        'success': false,
       };
     }
-    _codeStatus = ForgotPasswordSendCodeStatus.Sent;
-    notifyListeners();
     return result;
-    */
-
   }
 
 
