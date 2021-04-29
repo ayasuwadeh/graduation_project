@@ -554,12 +554,18 @@ class AuthProvider extends ChangeNotifier {
 
 
   Future<Map<String, dynamic>> saveStory({UserStory story, List<StoryImage> images, List<PathPoint> points}) async {
+    List<String> pointsList = new List<String>();
+    for(var point in points){
+      pointsList.add(point.toString());
+    }
+
     Map<String, dynamic> data = {
       'name': story.name,
       'city': story.city,
       'country': story.country,
-      'images': jsonEncode(images),
-      //'points': points.toString()
+      'dateCreated': story.time.toString(),
+      'images': images,
+      'points': pointsList
     };
     final body = jsonEncode(data);
 
@@ -580,9 +586,6 @@ class AuthProvider extends ChangeNotifier {
       if(responseData['success']){
         result = {
           'success': true,
-          'story': story,
-          'images': images,
-          'points': points
         };
       }else{
         result = {

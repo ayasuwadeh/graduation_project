@@ -215,7 +215,6 @@ class _MyRoutesState extends State<MyRoutes> {
                  syncFunction(story,index);
                   Toast.show("route has been synced", context,
                       duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-
                   //reflectDeleting(story, index);
                 },
               ),
@@ -319,10 +318,7 @@ class _MyRoutesState extends State<MyRoutes> {
           {
             sendStoryToBackend(story[0],index);
           });
-
         });
-
-
     });
 
   }
@@ -337,9 +333,19 @@ class _MyRoutesState extends State<MyRoutes> {
     final Future<Map<String, dynamic>> result =
     Provider.of<AuthProvider>(context, listen: false)
         .saveStory(story: storyToBackEnd, images: imagesToBackEnd, points: pointsOfPathToBackEnd);
-    result.then((value) => print(value));
-    //deleteStory(index);
 
+    result.then((value) {
+      if(value['success']){
+        print(value);
+        deleteStory(index);
+        reflectDeleting(story, index);
+        Toast.show("route has been synced", context,
+            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      }else{
+        Toast.show("Something went wrong", context,
+            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      }
+    });
   }
 
 }
