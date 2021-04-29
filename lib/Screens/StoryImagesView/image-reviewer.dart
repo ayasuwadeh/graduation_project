@@ -8,6 +8,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:graduation_project/services/geolocator_service.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:graduation_project/models/story-image.dart';
+import 'package:graduation_project/services/sql_lite/image_functions.dart';
+import 'package:toast/toast.dart';
+import 'dart:convert';
 class ImageReview extends StatefulWidget {
   final StoryImage image;
 
@@ -26,25 +29,35 @@ class _ImageReviewState extends State<ImageReview> {
   String shareText = '';
   final GeolocatorService geoService = GeolocatorService();
   Position currentLocation;
+  int counter=0;
 
   @override
   void initState() {
-    // TODO: implement initState
-    geoService.getInitialLocation().then((value) {
-      setState(() {
-        currentLocation = value;
-        print(currentLocation.toString() + "hiii");
-      });
-    });
+    if(widget.image.caption!=null)
+    textController.text=widget.image.caption;
+    else     textController.text='';
+
+    // geoService.getInitialLocation().then((value) {
+    //   setState(() {
+    //     currentLocation = value;
+    //    // print(currentLocation.toString() + "hiii");
+    //   });
+    // });
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    print(widget.image.path);
+    // print(widget.image.path);
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -72,8 +85,8 @@ class _ImageReviewState extends State<ImageReview> {
                // scale: 1,
                // origin: Offset(20, 20),
                 child: Container(
-                    child: Image.network(
-                      widget.image.path,
+                    child: Image.memory(
+                      base64Decode(widget.image.path),
                       height:height,
                       width: width,
                       fit: BoxFit.cover,
@@ -88,8 +101,9 @@ class _ImageReviewState extends State<ImageReview> {
                 Container(
                   height: 50,
                   child: IconButton(
-                      onPressed: () {
-                        Share.shareFiles([widget.image.path], text: shareText);
+                      onPressed: () 
+                      {
+                        showDeleteDialog(context);
                       },
                       color: Colors.white,
                       icon: Icon(
@@ -105,7 +119,7 @@ class _ImageReviewState extends State<ImageReview> {
                   height: 50,
                   child: IconButton(
                       onPressed: () {
-                        Share.shareFiles([widget.image.path], text: shareText);
+                        shareImage();
                       },
                       color: Colors.white,
                       icon: Icon(
@@ -148,13 +162,18 @@ class _ImageReviewState extends State<ImageReview> {
                     child: SingleChildScrollView(
                       child: TextField(
                         maxLines: null,
-                        onTap: toggleWriting,
+                        onTap: ()
+                        {
+                          counter=0;
+                          toggleWriting();
+                        },
                         controller: textController,
                         onSubmitted: (text) {
                           setState(() {
                             shareText = text;
                           });
                           toggleWriting();
+
                         },
                         style: TextStyle(
                             fontSize: 30,
@@ -185,10 +204,22 @@ class _ImageReviewState extends State<ImageReview> {
                       size: 35,
                       color: Colors.white,
                     ),
+
                     onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      toggleWriting();
-                      //    Navigator.pop(context);
+                      if(!isWriting||counter>0) {
+                        FocusScope.of(context).unfocus();
+                        //toggleWriting();
+                        editCaption();
+                        Navigator.pop(context, 1);
+                        //
+                      }
+                      else if(counter<1)
+                        {
+                          FocusScope.of(context).unfocus();
+
+                          incrementCounter();
+
+                        }
                     },
                   ),
                 ),
@@ -201,6 +232,10 @@ class _ImageReviewState extends State<ImageReview> {
       ),
     );
   }
+  void incrementCounter() {
+    this.counter++;
+    toggleWriting();
+  }
 
   void downloadImage() async {
     final path = join(
@@ -209,8 +244,7 @@ class _ImageReviewState extends State<ImageReview> {
       (await getTemporaryDirectory()).path,
       '${DateTime.now()}.png',
     );
-
-    final newFile = await File(widget.image.path).copy(path);
+    final newFile = await File(path).writeAsBytes(base64Decode(widget.image.path));
 
     await GallerySaver.saveImage(newFile.path).then((value) {
       print('saved successfluutt');
@@ -222,5 +256,60 @@ class _ImageReviewState extends State<ImageReview> {
     setState(() {
       isWriting = !isWriting;
     });
+
   }
+
+  void deleteStoryImage(BuildContext context) {
+    ImageFunctions.delete(int.parse(widget.image.id));
+    Navigator.pop(context,1);
+    Navigator.pop(context,1);
+
+
+  }
+
+  bool showDeleteDialog(BuildContext context) {
+    bool deletingDone=false;
+   // print(index.toString()+"index");
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            title: new Text("are sure you want to delete this image?"),
+            content: new Text("you can confirm by pressing ok"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  deletingDone=true;
+                  deleteStoryImage(context);
+                },
+              ),
+            ],
+          );
+        });
+    return deletingDone;
+  }
+
+  void editCaption() async{
+    int t=await ImageFunctions.update(int.parse(widget.image.id), textController.text);
+
+  }
+
+  void shareImage() async{
+    final path = join(
+      // Store the picture in the temp directory.
+      // Find the temp directory using the `path_provider` plugin.
+        (await getTemporaryDirectory()).path,
+    '${DateTime.now().microsecondsSinceEpoch}.png',
+    );
+
+    final newFile = await File(path).writeAsBytes(base64Decode(widget.image.path));
+
+    Share.shareFiles([newFile.path], text: shareText);
+
+  }
+
 }

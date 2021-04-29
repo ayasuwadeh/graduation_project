@@ -18,12 +18,22 @@ class StoryFunctions {
     Database db = await SQLService.instance.database;
     return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM story'));
   }
-
-  static Future<int> update(Map<String, dynamic> row) async {
+  static Future<List<Map<String, dynamic>>> queryRow(String id) async {
     Database db = await SQLService.instance.database;
-    int id = row['id'];
-    return await db.update('story', row, where: 'id = ?', whereArgs: [id]);
+    return await db.query('story',columns: ['id','time','name','city','country'],
+        where: 'id = ?', whereArgs: [id]
+    );
   }
+
+  static Future<int> update( int id,String name) async {
+    Database db = await SQLService.instance.database;
+    return await db.update('story',{'name':name}, where: 'id = ?', whereArgs: [id]);
+  }
+  static Future<int> updateSync( int id,String name) async {
+    Database db = await SQLService.instance.database;
+    return await db.update('story',{'synced':name}, where: 'id = ?', whereArgs: [id]);
+  }
+
 
   static Future<int> delete(int id) async {
     Database db = await SQLService.instance.database;

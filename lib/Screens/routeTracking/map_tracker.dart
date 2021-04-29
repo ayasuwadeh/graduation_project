@@ -46,7 +46,7 @@ class _LiveMapState extends State<LiveMap> {
     seq.add(_pointId);
     GeneralLocation location=new GeneralLocation(position.latitude.toString(),
         position.longitude.toString());
-    PathPoint point= PathPoint('',location,_pointId.toString());
+    PathPoint point= PathPoint('',location,_pointId.toString(),'');
     pathPoints.add(point);
 
     if (_pointId > 0) draw();
@@ -59,6 +59,7 @@ class _LiveMapState extends State<LiveMap> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+
       // ignore: missing_required_param
       body: Stack(
         children: [
@@ -189,7 +190,7 @@ class _LiveMapState extends State<LiveMap> {
     streamSubscription = geoService.getCurrentLocation().listen((position) {
       setState(() {
         currentLocation=position;
-        print(currentLocation.toString()+"hello");
+       // print(currentLocation.toString()+"hello");
       });
       centerScreen(position);
       addPointToPolylines(position);
@@ -217,7 +218,7 @@ class _LiveMapState extends State<LiveMap> {
     );
     if(result!=null) {
       this.images.addAll(result);
-      print(images.toString());
+     // print(images.toString());
     }
   }
 

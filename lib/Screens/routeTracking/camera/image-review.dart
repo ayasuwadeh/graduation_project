@@ -32,12 +32,12 @@ class _ImageReviewState extends State<ImageReview> {
   int counter=0;
   @override
   void initState() {
-    // TODO: implement initState
+    //
      geoService.getInitialLocation().then((value)
      {
        setState(() {
          currentLocation=value;
-        print(currentLocation.toString()+"hiii");
+        //print(currentLocation.toString()+"hiii");
        });
      });
     super.initState();
@@ -49,7 +49,7 @@ class _ImageReviewState extends State<ImageReview> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    print(widget.imagePath);
+   // print(widget.imagePath);
 
     return Scaffold(
       resizeToAvoidBottomPadding:false,
@@ -113,6 +113,7 @@ class _ImageReviewState extends State<ImageReview> {
                   child: IconButton(
                       onPressed: () async{
                            downloadImage();
+                           //TODO:toast says done or not
                       },
                       color:Colors.white,
                       icon: Icon(Icons.arrow_downward,size: 30)),
@@ -179,12 +180,15 @@ class _ImageReviewState extends State<ImageReview> {
                           Icons.done,
                           size: 35,color: Colors.white,),
 
-                        onPressed: () {
+                        onPressed: () async{
                           FocusScope.of(context).unfocus();
                           if(counter>0|| !isWriting)
                             {
-                              saveImageToServer();
+                              // int result=await saveImageToServer();
+                              // if(result==1)
                               backToCamera(context);
+
+                              //TODO:toast says error in image&saved image
 
                             }
                           else if (counter<1)
@@ -206,6 +210,8 @@ class _ImageReviewState extends State<ImageReview> {
   }
 
   void downloadImage() async{
+    base64Image = base64Encode(File(widget.imagePath).readAsBytesSync());
+
     final path = join(
         (await getTemporaryDirectory()).path,
     '${DateTime.now()}.png',
@@ -215,9 +221,9 @@ class _ImageReviewState extends State<ImageReview> {
 
     await GallerySaver.saveImage(newFile.path).then((value)
     {
-    print('saved successfluutt');
+   // print('saved successfluutt');
     });
-    print('noo');
+   // print('noo');
   }
 
   void toggleWriting() {
@@ -226,28 +232,12 @@ class _ImageReviewState extends State<ImageReview> {
     });
   }
 
-  void saveImageToServer() async{
-    base64Image = base64Encode(File(widget.imagePath).readAsBytesSync());
-    if (null == widget.imagePath) {
-      return;
-    }
-    setState(() {
-      serverFileName = widget.imagePath.split('/').last;
-
-    });
-     serverFileName = widget.imagePath.split('/').last;
-    String result=await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, base64Image);
-    if(result==null)
-      {
-        print(base64Image);
-      }
-  }
 
   void backToCamera(BuildContext context) {
-    print(this.textController.text+"nothing");
-    serverFileName='http://10.0.2.2:80/story_images/'+serverFileName;
+  //  serverFileName='http://10.0.2.2:80/story_images/'+serverFileName;
+    base64Image = base64Encode(File(widget.imagePath).readAsBytesSync());
     GeneralLocation generalLocation=new GeneralLocation(this.currentLocation.latitude.toString(),this.currentLocation.longitude.toString());
-    StoryImage image=new StoryImage('no id',this.serverFileName,this.textController.text, generalLocation);
+    StoryImage image=new StoryImage('no id',DateTime.now(),this.base64Image,this.textController.text, generalLocation,'');
 
     Navigator.pop(context, image);
 

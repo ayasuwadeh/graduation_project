@@ -15,7 +15,7 @@ class ImageFunctions {
 
   static Future<List<Map<String, dynamic>>> queryRow(String id) async {
     Database db = await SQLService.instance.database;
-    return await db.query('image',columns: ['id','description','path','lat','lng','story_id'],
+    return await db.query('image',columns: ['id','time','description','path','lat','lng','story_id'],
         where: 'story_id = ?', whereArgs: [id]
     );
   }
@@ -26,11 +26,16 @@ class ImageFunctions {
     return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM image'));
   }
 
-  static Future<int> update(Map<String, dynamic> row) async {
+  static Future<int> update(int id,String name) async {
     Database db = await SQLService.instance.database;
-    int id = row['id'];
-    return await db.update('image', row, where: 'id = ?', whereArgs: [id]);
+    return await db.update('image', {'description':name}, where: 'id = ?', whereArgs: [id]);
   }
+
+  static Future<int> updatePath(int id,String name) async {
+    Database db = await SQLService.instance.database;
+    return await db.update('image', {'path':name}, where: 'id = ?', whereArgs: [id]);
+  }
+
 
   static Future<int> delete(int id) async {
     Database db = await SQLService.instance.database;

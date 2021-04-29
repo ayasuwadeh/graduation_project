@@ -17,10 +17,31 @@ class StorySQLApi {
     for(var item in allRows)
       {
         print(item);
-       userStories.add(await UserStory.createStory(item));
+       userStories.add(await UserStory.fetchAllStories(item));
       }
       return userStories;
   }
+
+  Future <List<UserStory>> fetchStory( int id ) async {
+    List<UserStory> userStory=[];
+    final row = await StoryFunctions.queryRow(id.toString());
+      userStory.add(await UserStory.fetchStory(row[0]));
+    return userStory;
+  }
+
+   Future<List<StoryImage>> fetchImagesOfStory(String id) async {
+    final allRows = await ImageFunctions.queryRow(id);
+    List <StoryImage> images=[];
+    allRows.forEach((row)
+    {      //print(row.toString()+"nice one");
+
+      StoryImage storyImage=StoryImage.fromJson(row);
+      images.add(storyImage);
+    });
+
+    return images;
+  }
+
 
 }
 

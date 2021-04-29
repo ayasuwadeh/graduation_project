@@ -72,42 +72,6 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        // leading: Column(
-        //   children: [
-        //     Container(
-        //     //  margin: EdgeInsets.all(10),
-        //       decoration: BoxDecoration(
-        //
-        //           color: kPrimaryColor.withAlpha(100),
-        //           shape: BoxShape.circle
-        //       ),
-        //
-        //       child: IconButton(
-        //         icon: Icon(Icons.bookmark_border,size: 35,),
-        //         onPressed: () {},
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // actions: [
-        //   Container(
-        //   //  margin: EdgeInsets.all(10),
-        //     decoration: BoxDecoration(
-        //
-        //         color: kPrimaryColor.withAlpha(100),
-        //         shape: BoxShape.circle
-        //     ),
-        //
-        //     child: IconButton(
-        //       icon: Icon(Icons.close, size: 35,),
-        //
-        //       onPressed: () {
-        //         Navigator.pop(context);
-        //
-        //       },
-        //     ),
-        //   )
-        // ],
       ),
       body: Stack(
         children: [
