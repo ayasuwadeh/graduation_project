@@ -291,40 +291,39 @@ class _MyRoutesState extends State<MyRoutes> {
   }
 
 
-  Future<int> uploadImageToServer(StoryImage image) async {
-    String serverFileName = '';
-    serverFileName = image.id.toString() +
-        DateTime.now().microsecondsSinceEpoch.toString() +
-        '.jpg';
-    await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, image.path).then((result) {
-      print('result' + result.toString());
-      modifyImagePath(image, serverFileName);
-      return result;
-      /*if(result == 1){
+  Future<int> uploadImagesToServer(List<StoryImage> images) async {
+    for(var image in images)
+      {
+        String serverFileName = '';
+        serverFileName = image.id.toString() +
+            DateTime.now().microsecondsSinceEpoch.toString() +
+            '.jpg';
+        await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, image.path);
         modifyImagePath(image, serverFileName);
-        return result;
-      }*/
-    });
-    return 0;
+
+      }
+    return 1;
   }
 
-  void modifyImagePath(StoryImage image, String serverFileName) {
+  void modifyImagePath(StoryImage image, String serverFileName) async{
 
     serverFileName = 'http://10.0.2.2:80/story_images/' + serverFileName;
-    ImageFunctions.updatePath(int.parse(image.id), serverFileName);
+    await ImageFunctions.updatePath(int.parse(image.id), serverFileName);
 
   }
 
   void syncFunction(UserStory story,int index)  async {
     StorySQLApi storySQLApi=new StorySQLApi();
     UserStory.fetchImagesOfStory(story.id).then((value) {
-      for (var item in value) {
-        uploadImageToServer(item);
-      }
-      storySQLApi.fetchStory(int.parse(story.id)).then((story)
-      {
-        sendStoryToBackend(story[0],index);
-      });
+        uploadImagesToServer(value).then((value)
+        {
+          storySQLApi.fetchStory(int.parse(story.id)).then((story)
+          {
+            sendStoryToBackend(story[0],index);
+          });
+
+        });
+
 
     });
 
@@ -335,7 +334,6 @@ class _MyRoutesState extends State<MyRoutes> {
     List<StoryImage> imagesToBackEnd=[];
     List<PathPoint> pointsOfPathToBackEnd=[];
     imagesToBackEnd.addAll(story.storyImages);
-    //print(storyImages.toString());
     pointsOfPathToBackEnd.addAll(story.userPath);
 
     final Future<Map<String, dynamic>> result =

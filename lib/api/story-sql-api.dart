@@ -29,7 +29,8 @@ class StorySQLApi {
     return userStory;
   }
 
-   Future<List<StoryImage>> fetchImagesOfStory(String id) async {
+
+  Future<List<StoryImage>> fetchImagesOfStory(String id) async {
     final allRows = await ImageFunctions.queryRow(id);
     List <StoryImage> images=[];
     allRows.forEach((row)
