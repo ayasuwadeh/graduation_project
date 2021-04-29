@@ -146,10 +146,16 @@ class MainDrawer extends StatelessWidget {
             result.then((response) => {
               if(response['status']){
                 Provider.of<UserProvider>(context, listen: false).deleteData(),
+                Navigator.pop(context),
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return LoginScreen();
                 }))
               }else{
+                Provider.of<UserProvider>(context, listen: false).deleteData(),
+                Navigator.pop(context),
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
+                })),
                 print('error logging out')
               }
             });

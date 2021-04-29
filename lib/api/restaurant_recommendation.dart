@@ -16,11 +16,11 @@ class RestsRecommendationApi {
         Restaurant rest = Restaurant.fromJson(item);
 
         rests.add(rest);
-        print(rest.location.lat);
+        //print(rest.location.lat);
       }
-       print(rests.length);
+       //print(rests.length);
     }
-    else print(response.statusCode);
+    //else print(response.statusCode);
 
      return rests;
   }

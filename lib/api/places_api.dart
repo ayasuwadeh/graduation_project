@@ -11,13 +11,13 @@ class PlaceDetailsApi{
     var response = await http.get(details);
 
     var hotelDetails=new PlaceDetails(0);
-    print(venueID);
+    //print(venueID);
     if(response.statusCode == 200){
       Map<String, dynamic> body = jsonDecode(response.body);
       // print("in ratingggg");
       hotelDetails = PlaceDetails.fromJson(body['response']['venue']);
     }
-    else print (response.statusCode);
+    //else print (response.statusCode);
 
     return hotelDetails;
   }

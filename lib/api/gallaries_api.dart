@@ -45,8 +45,8 @@ class GalleryApi{
       Map<String, dynamic> body = jsonDecode(response.body);
       //print(body['response']['venues']);
       for(var item in body['response']['venues']){
-        Gallery hospital = Gallery.fromJson(item);
-        galleries.add(hospital);
+        Gallery gallery = Gallery.fromJson(item);
+        galleries.add(gallery);
       }
     }
     return galleries;

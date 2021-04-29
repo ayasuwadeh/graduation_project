@@ -9,6 +9,8 @@ import 'adventure_cards.dart';
 import 'categories.dart';
 import 'package:graduation_project/Screens/OCRfeature/main.dart';
 import 'Drawer.dart';
+import 'package:graduation_project/services/user_preferences.dart';
+import 'package:graduation_project/Screens/Login/login_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -22,11 +24,19 @@ class _HomeScreenState extends State<HomeScreen> {
   String data = '';
   String back = 'hi';
   //RestsRecommendationApi recApi = RestsRecommendationApi();
+
   @override
   void initState() {
-    //getRec();
-
     super.initState();
+    Future<bool> value = UserPreferences().ifLoggedIn();
+    value.then((loggedIn){
+      if(!loggedIn){
+        //Navigator.pop(context);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          return LoginScreen();
+        }));
+      }
+    } );
   }
 
   @override

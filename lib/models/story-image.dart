@@ -22,4 +22,11 @@ class StoryImage{
     this.storyID=jsonObject['story_id'].toString();
 
   }
+
+  Map<String, dynamic> toJson() => {
+    'description': this.caption,
+    'url': this.path,
+    'lat': this.location.lat,
+    'lan': this.location.lan
+  };
 }

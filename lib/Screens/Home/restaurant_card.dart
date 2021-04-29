@@ -5,7 +5,7 @@ import 'package:graduation_project/components/stats_widget_comp.dart';
 import 'package:graduation_project/Screens/Map/map_screen.dart';
 import 'package:graduation_project/Screens/rest_details/page/main_page.dart';
 class RestCard extends StatefulWidget {
-  Restaurant restaurant;
+  final Restaurant restaurant;
   RestCard(this.restaurant);
   @override
   _RestCardState createState() => _RestCardState();

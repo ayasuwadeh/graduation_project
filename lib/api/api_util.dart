@@ -21,6 +21,7 @@ class ApiUtil{
   static const String sendResetPasswordCode = MAIN_API_UTIL + '/forgot-password';
   static const String validatePasswordResetToken = MAIN_API_UTIL + '/forgot-password/code';
   static const String resetPassword = MAIN_API_UTIL + '/reset-password';
+  static const String saveStory = MAIN_API_UTIL + '/user/save-story';
 
 
 

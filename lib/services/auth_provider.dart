@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:graduation_project/api/api_util.dart';
+import 'package:graduation_project/models/story-image.dart';
+import 'package:graduation_project/models/user-story.dart';
 import 'package:graduation_project/models/user.dart';
 import 'package:graduation_project/services/user_preferences.dart';
+import 'package:graduation_project/models/path-point.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -100,6 +103,10 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       result = {'status': true};
     } else {
+      UserPreferences().removeUser();
+      UserPreferences().setStatusLogOut();
+      _loggedInStatus = Status.LoggedOut;
+      notifyListeners();
       result = {'status': false, 'error': response.statusCode.toString()};
     }
     return result;
@@ -314,7 +321,7 @@ class AuthProvider extends ChangeNotifier {
 
     Future<Map<String, String>> headers = UserPreferences()
         .getToken()
-        .then((token) => getInterestsHeaders(token));
+        .then((token) => getHeadersForJsonContent(token));
     var response = await headers.then((value) =>
         http.post(ApiUtil.storeCuisines, headers: value, body: body));
     var result;
@@ -323,7 +330,8 @@ class AuthProvider extends ChangeNotifier {
       final Map<String, dynamic> responseData = json.decode(response.body);
       final List<String> cuisines = List<String>();
       for (var item in responseData['data']) {
-        cuisines.add(item['name']);
+        //print(item['name']);
+        cuisines.add(item['name'].toString());
       }
 
       UserPreferences().saveCultures(cuisines);
@@ -350,7 +358,7 @@ class AuthProvider extends ChangeNotifier {
     final body = jsonEncode(data);
     Future<Map<String, String>> headers = UserPreferences()
         .getToken()
-        .then((token) => getInterestsHeaders(token));
+        .then((token) => getHeadersForJsonContent(token));
     var response = await headers.then((value) =>
         http.post(ApiUtil.storeCultures, headers: value, body: body));
     var result;
@@ -359,7 +367,7 @@ class AuthProvider extends ChangeNotifier {
       final Map<String, dynamic> responseData = json.decode(response.body);
       final List<String> cultures = List<String>();
       for (var item in responseData['data']) {
-        cultures.add(item['name']);
+        cultures.add(item['name'].toString());
       }
       UserPreferences().saveCultures(cultures);
 
@@ -375,7 +383,7 @@ class AuthProvider extends ChangeNotifier {
         'error': responseData['errors'].toString()
       };
     }
-    print('cultures' + response.statusCode.toString());
+    //print('cultures' + response.statusCode.toString());
     return result;
   }
 
@@ -386,7 +394,7 @@ class AuthProvider extends ChangeNotifier {
 
     Future<Map<String, String>> headers = UserPreferences()
         .getToken()
-        .then((token) => getInterestsHeaders(token));
+        .then((token) => getHeadersForJsonContent(token));
     var response = await headers.then(
         (value) => http.post(ApiUtil.storeNatures, headers: value, body: body));
     var result;
@@ -412,11 +420,11 @@ class AuthProvider extends ChangeNotifier {
         'error': responseData['errors'].toString()
       };
     }
-    print('natures' + response.statusCode.toString());
+    //print('natures' + response.statusCode.toString());
     return result;
   }
 
-  Map<String, String> getInterestsHeaders(String token) {
+  Map<String, String> getHeadersForJsonContent(String token) {
     Map<String, String> headers = {
       'accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -542,6 +550,63 @@ class AuthProvider extends ChangeNotifier {
       };
     }
     return result;
+  }
+
+
+  Future<Map<String, dynamic>> saveStory({UserStory story, List<StoryImage> images, List<PathPoint> points}) async {
+    Map<String, dynamic> data = {
+      'name': story.name,
+      'city': story.city,
+      'country': story.country,
+      'images': jsonEncode(images),
+      'points': points.toString()
+    };
+
+    print(data);
+
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeadersForJsonContent(token));
+
+
+
+    return {
+      'hi': 'jkbnjk'
+    };
+
+
+
+    /*
+
+    var response = await http.post(ApiUtil.saveStory,
+        headers: headers, body: data);
+    var result;
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      var error = responseData['error'];
+      var message = responseData['message'];
+
+      result = {
+        'errorStatus': error,
+        'message': message
+      };
+
+    } else {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      var error = responseData['error'];
+      var message = responseData['message'];
+
+      result = {
+        'errorStatus': error,
+        'message': message
+      };
+    }
+    _codeStatus = ForgotPasswordSendCodeStatus.Sent;
+    notifyListeners();
+    return result;
+    */
+
   }
 
 

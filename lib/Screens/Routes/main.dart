@@ -14,7 +14,10 @@ import 'package:graduation_project/api/story-sql-api.dart';
 import 'package:graduation_project/api/xampp_util.dart';
 import 'stories.dart';
 import 'package:graduation_project/models/path-point.dart';
-import 'package:graduation_project/api/story-sql-api.dart';
+import 'package:provider/provider.dart';
+import 'package:graduation_project/services/auth_provider.dart';
+
+
 class Stories extends StatelessWidget {
   StorySQLApi storySQLApi = new StorySQLApi();
 
@@ -293,37 +296,53 @@ class _MyRoutesState extends State<MyRoutes> {
     serverFileName = image.id.toString() +
         DateTime.now().microsecondsSinceEpoch.toString() +
         '.jpg';
-    int result = await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, image.path);
-    if (result == 1) {
+    await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, image.path).then((result) {
+      print('result' + result.toString());
       modifyImagePath(image, serverFileName);
-    }
-    return result;
+      return result;
+      /*if(result == 1){
+        modifyImagePath(image, serverFileName);
+        return result;
+      }*/
+    });
+    return 0;
   }
 
-  void modifyImagePath(StoryImage image, String serverFileName) async {
+  void modifyImagePath(StoryImage image, String serverFileName) {
 
     serverFileName = 'http://10.0.2.2:80/story_images/' + serverFileName;
-    int result = await ImageFunctions.updatePath(int.parse(image.id), serverFileName);
+    ImageFunctions.updatePath(int.parse(image.id), serverFileName);
+
   }
 
   void syncFunction(UserStory story,int index)  async {
     StorySQLApi storySQLApi=new StorySQLApi();
-    storySQLApi.fetchStory(int.parse(story.id)).then((value)
-    {
-      for (var item in value[0].storyImages) {
-      uploadImageToServer(item);
-    }
-    sendStoryToBackend(value,index);
+    UserStory.fetchImagesOfStory(story.id).then((value) {
+      for (var item in value) {
+        uploadImageToServer(item);
+      }
+      storySQLApi.fetchStory(int.parse(story.id)).then((story)
+      {
+        sendStoryToBackend(story[0],index);
+      });
+
     });
 
   }
 
-  void sendStoryToBackend(List<UserStory> story, int index) {
-    UserStory storyToBackEnd=story[0];
+  void sendStoryToBackend(UserStory story, int index) {
+    UserStory storyToBackEnd=story;
     List<StoryImage> imagesToBackEnd=[];
     List<PathPoint> pointsOfPathToBackEnd=[];
-    imagesToBackEnd.addAll(story[0].storyImages);
-    pointsOfPathToBackEnd.addAll(story[0].userPath);
+    imagesToBackEnd.addAll(story.storyImages);
+    //print(storyImages.toString());
+    pointsOfPathToBackEnd.addAll(story.userPath);
+
+    final Future<Map<String, dynamic>> result =
+    Provider.of<AuthProvider>(context, listen: false)
+        .saveStory(story: storyToBackEnd, images: imagesToBackEnd, points: pointsOfPathToBackEnd);
+
+
     deleteStory(index);
 
   }

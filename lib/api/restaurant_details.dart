@@ -15,14 +15,14 @@ class RestDetailsSecondApi{
       Map<String, dynamic> body = jsonDecode(response.body);
       if(body['results'].length>0) {
         hotelDetails = RestDetails.fromJson(body['results'][0]);
-        print(hotelDetails.lat);
+        //print(hotelDetails.lat);
       }
       else
         {hotelDetails.lat=-100;
         hotelDetails.lan=-200;
         }
     }
-    else print (response.statusCode);
+    //else print (response.statusCode);
 
     return hotelDetails;
   }

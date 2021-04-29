@@ -18,11 +18,14 @@ class _MainSplashState extends State<MainSplash> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), ()=>   Navigator.push(context, MaterialPageRoute(
-        builder: (context){
-          return WelcomeScreen();
-        }
-    )));
+    Timer(Duration(seconds: 3), (){
+      //Navigator.pop(context);
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context){
+            return WelcomeScreen();
+          }
+      ));
+    });
   }
 
   @override

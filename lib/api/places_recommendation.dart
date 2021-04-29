@@ -16,11 +16,11 @@ class PlacesRecommendationApi {
         RecommendationPlace place = RecommendationPlace.fromJson(item);
 
         places.add(place);
-        print(place.location.lat);
+        //print(place.location.lat);
       }
-      print(places.length);
+      //print(places.length);
     }
-    else print(response.statusCode);
+    //else print(response.statusCode);
 
     return places;
   }

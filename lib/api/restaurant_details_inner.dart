@@ -21,7 +21,7 @@ class RestInnerDetails{
 
       }
     }
-    else print (response.statusCode);
+    //else print (response.statusCode);
 
     return innerDetails;
   }
