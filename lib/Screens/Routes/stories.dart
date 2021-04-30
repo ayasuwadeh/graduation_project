@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/models/user-story.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'card.dart';
+import 'sync_card.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/components/error.dart';
 import 'routeMap.dart';
@@ -37,6 +37,7 @@ class Routes extends StatelessWidget {
               } else if (snapshot.hasData) {
                 print(snapshot.data);
                 List<UserStory> stories = snapshot.data;
+                return MyRoutes(stories);
                 // TODO here is the list of stories. NOTE: images only have (description , location and url)
               }
           }
@@ -78,7 +79,7 @@ class _MyRoutesState extends State<MyRoutes> {
               children: [
                 Center(
                   child: Text(
-                    "hiiiiiiiiiiiiiiiiii",
+                    "no stories for you ",
                     style: TextStyle(
                       color: Colors.black54,
                       fontSize: 22,
@@ -94,43 +95,16 @@ class _MyRoutesState extends State<MyRoutes> {
               padding: EdgeInsets.only(top: 20),
               initialItemCount: widget.stories.length,
               itemBuilder: (context, index, animation) {
-                return FutureBuilder(
-                    future: storySQLApi.fetchAllStories(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.active:
-                          return Container();
-                          break;
-                        case ConnectionState.waiting:
-                          return Container();
-                          break;
-                        case ConnectionState.none:
-                          return Error(errorText: 'No Internet Connection');
-                          break;
-                        case ConnectionState.done:
-                          if (snapshot.hasError) {
-                            return Error(errorText: snapshot.error.toString());
-                            break;
-                          } else if (snapshot.hasData) {
-                            {
-                              // if(snapshot.data[index].synced!='false')
-                              return _buildItem(snapshot.data[index], index);
-                            }
-                          }
-                      }
-                      return Container(
-                        color: Colors.white,
-                      );
-                    });
+                return _buildItem(widget.stories[index], index);
 
                 //  return _buildItem(index);
               }),
     );
   }
 
-  void deleteStory(int index) {
-    StoryFunctions.delete(int.parse(widget.stories[index].id));
-  }
+  // void deleteStory(int index) {
+  //   StoryFunctions.delete(int.parse(widget.stories[index].id));
+  // }
 
   bool showDeleteDialog(BuildContext context, UserStory story, index) {
     bool deletingDone = false;
@@ -150,7 +124,7 @@ class _MyRoutesState extends State<MyRoutes> {
                 child: new Text("OK"),
                 onPressed: () {
                   deletingDone = true;
-                  deleteStory(index);
+                  //deleteStory(index);
                   Toast.show("route has been deleted", context,
                       duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
 
@@ -190,7 +164,7 @@ class _MyRoutesState extends State<MyRoutes> {
     return Slidable(
       key: ValueKey(index),
       //controller: slidableController,
-      child: RouteCard(
+      child: SyncCard(
         story: story,
         isOpend: false,
       ),

@@ -24,8 +24,6 @@ class SyncedGridview extends StatefulWidget {
 class _StoryGridViewState extends State<SyncedGridview> {
   final textFieldController = TextEditingController(text: "");
   List<StoryImage> images = [];
-  StorySQLApi storySQLApi = new StorySQLApi();
-  bool changed = false;
 
   @override
   void initState() {
@@ -70,48 +68,14 @@ class _StoryGridViewState extends State<SyncedGridview> {
                   ),
                 ],
               )),
-          FutureBuilder(
-              key: ValueKey(changed),
-              future: storySQLApi.fetchImagesOfStory(widget.story.id),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.active:
-                    return Loading();
-                    break;
-                  case ConnectionState.waiting:
-                    return Loading();
-                    break;
-                  case ConnectionState.none:
-                    return Error(errorText: 'No Internet Connection');
-                    break;
-                  case ConnectionState.done:
-                    if (snapshot.hasError) {
-                      return Error(errorText: snapshot.error.toString());
-                      break;
-                    } else if (snapshot.hasData) {
-                      {
-                        print(snapshot.data);
-                        return imagesWidget(snapshot.data);
-                      }
-                    }
-                }
-                return Container(
-                  color: Colors.white,
-                );
-              }),
-        ],
+         imagesWidget(widget.story.storyImages)
+
+    ],
       ),
     );
   }
 
 
-  void fetchStory(String id) async {
-    storySQLApi.fetchImagesOfStory(id).then((value) {
-      setState(() {
-        images.addAll(value);
-      });
-    });
-  }
 
   Widget imagesWidget(var list) {
     return Positioned.fill(
@@ -139,7 +103,6 @@ class _StoryGridViewState extends State<SyncedGridview> {
                           image: list[index],
                         );
                       })); //print(index);
-                      reloadImages(result);
                     },
                     child: FadeInImage.memoryNetwork(
                       placeholder: kTransparentImage,
@@ -158,11 +121,5 @@ class _StoryGridViewState extends State<SyncedGridview> {
     );
   }
 
-  void reloadImages(int result) {
-    //print (result);
-    setState(() {
-      changed = true;
-    });
-  }
 
 }

@@ -152,9 +152,11 @@ class _MyRoutesState extends State<MyRoutes> {
   }
 
 
-  void deleteStory(int index) {
+  void deleteStory(UserStory story,int index) {
     StoryFunctions.delete(int.parse(widget.stories[index].id));
     widget.stories.removeAt(index);
+    reflectDeleting(story, index);
+
     setState(() {
       changed=!changed;
     });
@@ -178,12 +180,12 @@ class _MyRoutesState extends State<MyRoutes> {
                 child: new Text("OK"),
                 onPressed: () {
                   deletingDone = true;
-                  deleteStory(index);
+                  deleteStory(story,index);
                   Toast.show("route has been deleted", context,
                       duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
 
                   Navigator.pop(context);
-                  reflectDeleting(story, index);
+              //    reflectDeleting(story, index);
                 },
               ),
             ],
@@ -329,22 +331,10 @@ class _MyRoutesState extends State<MyRoutes> {
     imagesToBackEnd.addAll(story.storyImages);
     pointsOfPathToBackEnd.addAll(story.userPath);
 
-    final Future<Map<String, dynamic>> result =
+    // final Future<Map<String, dynamic>> result =
     Provider.of<AuthProvider>(context, listen: false)
-        .saveStory(story: storyToBackEnd, images: imagesToBackEnd, points: pointsOfPathToBackEnd);
-
-    result.then((value) {
-      if(value['success']){
-        print(value);
-        deleteStory(index);
-        reflectDeleting(story, index);
-        Toast.show("route has been synced", context,
-            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-      }else{
-        Toast.show("Something went wrong", context,
-            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-      }
-    });
-  }
+        .saveStory(story: storyToBackEnd, images: imagesToBackEnd, points: pointsOfPathToBackEnd).then((value) {
+      deleteStory(story, index);
+    } ); }
 
 }
