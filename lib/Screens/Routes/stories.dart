@@ -3,19 +3,22 @@ import 'package:graduation_project/models/user-story.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'card.dart';
-import 'package:graduation_project/models/story-image.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/components/error.dart';
 import 'routeMap.dart';
 import 'package:graduation_project/api/story-sql-api.dart';
 import 'package:graduation_project/services/sql_lite/story_functions.dart';
-import 'package:graduation_project/Screens/StoryImagesView/synced_gridviwe.dart';
+import 'package:graduation_project/api/stories_api.dart';
+
+
 class Routes extends StatelessWidget {
-  StorySQLApi storySQLApi=new StorySQLApi();
+  final StoriesAPI storiesAPI = StoriesAPI();
+
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: storySQLApi.fetchAllStories(),
+        future: storiesAPI.fetchAllStories(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.active:
@@ -32,28 +35,20 @@ class Routes extends StatelessWidget {
                 return Error(errorText: snapshot.error.toString());
                 break;
               } else if (snapshot.hasData) {
-                {
-                  { List <UserStory>list =[];
-                  for(var item in snapshot.data)
-                  {
-                    if(item.synced=='true')
-                      list.add(item);
-                  }
-                  return MyRoutes(list);
-                  }                }
+                print(snapshot.data);
+                List<UserStory> stories = snapshot.data;
+                // TODO here is the list of stories. NOTE: images only have (description , location and url)
               }
           }
           return Container(
             color: Colors.white,
           );
         });
-
   }
 }
 
-
 class MyRoutes extends StatefulWidget {
-  List<UserStory> stories;
+  final List<UserStory> stories;
 
   MyRoutes(this.stories);
 
@@ -64,7 +59,7 @@ class MyRoutes extends StatefulWidget {
 class _MyRoutesState extends State<MyRoutes> {
   bool deleted = false;
   final _myListKey = GlobalKey<AnimatedListState>();
-  StorySQLApi storySQLApi=new StorySQLApi();
+  StorySQLApi storySQLApi = new StorySQLApi();
 
   @override
   void initState() {
@@ -74,70 +69,63 @@ class _MyRoutesState extends State<MyRoutes> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: widget.stories.length == 0
           ? Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-            child: Text(
-              "No stories for now",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 22,
-                //fontWeight: FontWeight.bold
-              ),
-            ),
-          )
-        ],
-      )
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    "hiiiiiiiiiiiiiiiiii",
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 22,
+                      //fontWeight: FontWeight.bold
+                    ),
+                  ),
+                )
+              ],
+            )
           : AnimatedList(
-          key: _myListKey,
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.only(top: 20),
-          initialItemCount: widget.stories.length,
-          itemBuilder: (context, index, animation) {
-
-            return FutureBuilder(
-                future: storySQLApi.fetchAllStories(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.active:
-                      return Container();
-                      break;
-                    case ConnectionState.waiting:
-                      return Container();
-                      break;
-                    case ConnectionState.none:
-                      return Error(errorText: 'No Internet Connection');
-                      break;
-                    case ConnectionState.done:
-                      if (snapshot.hasError) {
-                        return Error(errorText: snapshot.error.toString());
-                        break;
-                      } else if (snapshot.hasData) {
-                        {
-
-                         // if(snapshot.data[index].synced!='false')
-                            return _buildItem(snapshot.data[index], index);
-                        }
+              key: _myListKey,
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.only(top: 20),
+              initialItemCount: widget.stories.length,
+              itemBuilder: (context, index, animation) {
+                return FutureBuilder(
+                    future: storySQLApi.fetchAllStories(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.active:
+                          return Container();
+                          break;
+                        case ConnectionState.waiting:
+                          return Container();
+                          break;
+                        case ConnectionState.none:
+                          return Error(errorText: 'No Internet Connection');
+                          break;
+                        case ConnectionState.done:
+                          if (snapshot.hasError) {
+                            return Error(errorText: snapshot.error.toString());
+                            break;
+                          } else if (snapshot.hasData) {
+                            {
+                              // if(snapshot.data[index].synced!='false')
+                              return _buildItem(snapshot.data[index], index);
+                            }
+                          }
                       }
-                  }
-                  return Container(
-                    color: Colors.white,
-                  );
-                });
+                      return Container(
+                        color: Colors.white,
+                      );
+                    });
 
-            //  return _buildItem(index);
-          }),
+                //  return _buildItem(index);
+              }),
     );
-  }
-
-  void showStories() {
-    // print(widget.stories[0].storyImages);
   }
 
   void deleteStory(int index) {
@@ -182,13 +170,13 @@ class _MyRoutesState extends State<MyRoutes> {
     });
     _myListKey.currentState.removeItem(
       index,
-          (BuildContext context, Animation<double> animation) {
+      (BuildContext context, Animation<double> animation) {
         return FadeTransition(
           opacity:
-          CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
+              CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
           child: SizeTransition(
             sizeFactor:
-            CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
+                CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
             axisAlignment: 0.0,
             child: _buildItem(story, index),
           ),
@@ -231,6 +219,4 @@ class _MyRoutesState extends State<MyRoutes> {
       ],
     );
   }
-
-
 }

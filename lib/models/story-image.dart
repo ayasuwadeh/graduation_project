@@ -17,10 +17,16 @@ class StoryImage{
     if(  jsonObject['description']==null)
       this.caption="";
 
-   else this.caption=jsonObject['description'].toString();
+    else this.caption=jsonObject['description'].toString();
     this.location = GeneralLocation(jsonObject['lat'].toString(),jsonObject['lng'].toString());
     this.storyID=jsonObject['story_id'].toString();
 
+  }
+
+  StoryImage.fromJsonDatabase(Map<String, dynamic> jsonObject){
+    this.path = jsonObject['url'].toString();
+    this.location = GeneralLocation(jsonObject['lat'].toString(),jsonObject['lan'].toString());
+    this.caption = (jsonObject['description'] != null)? jsonObject['description'].toString(): " ";
   }
 
   Map<String, dynamic> toJson() => {

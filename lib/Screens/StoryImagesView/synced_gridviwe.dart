@@ -13,7 +13,7 @@ import 'package:graduation_project/models/story-image.dart';
 import 'package:graduation_project/services/sql_lite/story_functions.dart';
 
 class SyncedGridview extends StatefulWidget {
-  UserStory story;
+  final UserStory story;
 
   SyncedGridview(this.story);
 

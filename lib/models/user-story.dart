@@ -1,8 +1,10 @@
 import 'package:graduation_project/models/story-image.dart';
 import 'package:graduation_project/models/path-point.dart';
-import 'package:graduation_project/models/path-point.dart';
 import 'package:graduation_project/services/sql_lite/image_functions.dart';
 import 'package:graduation_project/services/sql_lite/point_functions.dart';
+import 'general_location.dart';
+
+
 class UserStory {
   String id;
   String synced;
@@ -15,6 +17,30 @@ class UserStory {
   List<PathPoint> userPath;
 
   UserStory(this.id,this.time,this.name,this.city,this.country,this.storyImages,this.userPath,this.synced);
+
+   UserStory.fromJson(Map<String, dynamic> jsonObject){
+    int index = 0;
+
+    this.storyImages = List<StoryImage>();
+    this.userPath = List<PathPoint>();
+    this.name = jsonObject['name'].toString();
+    this.city = jsonObject['city'].toString();
+    this.country = jsonObject['country'].toString();
+    this.time = DateTime.parse(jsonObject['dateCreated'].toString());
+
+    for(var img in jsonObject['images'] ){
+      this.storyImages.add(StoryImage.fromJsonDatabase(img));
+    }
+
+    for(var pointJson in jsonObject['points'] ){
+      List<String> pointString = pointJson.toString().split(', ');
+      GeneralLocation location = new GeneralLocation(pointString[0] , pointString[1]);
+      PathPoint point = new PathPoint('', location ,index.toString() , '');
+      index++;
+      this.userPath.add(point);
+    }
+
+  }
 
   static Future<UserStory>fetchAllStories(Map<String, dynamic> jsonObject) async {
     String id=jsonObject['id'].toString();
