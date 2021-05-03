@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/Screens/Explore/main.dart';
 import 'package:graduation_project/Screens/Home/home_screen.dart';
 import 'package:graduation_project/Screens/routeTracking/route_welcoming_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:graduation_project/Screens/routeTracking/map_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   final String activePage;
@@ -65,17 +66,34 @@ class _BottomNavBarState extends State<BottomNavBar> {
             },
 
           ),
-          RaisedButton(
-            padding: EdgeInsets.all(5.0),
-            color: Colors.deepOrange,
-            shape: CircleBorder(),
-            child: Icon(Icons.navigation,color: Colors.white,size: 40,),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) {
-                    return RouteWelcomeScreen();
-                  }));
-            },
+          Container(
+            width:50,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 4,
+                  blurRadius: 5,
+                  offset: Offset(-1.5, 5), // changes position of shadow
+                ),
+              ],
+
+              color: Color(0xFFFFECDF),
+              borderRadius: BorderRadius.circular(70),
+            ),
+            child: RaisedButton(
+              padding: EdgeInsets.all(5.0),
+              color: Colors.deepOrange,
+              shape: CircleBorder(),
+              child: Icon(Icons.navigation,color: Colors.white,size: 40,),
+              onPressed: () {
+                checkWelcomeScreen();
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) {
+                //       return RouteWelcomeScreen();
+                //     }));
+              },
+            ),
           ),
 
           BottomNavItem(
@@ -96,17 +114,27 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
           ),
 
-          // BottomNavItem(
-          //   title: "Fav Places",
-          //   icon: Icons.bookmark,
-          // ),
-          // BottomNavItem(
-          //   title: "Profile",
-          //   icon: Icons.person,
-          // ),
         ],
       ),
     );
+  }
+
+  Future checkWelcomeScreen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+
+    if (_seen) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) {
+            return MapScreen();
+          }));    }
+    else {
+      await prefs.setBool('seen', true);
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return RouteWelcomeScreen();
+      }));
+    }
+
   }
 }
 
@@ -133,7 +161,7 @@ class BottomNavItem extends StatelessWidget {
           Icon(
             icon,
             size: 30,
-            color: isActive ? kPrimaryColor : Colors.black54,
+            color: isActive ? Color(0xEEEAB5A5) : Colors.black54,
           ),
           Text(
             title,

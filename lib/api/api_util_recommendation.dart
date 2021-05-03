@@ -22,6 +22,10 @@ class ApiUtilRecommendation{
     return FLASK_MAIN_REQUEST + 'places?keywords='+ keywords ;
   }
 
+  static String GET_ALL_CITIES_RECOMMENDATION(String keywords){
+    return FLASK_MAIN_REQUEST + 'cities?plan='+ keywords ;
+  }
+
   static String GET_ALL_SIMILAR_PLACES(String id){
     return FLASK_MAIN_REQUEST + 'similarPlaces?ID='+ id ;
   }

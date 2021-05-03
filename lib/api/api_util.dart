@@ -1,5 +1,4 @@
 import 'package:url_launcher/url_launcher.dart';
-
 class ApiUtil{
 
   static const String MAIN_API_UTIL = 'http://10.0.2.2:8000/api';
@@ -31,8 +30,8 @@ class ApiUtil{
   static const String MAIN_FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/search?';
   static const String FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/';
 
-  static const String CLIENT_ID = 'client_id=2RPMC1UN4IL12SVLGQPDFUMYWJHBU10MCRR1BDBQPCIVK5MG';
-  static const String CLIENT_SECRET = 'client_secret=YEOS2I23JAM05F420R0JHD1XUV5Z2JQXCO5LA1GTCKVNUS22';
+  static const String CLIENT_ID = 'client_id=WGDK1ZR0RRJZMOCQQFYEPRJHKOAJ2RQMUNITX3CIJI5M0UVU';
+  static const String CLIENT_SECRET = 'client_secret=ZLC0CNJJ0TM1RI424WNR2ASI5533QTHJHLDCM4IMEVPO3C4H';
   static const String V = 'v=20210316';
 
   static const String HOSPITAL_CATEGORY_ID = 'categoryId=4bf58dd8d48988d104941735';
@@ -47,9 +46,8 @@ class ApiUtil{
   static const String MUSEUMS_CATEGORY_ID = 'categoryId=4bf58dd8d48988d181941735';
 
 
-
   static String ALL_HOSPITALS(String latitude, String longitude){
-    return MAIN_FOURSQUARE_REQUEST + CLIENT_ID + '&' + CLIENT_SECRET + '&' + V + '&' + 'll=' + latitude + ',' + longitude + '&' + 'intent=checkin&radius=5000&limit=50' + '&' + HOSPITAL_CATEGORY_ID;
+  return MAIN_FOURSQUARE_REQUEST + CLIENT_ID + '&' + CLIENT_SECRET + '&' + V + '&' + 'll=' + latitude + ',' + longitude + '&' + 'intent=checkin&radius=5000&limit=50' + '&' + HOSPITAL_CATEGORY_ID;
   }
 
   static String ALL_MALLS(String latitude, String longitude){

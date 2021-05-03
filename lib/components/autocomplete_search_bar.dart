@@ -25,7 +25,7 @@ class _SearchBarState extends State<SearchBar> {
         child: Column(
           children: [
             Container(
-              width: size.width*0.84,
+              width: size.width*0.64,
               margin: EdgeInsets.only(bottom: size.width*0.02),
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 22),
               decoration: BoxDecoration(
@@ -43,7 +43,7 @@ class _SearchBarState extends State<SearchBar> {
                         ),
                         decoration: new InputDecoration(
                             hintText: widget.hint+'...',
-                            hintStyle: TextStyle(color: Colors.grey.shade700,fontSize:17,fontWeight: FontWeight.bold)
+                            hintStyle: TextStyle(color: Colors.grey.shade700,fontSize:14,)
                         ),
                         clearOnSubmit: false,
                         controller: _suggestionsAutoTextController,

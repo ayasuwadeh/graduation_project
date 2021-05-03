@@ -89,8 +89,7 @@ class _GalleriesListScreenState extends State<GalleriesListScreen> {
         .of(context)
         .size;
 
-    return
-       SingleChildScrollView(//TODO:draw route on map
+    return widget.galleries.length>0?SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: size.height*0.034,),
@@ -99,6 +98,21 @@ class _GalleriesListScreenState extends State<GalleriesListScreen> {
           ],
         ),
 
+    ):Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            "no places around",
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 22,
+              //fontWeight: FontWeight.bold
+            ),
+          ),
+        )
+      ],
     );
 
 

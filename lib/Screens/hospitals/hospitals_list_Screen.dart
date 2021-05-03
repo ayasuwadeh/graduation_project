@@ -11,7 +11,7 @@ class HospitalsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return hospitals.length>0?Scaffold(
       appBar: AppBar(
           leading: IconButton(icon:Icon(Icons.arrow_back,color: Colors.deepOrange,),
             color: Colors.black,
@@ -29,33 +29,26 @@ class HospitalsListScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-        //     Container(
-        //       margin: EdgeInsets.only(left: 29, top: 20, bottom: 20),
-        //       child: Row(
-        //         children: [
-        //           InkWell(
-        //             //TODO make it go back
-        //               child: Icon(
-        //                   Icons.arrow_back,
-        //                 color: kPrimaryColor,
-        //                 size: 30,
-        //               )
-        //           ),
-        //           Text(
-        //             '   Hospitals',
-        //             style: TextStyle(
-        //               fontSize: 30,
-        //               fontWeight: FontWeight.bold
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-            SizedBox(height: size.height*0.034,),
             HospitalsListWidget(hospitals),
           ],
         ),
       ),
+    ):
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            "no places around",
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 22,
+              //fontWeight: FontWeight.bold
+            ),
+          ),
+        )
+      ],
     );
   }
 }
@@ -82,16 +75,7 @@ class _HospitalsListWidgetState extends State<HospitalsListWidget> {
 
   @override
   Widget build(BuildContext context) {//TODO: bring data here from api
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            searchBar(),
-            _buildHospitalList(_searchedHospitals),
-          ],
-        ),
-      ),
-    );
+    return Expanded(child: _buildHospitalList(_searchedHospitals));
   }
 
   Widget searchBar() {//TODO:make it component
@@ -166,26 +150,24 @@ class _HospitalsListWidgetState extends State<HospitalsListWidget> {
   }
 
   Widget _buildHospitalList(List<Hospital> hospitals) {
-    print(hospitals.length.toString());
+   // print(hospitals.length.toString());
     Size size = MediaQuery
         .of(context)
         .size;
 
-    return SizedBox(
-      height: MediaQuery
-          .of(context)
-          .size
-          .height * 0.7,
-      child: ListView.builder(
+    return  ListView.builder(
         padding: const EdgeInsets.all(8),
-        itemCount: hospitals.length,
+        itemCount: hospitals.length+1,
         itemBuilder: (BuildContext context, int index) {
-          if (hospitals.length > 0)
-            return HospitalCard(hospital: hospitals[index],);
-          else
+          if (index == 0)
             return searchBar();
-        },
-      ),
+          else
+            return Transform(
+              transform: Matrix4.translationValues(5, 0, 0),
+                child:
+                HospitalCard(hospital: hospitals[index -1],));
+        }
+
     );
   }
 

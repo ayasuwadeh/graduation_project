@@ -35,7 +35,6 @@ class HotelsListScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: size.height*0.034,),
 
             MallsListWidget(hotels:hotels),
 
@@ -70,32 +69,30 @@ class _MallsListWidgetState extends State<MallsListWidget> {
   Widget build(BuildContext context) {
 
     return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            searchBar(),
+      child:
             _buildMallList(_searchedHotels),
-          ],
-        ),
-      ),
-    );
+
+        );
 
   }
 
 
   Widget _buildMallList(List<Hotel> malls){
-   print(malls.length.toString());
+   //print(malls.length.toString());
    Size size = MediaQuery.of(context).size;
 
    return  SizedBox(
-          height: MediaQuery.of(context).size.height * 0.7,
+          height: MediaQuery.of(context).size.height * 0.8,
           child: ListView.builder(
             padding: const EdgeInsets.all(8),
-            itemCount: malls.length,
+            itemCount: malls.length+1,
             itemBuilder: (BuildContext context, int index){
-              if (malls.length>0)
-                return HotelCard(hotel: malls[index],);
-              else return searchBar();
+              if(index==0)
+                {
+                  return searchBar();
+                }
+
+                return HotelCard(hotel: malls[index-1],);
             },
           ),
        );
@@ -170,7 +167,7 @@ class _MallsListWidgetState extends State<MallsListWidget> {
   }
   change() {
     setState(() {
-      print("hiiii");
+     // print("hiiii");
     });
   }
 }

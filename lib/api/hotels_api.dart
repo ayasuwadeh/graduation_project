@@ -2,12 +2,15 @@ import 'package:graduation_project/api/api_util.dart';
 import 'package:graduation_project/models/hotel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:geolocator/geolocator.dart';
 class HotelApi{
 
   Future<List<Hotel>> fetchAllHotels() async{
-    // TODO make location dynamic
-    String allMarkets = ApiUtil.ALL_HOTELS('48.85177', '2.22139');
+    Position position;
+
+    position=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+
+    String allMarkets = ApiUtil.ALL_HOTELS(position.latitude.toString(),position.longitude.toString());
 
     var response = await http.get(allMarkets);
 

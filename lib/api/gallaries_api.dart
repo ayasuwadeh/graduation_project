@@ -2,33 +2,37 @@ import 'package:graduation_project/api/api_util.dart';
 import 'package:graduation_project/models/gallary.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:geolocator/geolocator.dart';
 class GalleryApi{
 
   Future<List<Gallery>> fetchAllGalleries(int index) async{
     //TODO : make location dynamic
     String allGalleries ='';
+    Position position;
+
+    position=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+
 
     switch (index)
     {
       case 0:
-        {allGalleries=ApiUtil.GALLARIES('48.85177', '2.22139');
+        {allGalleries=ApiUtil.GALLARIES(position.latitude.toString(),position.longitude.toString());
         }
         break;
       case 1:
-        {allGalleries=ApiUtil.ZOOS('48.85177', '2.22139');
+        {allGalleries=ApiUtil.ZOOS(position.latitude.toString(),position.longitude.toString());
         }
         break;
       case 2:
-        {allGalleries=ApiUtil.PARKS('48.85177', '2.22139');
+        {allGalleries=ApiUtil.PARKS(position.latitude.toString(),position.longitude.toString());
         }
         break;
       case 3:
-        {allGalleries=ApiUtil.MUSEUM('48.85177', '2.22139');
+        {allGalleries=ApiUtil.MUSEUM(position.latitude.toString(),position.longitude.toString());
         }
         break;
       case 4:
-        {allGalleries=ApiUtil.BEACH('48.85177', '2.22139');
+        {allGalleries=ApiUtil.BEACH(position.latitude.toString(),position.longitude.toString());
         }
         break;
 

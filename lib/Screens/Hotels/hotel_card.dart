@@ -22,7 +22,7 @@ class HotelCard extends StatelessWidget {
       {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) {
-              print("hereeeeeeeeeeeee");
+             // print("hereeeeeeeeeeeee");
               return
                FutureBuilder(
                  future: itemDetailsApi.fetchDetails(hotel.id),
@@ -44,7 +44,7 @@ class HotelCard extends StatelessWidget {
                           return Error(errorText: snapshot.error.toString());
                           break;
                         } else if (snapshot.hasData) {
-                         { print(snapshot.data);
+                         { //print(snapshot.data);
                            return MapScreen(details: snapshot.data,
                           item: hotel,);
                           break;

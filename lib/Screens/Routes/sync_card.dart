@@ -130,6 +130,10 @@ class _RouteCardState extends State<SyncCard> {
 
   Widget opacityWidget(UserStory story)
   {
+    // for(var item in story.storyImages)
+    // {
+    //   print(item.path);
+    // }
     return Opacity(opacity: 0.5,
       child: Container(
         decoration: new BoxDecoration(

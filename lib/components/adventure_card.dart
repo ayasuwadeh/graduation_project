@@ -24,18 +24,18 @@ class AdventureCard extends StatelessWidget {
                 Positioned.fill(
                     child: Image(
                         image: AssetImage(image),
-                        fit: BoxFit.fill)),
+                        fit: BoxFit.cover)),
                 Positioned.fill(
                     child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.black45.withAlpha(420)
-                      // gradient: LinearGradient(
-                      //     begin: Alignment.topCenter,
-                      //     end: Alignment.bottomCenter,
-                      //     colors: [
-                      //   Color(0x19232121).withOpacity(0.9),//0.4
-                      //   Color(0xFF343434).withOpacity(0.2)//0.15
-                      // ])
+                    //color: Colors.white.withAlpha(800),
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.centerRight,
+                          colors: [
+                        Colors.grey.shade600.withOpacity(0.7),//0.4
+                        Colors.white70.withOpacity(0.0001)//0.15
+                      ])
                   ),
                 )),
                 Padding(

@@ -4,12 +4,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project/services/geolocator_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:async';
-import 'package:graduation_project/models/path-point.dart';
+import 'package:graduation_project/models/user-story.dart';
 
 class RouteMap extends StatefulWidget {
-  final List <PathPoint> pathPoints;
+  final UserStory userStory;
 
-  const RouteMap({Key key, this.pathPoints}) : super(key: key);
+  const RouteMap({Key key, this.userStory}) : super(key: key);
 
   @override
   _RouteMapState createState() => _RouteMapState();
@@ -36,13 +36,13 @@ class _RouteMapState extends State<RouteMap> {
 
   void initState() {
 
-    _setInitialMarker(Position(latitude:double.parse(widget.pathPoints.first.location.lat),
-        longitude:double.parse(widget.pathPoints.first.location.lan)));
-    if(widget.pathPoints.length>1)
+    _setInitialMarker(Position(latitude:double.parse(widget.userStory.userPath.first.location.lat),
+        longitude:double.parse(widget.userStory.userPath.first.location.lan)));
+    if(widget.userStory.userPath.length>1)
     draw();
-    _setFinalMarker(Position(latitude:double.parse(widget.pathPoints.last.location.lat),
-        longitude:double.parse(widget.pathPoints.last.location.lan)));
-    
+    _setFinalMarker(Position(latitude:double.parse(widget.userStory.userPath.last.location.lat),
+        longitude:double.parse(widget.userStory.userPath.last.location.lan)));
+    addMarkers();
     super.initState();
   }
 
@@ -58,8 +58,8 @@ class _RouteMapState extends State<RouteMap> {
           mapType: MapType.normal,
           markers: markers != null ? Set<Marker>.from(markers) : null,
           initialCameraPosition: CameraPosition(
-              target: LatLng(double.parse(widget.pathPoints.first.location.lat),
-                  double.parse(widget.pathPoints.first.location.lan)),
+              target: LatLng(double.parse(widget.userStory.userPath.first.location.lat),
+                  double.parse(widget.userStory.userPath.first.location.lan)),
               zoom: 12),
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
@@ -81,17 +81,17 @@ class _RouteMapState extends State<RouteMap> {
   //
   void draw() {
     int count=0;
-    for(var item in widget.pathPoints)
+    for(var item in widget.userStory.userPath)
       {
         final String polylineIdVal = 'polyline_id_${item.sequence}';
         _polylineIdCounter++;
         final PolylineId polylineId = PolylineId(polylineIdVal);
         LatLng firstPoint = LatLng(
-            double.parse(widget.pathPoints[_pointId - 1].location.lat),
-            double.parse(widget.pathPoints[_pointId - 1].location.lan));
+            double.parse(widget.userStory.userPath[_pointId - 1].location.lat),
+            double.parse(widget.userStory.userPath[_pointId - 1].location.lan));
         LatLng secondPoint = LatLng(
-            double.parse(widget.pathPoints[_pointId].location.lat),
-            double.parse(widget.pathPoints[_pointId].location.lan));
+            double.parse(widget.userStory.userPath[_pointId].location.lat),
+            double.parse(widget.userStory.userPath[_pointId].location.lan));
         final Polyline polyline = Polyline(
           polylineId: polylineId,
           consumeTapEvents: true,
@@ -133,6 +133,24 @@ class _RouteMapState extends State<RouteMap> {
       icon: BitmapDescriptor.defaultMarker,
     );
     markers.add(finalMarker);
+  }
+
+  void addMarkers() {
+    
+    for(var item in widget.userStory.storyImages)
+      {
+        Marker newMarker = Marker(
+          markerId: MarkerId('dest'),
+          position: LatLng(
+              double.parse(item.location.lat), double.parse(item.location.lan)),
+          infoWindow: InfoWindow(
+            title: 'image',
+
+          ),
+          icon: BitmapDescriptor.defaultMarker,
+        );
+       markers.add(newMarker);
+      }
   }
 
 

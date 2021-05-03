@@ -21,7 +21,7 @@ class _SignUpViewState extends State<SignUpView> {
       Stack(
         children:[ PageView(
           children:[
-            new SignUpScreen1(),
+            new Body(),
             new MyHomePage(),
             new WelcomeCard(),
           ],

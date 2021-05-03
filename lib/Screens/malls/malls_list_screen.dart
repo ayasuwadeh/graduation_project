@@ -34,32 +34,6 @@ class MallsListScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Container(
-            //   margin: EdgeInsets.only(left: 29, top: 20, bottom: 20),
-            //   child: Row(
-            //     children: [
-            //       InkWell(
-            //           onTap: (){
-            //             Navigator.pop(context);
-            //           },
-            //           child: Icon(
-            //             Icons.arrow_back,
-            //             color: kPrimaryColor,
-            //             size: 30,
-            //           )
-            //       ),
-            //       Text(
-            //         '   Shopping Malls',
-            //         style: TextStyle(
-            //             fontSize: 30,
-            //             fontWeight: FontWeight.bold
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-           // SearchBar(hint: "Search",),
-            SizedBox(height: size.height*0.034,),
             MallsListWidget(malls),
           ],
         ),
@@ -89,14 +63,10 @@ class _MallsListWidgetState extends State<MallsListWidget> {
   Widget build(BuildContext context) {
 
     return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            searchBar(),
+
+        child:
             _buildMallList(_searchedMalls),
-          ],
-        ),
-      ),
+
     );
 
   }
@@ -110,11 +80,12 @@ class _MallsListWidgetState extends State<MallsListWidget> {
       height: MediaQuery.of(context).size.height * 0.7,
       child: ListView.builder(
         padding: const EdgeInsets.all(5),
-        itemCount: malls.length,
+        itemCount: malls.length+1,
         itemBuilder: (BuildContext context, int index){
-          if (malls.length>0)
-            return MallCard(mall: malls[index],);
-          else return searchBar();
+          if(index==0)
+            return searchBar();
+          else
+            return MallCard(mall: malls[index-1],);
         },
       ),
     );

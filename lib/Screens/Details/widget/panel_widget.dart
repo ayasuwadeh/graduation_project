@@ -29,15 +29,6 @@ class PanelWidget extends StatelessWidget {
             ),
             color: Colors.white,
 
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black45.withOpacity(0.5),
-                blurRadius: 20,
-                spreadRadius: 40,
-
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
           ),
 
           child: buildProfile(),

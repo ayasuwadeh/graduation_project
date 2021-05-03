@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'package:graduation_project/models/market.dart';
 import 'package:http/http.dart' as http;
 import 'api_util.dart';
-
+import 'package:geolocator/geolocator.dart';
 class MarketsApi{
   Future<List<Market>> fetchAllMarkets() async{
-    // TODO make location dynamic
-    String allMarkets = ApiUtil.ALL_MARKETS('48.85177', '2.22139');
+    Position position;
+
+    position=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    String allMarkets = ApiUtil.ALL_MARKETS(position.latitude.toString(), position.longitude.toString());
 
     //print(allMalls);
     var response = await http.get(allMarkets);

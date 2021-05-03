@@ -35,10 +35,13 @@ class Routes extends StatelessWidget {
                 return Error(errorText: snapshot.error.toString());
                 break;
               } else if (snapshot.hasData) {
-                print(snapshot.data);
+               // print(snapshot.data);
                 List<UserStory> stories = snapshot.data;
+                for(var itm in stories) {
+                  print("hello");
+                  print(itm.storyImages);
+                }
                 return MyRoutes(stories);
-                // TODO here is the list of stories. NOTE: images only have (description , location and url)
               }
           }
           return Container(
@@ -177,7 +180,7 @@ class _MyRoutesState extends State<MyRoutes> {
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return RouteMap(
-                pathPoints: story.userPath,
+                userStory: story,
               );
             })); //print(index);
           },

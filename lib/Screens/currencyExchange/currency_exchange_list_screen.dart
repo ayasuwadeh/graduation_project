@@ -16,7 +16,7 @@ class CurrencyExchangeListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return currencyEx.length>0?Scaffold(
       appBar: AppBar(
 
           leading: IconButton(icon:Icon(Icons.arrow_back,color: Colors.deepOrange,),
@@ -64,6 +64,22 @@ class CurrencyExchangeListScreen extends StatelessWidget {
           ],
         ),
       ),
+    ):
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            "no currency exchange around",
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 22,
+              //fontWeight: FontWeight.bold
+            ),
+          ),
+        )
+      ],
     );
   }
 }

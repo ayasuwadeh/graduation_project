@@ -21,7 +21,7 @@ class HospitalCard extends StatelessWidget {
        {
          Navigator.push(context,
              MaterialPageRoute(builder: (context) {
-               print("hereeeeeeeeeeeee");
+           //    print("hereeeeeeeeeeeee");
                return
                  FutureBuilder(
                      future: itemDetailsApi.fetchDetails(hospital.id),

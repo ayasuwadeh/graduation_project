@@ -41,7 +41,7 @@ class AdventuresCards extends StatelessWidget {
                 ));},
 
                 text: "Zoo",
-                image: "assets/images/zoo.jpg",
+                image: "assets/images/zoo1.jpg",
               ),
               AdventureCard(
                 onTapped: (){Navigator.push(context, MaterialPageRoute(

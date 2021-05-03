@@ -6,14 +6,14 @@ import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:graduation_project/services/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class SignUpScreen1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Body(),
-    );
-  }
-}
+// class SignUpScreen1 extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Body(),
+//     );
+//   }
+// }
 
 class Body extends StatefulWidget {
   @override
@@ -32,23 +32,20 @@ class _BodyState extends State<Body> with AutomaticKeepAliveClientMixin {
 
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            height: size.height * 0.7,
-            margin: EdgeInsets.only(top: size.height * 0.15),
-            child: SingleChildScrollView(
+      body:
+          SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
+               // mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
+                  SizedBox(height: 100,),
                   Text("Continue setting up your profile",
                       style: GoogleFonts.raleway(
                         textStyle: TextStyle(
@@ -64,6 +61,7 @@ class _BodyState extends State<Body> with AutomaticKeepAliveClientMixin {
                   GestureDetector(
                     child: Container(
                         width: 330,
+
                         margin: EdgeInsets.all(15),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black54),
@@ -133,41 +131,38 @@ class _BodyState extends State<Body> with AutomaticKeepAliveClientMixin {
                     ),
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 120,
                   ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                        height: 30,
+                        margin: EdgeInsets.only(bottom: 40),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.arrow_back_outlined,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              "you can swipe right",
+                              style: TextStyle(color: Colors.grey, fontSize: 15),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_outlined,
+                              color: Colors.grey,
+                            ),
+                          ],
+                        )),
+                  ),
+
                 ],
               ),
             ),
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                  height: 30,
-                  margin: EdgeInsets.only(bottom: 40),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Icon(
-                        Icons.arrow_back_outlined,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        "you can swipe right",
-                        style: TextStyle(color: Colors.grey, fontSize: 15),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_outlined,
-                        color: Colors.grey,
-                      ),
-                    ],
-                  )),
-            ),
-          ),
-        ],
-      ),
+
     );
   }
 

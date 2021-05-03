@@ -263,7 +263,7 @@ class _MyRoutesState extends State<MyRoutes> {
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return RouteMap(
-                pathPoints: story.userPath,
+                userStory: story,
               );
             })); //print(index);
           },

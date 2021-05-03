@@ -25,7 +25,7 @@ class Categories extends StatelessWidget {
   HotelApi hotelApi = HotelApi();
   MarketsApi marketsApi = MarketsApi();
   MallsApi mallApi = MallsApi();
-  CurrencyExchangeApi currencyExcApi = CurrencyExchangeApi();
+  CurrencyExchangeApi currencyExcApi = new CurrencyExchangeApi();
   HospitalApi hospitalApi = HospitalApi();
 
 
