@@ -11,6 +11,7 @@ class Gallery{
 
   Gallery.fromJson(Map<String, dynamic> jsonObject) {
     this.id = jsonObject['id'].toString();
+    print(this.id);
     this.name = jsonObject['name'].toString();
     this.location = Location.fromJson(jsonObject['location']);
     this.category = Category.fromJson(jsonObject['categories'][0]);

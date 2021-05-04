@@ -37,14 +37,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 7,
-          blurRadius: 7,
+          spreadRadius: 2,
+          blurRadius: 5,
           offset: Offset(0, 0), // changes position of shadow
         ),
       ],
     ),
       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-      height: 70,
+      height: 67,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -79,7 +79,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ],
 
               color: Color(0xFFFFECDF),
-              borderRadius: BorderRadius.circular(70),
+              borderRadius: BorderRadius.circular(77),
             ),
             child: RaisedButton(
               padding: EdgeInsets.all(5.0),

@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 
 class BookCard extends StatefulWidget {
-  final AssetImage image;
+  final String image;
   final String name;
   final String country;
-
-  const BookCard({Key key,@required this.image,@required this.name, @required this.country}) :
+  final String city;
+  final double rating;
+  const BookCard({Key key,@required this.image,@required this.name, @required this.country, this.city, this.rating}) :
         super(key: key);
   @override
   _BookCardState createState() => _BookCardState();
@@ -57,7 +58,9 @@ class _BookCardState extends State<BookCard> {
                   decoration: new BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image:widget.image,
+                      image:
+                        NetworkImage('https://t4.ftcdn.net/jpg/01/38/09/45/360_F_138094550_tDdrNPWdyycckV81QF75ov7U2OdE7WSr.jpg'),
+
                       fit: BoxFit.cover,
                     ),
                   ),

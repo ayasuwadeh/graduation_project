@@ -25,8 +25,7 @@ class PlaceDetails{
 
     if((jsonObject['photos']['count'])!=0) {
       for (var image in jsonObject['photos']['groups'][0]['items'])
-       { print("imageeee");
-       print(image);
+       {
          this.images.add(image['prefix'].toString() +
              image['width'].toString() +
              'x' + image['height'].toString() +
@@ -34,14 +33,6 @@ class PlaceDetails{
     }
 
     else this.images=['not found'];
-    // if((jsonObject['bestPhoto'])!=null) {
-    //   this.images.add( jsonObject['bestPhoto']['prefix'] +
-    //       jsonObject['bestPhoto']['width'].toString() +
-    //       'x' + jsonObject['bestPhoto']['height'].toString() +
-    //       jsonObject['bestPhoto']['suffix']);
-    //   print(images);
-    // }
-    // else this.images.add("hh");
 
     if(jsonObject['url']!=null)
       this.url=jsonObject['url'];

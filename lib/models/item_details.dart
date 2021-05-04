@@ -7,7 +7,6 @@ class ItemDetails{
   String url;
   double lat;
   double lan;
- // String phoneNumber;
 
   ItemDetails(this.rating, );
 

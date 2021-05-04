@@ -6,7 +6,6 @@ import 'package:geolocator/geolocator.dart';
 class GalleryApi{
 
   Future<List<Gallery>> fetchAllGalleries(int index) async{
-    //TODO : make location dynamic
     String allGalleries ='';
     Position position;
 

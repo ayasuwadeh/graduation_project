@@ -91,9 +91,11 @@ class _GalleriesListScreenState extends State<GalleriesListScreen> {
 
     return widget.galleries.length>0?SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
-            SizedBox(height: size.height*0.034,),
-            searchBar(),
             itemList(searchedGalleries),
           ],
         ),
@@ -121,20 +123,23 @@ class _GalleriesListScreenState extends State<GalleriesListScreen> {
   { //print('jjjjjj'+galleries[0].name);
    return
       SizedBox(
-        height: MediaQuery.of(context).size.height * 0.7,
+        height: MediaQuery.of(context).size.height * 0.9,
         child: ListView.builder(
           padding: const EdgeInsets.all(8),
-          itemCount: galleries.length,
+          itemCount: galleries.length+1,
           itemBuilder: (BuildContext context, int index){
+            if(index==0)
+              return searchBar();
+            else
             return GalleryCard(
-              gallery: galleries[index],
+              gallery: galleries[index-1],
             );
           },
           //children: List.from(hotelCards)
         ),
     );
   }
-  Widget searchBar() {//TODO:make it component
+  Widget searchBar() {
     Size size = MediaQuery
         .of(context)
         .size;

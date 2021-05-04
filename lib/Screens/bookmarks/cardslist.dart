@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/bookmarks/date_divider.dart';
 import 'package:graduation_project/Screens/bookmarks/card.dart';
-
+import 'package:graduation_project/models/BookmarkPlace.dart';
 class CardsList extends StatefulWidget {
-  final List<BookCard> cardsList;
-  final DateTime saved;
+  final List<BookmarkPlace> bookmarks;
+  //final DateTime saved;
 
-  const CardsList({Key key, this.cardsList, this.saved}) : super(key: key);
+  const CardsList({Key key, this.bookmarks, }) : super(key: key);
   @override
   _CardsListState createState() => _CardsListState();
 }
@@ -17,8 +17,21 @@ class _CardsListState extends State<CardsList> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-
+        children: _createChildren( widget.bookmarks),
       ),
     );
   }
 }
+
+List<Widget> _createChildren(List<BookmarkPlace> list) {
+  return new List<Widget>.generate(list.length, (int index) {
+    return BookCard(country: list[index].country,
+      name: list[index].name,
+      image: list[index].image,
+      city: list[index].city,
+      rating: list[index].rating,
+    );
+  });
+}
+
+

@@ -15,6 +15,10 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   var _suggestionsAutoTextController=new TextEditingController();
 
+  var item=[
+    'now',
+    'tomorrow'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +56,7 @@ class _SearchBarState extends State<SearchBar> {
                           _suggestionsAutoTextController.text=item;
                         },
                         key: null,
-                        suggestions: widget.items,
+                        suggestions: item,
                         itemBuilder: (context,item)
                         {
                           return Container(

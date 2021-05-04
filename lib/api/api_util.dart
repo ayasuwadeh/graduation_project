@@ -22,6 +22,9 @@ class ApiUtil{
   static const String resetPassword = MAIN_API_UTIL + '/reset-password';
   static const String saveStory = MAIN_API_UTIL + '/user/save-story';
   static const String allStories = MAIN_API_UTIL + '/user/stories';
+  static const String userEntertainmentsBookmarks = MAIN_API_UTIL + '/user/entertainments/';
+  static const String userRestaurantsBookmarks = MAIN_API_UTIL + '/user/restaurants/';
+
 
 
 

@@ -1,14 +1,14 @@
 import 'package:graduation_project/models/category.dart';
 import 'package:graduation_project/models/location.dart';
-class InnerRest{
+class InnerPlaceRec{
   List <String> imageReferences=List<String>();
   bool isOpen=false;
 
 
-  InnerRest( );
+  InnerPlaceRec( );
 
-  static Future <InnerRest>fetchImages(Map<String, dynamic> jsonObject) async {
-    InnerRest innerRest=InnerRest();
+  static Future <InnerPlaceRec>fetchImages(Map<String, dynamic> jsonObject) async {
+    InnerPlaceRec innerRest=InnerPlaceRec();
     int i=0;
     if(jsonObject['opening_hours']!=null)
       if(jsonObject['opening_hours']['open_now']!=null)

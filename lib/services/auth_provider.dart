@@ -7,7 +7,7 @@ import 'package:graduation_project/services/user_preferences.dart';
 import 'package:graduation_project/models/path-point.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:graduation_project/models/BookmarkPlace.dart';
 enum Status {
   NotLoggedIn,
   NotRegistered,
@@ -433,6 +433,7 @@ class AuthProvider extends ChangeNotifier {
     return headers;
   }
 
+
   Future<Map<String, dynamic>> sendForgotPasswordEmail({String email}) async {
     Map<String, dynamic> data = {
       'email': email,
@@ -600,6 +601,64 @@ class AuthProvider extends ChangeNotifier {
     }
     return result;
   }
+
+  Future <List<BookmarkPlace>> showEntertainmentsBookmarks() async {
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeaders(token));
+
+    var response = await headers.then((header) => http.get(ApiUtil.userEntertainmentsBookmarks,
+        headers: header));
+
+    var result;
+    List<BookmarkPlace > bookmarkPlaces=[];
+    final Map<String, dynamic> responseData = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+        for(var item in responseData['data']['entertainments'] )
+          {
+            BookmarkPlace bookmarkPlace=BookmarkPlace.fromJson(item);
+            bookmarkPlaces.add(bookmarkPlace);
+          }
+    } else {
+      print(response.statusCode);
+    }
+    return bookmarkPlaces;
+  }
+
+
+  Future <List<BookmarkPlace>> showRestaurantsBookmarks() async {
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeaders(token));
+
+    var response = await headers.then((header) => http.get(ApiUtil.userRestaurantsBookmarks,
+        headers: header));
+
+    var result;
+    List<BookmarkPlace > bookmarkPlaces=[];
+    final Map<String, dynamic> responseData = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      for(var item in responseData['data']['restaurants'] )
+      {
+        BookmarkPlace bookmarkPlace=BookmarkPlace.fromJson(item);
+        bookmarkPlaces.add(bookmarkPlace);
+      }
+    } else {
+      print(response.statusCode);
+    }
+    return bookmarkPlaces;
+  }
+
+  Future <List<BookmarkPlace>> showAllBookmarks() async {
+    List<BookmarkPlace > bookmarkPlaces=[];
+
+    bookmarkPlaces.addAll(await this.showEntertainmentsBookmarks());
+    bookmarkPlaces.addAll(await this.showRestaurantsBookmarks());
+    return bookmarkPlaces;
+  }
+
 
 
 }

@@ -1,4 +1,5 @@
 class RecommendationCity{
+  String id;
   String name;
   String image;
   String description;
@@ -6,7 +7,6 @@ class RecommendationCity{
   double score;
 
   RecommendationCity.fromJson(Map<String, dynamic> jsonObject)  {
-    print(jsonObject);
     this.name = jsonObject['city'];
     this.image=jsonObject['image'];
     this.description=jsonObject['description'];

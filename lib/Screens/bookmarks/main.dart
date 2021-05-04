@@ -2,8 +2,11 @@ import 'package:graduation_project/Screens/bookmarks/date_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Screens/bookmarks/card.dart';
-
-
+import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/components/loading.dart';
+import 'package:graduation_project/components/error.dart';
+import 'cardslist.dart';
+import 'package:graduation_project/models/BookmarkPlace.dart';
 class MyBookmarks extends StatefulWidget {
   MyBookmarks({Key key}) : super(key: key);
 
@@ -13,7 +16,7 @@ class MyBookmarks extends StatefulWidget {
 }
 
 class _MyBookmarksState extends State<MyBookmarks> {
-
+  AuthProvider authProvider=new AuthProvider();
   var chipsMap = [
     {
       'name': 'all',
@@ -33,6 +36,7 @@ class _MyBookmarksState extends State<MyBookmarks> {
   ];
   int _value = 0;
   int index;
+  int apiIndex=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +72,7 @@ class _MyBookmarksState extends State<MyBookmarks> {
                     onSelected: (bool selected) {
                       setState(() {
                         _value = selected ? index : null;
+                        print(_value);
                       });
                       checkValue();
                     },
@@ -81,26 +86,37 @@ class _MyBookmarksState extends State<MyBookmarks> {
             ).toList(),
           ),
 
+          FutureBuilder(
+              key: ValueKey(_value),
+              future: _value==1?authProvider.showRestaurantsBookmarks():_value==2?
+              authProvider.showEntertainmentsBookmarks():authProvider.showAllBookmarks(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.active:
+                    return Loading();
+                    break;
+                  case ConnectionState.waiting:
+                    return Loading();
+                    break;
+                  case ConnectionState.none:
+                    return Error(errorText: 'No Internet Connection');
+                    break;
+                  case ConnectionState.done:
+                    if (snapshot.hasError) {
+                      return Error(errorText: snapshot.error.toString());
+                      break;
+                    } else if (snapshot.hasData) {
+                      {
+                        return CardsList(bookmarks: snapshot.data,);
+                      }
+                    }
+                }
+                return Container(
+                  color: Colors.white,
+                );
+              }),
 
-          new BookCard(image: AssetImage("assets/images/pyramids.jpg"),
-            name: "Piza Tower",
-            country: "Italy",),
-          DateDivider(saveDate: new DateTime.now(),),
-          new BookCard(image: AssetImage("assets/images/piza.jpg"),
-            name: "Piza Tower",
-            country: "Italy",),
-          new BookCard(image: AssetImage("assets/images/china.jpg"),
-            name: "Piza Tower",
-            country: "Italy",),
-          new BookCard(image: AssetImage("assets/images/piza.jpg"),
-            name: "Piza Tower",
-            country: "Italy",),
-          new BookCard(image: AssetImage("assets/images/piza.jpg"),
-            name: "Piza Tower",
-            country: "Italy",),
-          new BookCard(image: AssetImage("assets/images/piza.jpg"),
-            name: "Piza Tower",
-            country: "Italy",),
+
 
 
         ],

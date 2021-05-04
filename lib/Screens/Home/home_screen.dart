@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String url = '';
   String data = '';
   String back = 'hi';
+
   //RestsRecommendationApi recApi = RestsRecommendationApi();
 
   @override
@@ -107,8 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ]),
             //SizedBox(height: 35),
             AdventuresCards(),
-            SizedBox(height: 30),
-            Categories(),
+            // SizedBox(height: 30),
+            // Categories(),
             // SizedBox(height: 30),
             // Places(),
             // SizedBox(
