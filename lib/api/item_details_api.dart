@@ -11,7 +11,6 @@ class ItemDetailsApi{
     var response = await http.get(details);
 
     var hotelDetails=new ItemDetails(0);
-    print(venueID);
     if(response.statusCode == 200){
       Map<String, dynamic> body = jsonDecode(response.body);
      // print("in ratingggg");

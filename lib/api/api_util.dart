@@ -24,6 +24,9 @@ class ApiUtil{
   static const String allStories = MAIN_API_UTIL + '/user/stories';
   static const String userEntertainmentsBookmarks = MAIN_API_UTIL + '/user/entertainments/';
   static const String userRestaurantsBookmarks = MAIN_API_UTIL + '/user/restaurants/';
+  static const String addEntertainmentBookmark = MAIN_API_UTIL + '/user/add-entertainment-bookmark/';
+  static const String deleteEntertainmentBookmark = MAIN_API_UTIL + '/user/delete-entertainment-bookmark/';
+  static const String findEntertainmentBookmark = MAIN_API_UTIL + '/user/find-entertainment-bookmark?id=';
 
 
 
@@ -33,8 +36,8 @@ class ApiUtil{
   static const String MAIN_FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/search?';
   static const String FOURSQUARE_REQUEST = 'https://api.foursquare.com/v2/venues/';
 
-  static const String CLIENT_ID = 'client_id=WGDK1ZR0RRJZMOCQQFYEPRJHKOAJ2RQMUNITX3CIJI5M0UVU';
-  static const String CLIENT_SECRET = 'client_secret=ZLC0CNJJ0TM1RI424WNR2ASI5533QTHJHLDCM4IMEVPO3C4H';
+  static const String CLIENT_ID = 'client_id=BG5X4Q4NP2FK25KJ3RZOWDE4Z4AWI4W2LE1Z1WFOMTFGVZDQ';
+  static const String CLIENT_SECRET = 'client_secret=HCOL5ITU5TDP4WF5ENUC0FG1S4M25LKOIBYSRIPOQJ3P1YTT';
   static const String V = 'v=20210316';
 
   static const String HOSPITAL_CATEGORY_ID = 'categoryId=4bf58dd8d48988d104941735';
@@ -48,7 +51,7 @@ class ApiUtil{
   static const String BEACH_CATEGORY_ID = 'categoryId=4bf58dd8d48988d1e2941735';
   static const String MUSEUMS_CATEGORY_ID = 'categoryId=4bf58dd8d48988d181941735';
 
-
+  //////////////////foursquare
   static String ALL_HOSPITALS(String latitude, String longitude){
   return MAIN_FOURSQUARE_REQUEST + CLIENT_ID + '&' + CLIENT_SECRET + '&' + V + '&' + 'll=' + latitude + ',' + longitude + '&' + 'intent=checkin&radius=5000&limit=50' + '&' + HOSPITAL_CATEGORY_ID;
   }

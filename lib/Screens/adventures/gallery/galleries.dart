@@ -48,7 +48,7 @@ class Galleries extends StatelessWidget {
                   break;
                 }
                 else if (snapshot.hasData) {
-                  {print(snapshot.data);
+                  {
                   galleries=snapshot.data;
                   galleries.sort((a, b) => a.location.distance.compareTo(b.location.distance));
                   return GalleriesListScreen(galleries);
@@ -78,7 +78,6 @@ class _GalleriesListScreenState extends State<GalleriesListScreen> {
   @override
   void initState() {
        searchedGalleries=widget.galleries;
-       print("hhhh");
 
     super.initState();
   }

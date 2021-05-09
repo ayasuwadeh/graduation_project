@@ -9,7 +9,8 @@ import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/api/restaurant_details_inner.dart';
 import 'package:graduation_project/models/restaurant.dart';
 import 'package:graduation_project/models/inner_restaurant.dart';
-import 'package:graduation_project/api/book-rest.dart';
+import 'package:graduation_project/models/BookmarkPlace.dart';
+import 'package:graduation_project/services/auth_provider.dart';
 class PlaceWidget extends StatelessWidget {
   Restaurant restaurant;
   PlaceWidget(this.restaurant);
@@ -110,7 +111,7 @@ class _MainPageState extends State<MainPage> {
   final panelController = PanelController();
   bool isBooked=false;
   bool isLiked=false;
-  BookRestApi bookRestApi= new BookRestApi();
+  AuthProvider authProvider=new AuthProvider();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -230,12 +231,20 @@ class _MainPageState extends State<MainPage> {
     print('pressed');
     if(isBooked)
       {
-        BookRestApi.BOOK_RESTAURANT("22", widget.restaurant.id);
+
       }
 
     if(!isBooked)
       {
-        BookRestApi.BOOK_RESTAURANT("22", widget.restaurant.id);
+        BookmarkPlace bookmarkPlace=new BookmarkPlace();
+        bookmarkPlace.name=widget.restaurant.name;
+        bookmarkPlace.id=widget.restaurant.googleID;
+        bookmarkPlace.rating=widget.restaurant.rating;
+        bookmarkPlace.source='google';
+        bookmarkPlace.country='France';
+        bookmarkPlace.city='Paris';
+        bookmarkPlace.image=widget.innerRest.imageReferences[0];
+        authProvider.addEntertainmentBookmark(place:bookmarkPlace );
       }
     setState(() {
       isBooked=!isBooked;

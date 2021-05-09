@@ -14,7 +14,6 @@ class PlaceDetails{
   PlaceDetails.fromJson(Map<String, dynamic> jsonObject) {
     if((jsonObject['rating'])!=null)
     { this.rating = (jsonObject['rating']/2);//TODO: ROUNDING
-      print(this.rating.toString()+"  ratinggggggg0");
     }
     else this.rating=-1;
 

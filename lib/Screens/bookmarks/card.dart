@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:graduation_project/services/auth_provider.dart';
 
 class BookCard extends StatefulWidget {
+  final String id;
   final String image;
   final String name;
   final String country;
   final String city;
   final double rating;
-  const BookCard({Key key,@required this.image,@required this.name, @required this.country, this.city, this.rating}) :
+  const BookCard({Key key,@required this.image,@required this.name, @required this.country, this.city, this.rating, this.id}) :
         super(key: key);
   @override
   _BookCardState createState() => _BookCardState();
@@ -16,6 +17,7 @@ class BookCard extends StatefulWidget {
 
 class _BookCardState extends State<BookCard> {
  bool _isSaved=true;
+ AuthProvider authProvider=new AuthProvider();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -59,8 +61,9 @@ class _BookCardState extends State<BookCard> {
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
                       image:
-                        NetworkImage('https://t4.ftcdn.net/jpg/01/38/09/45/360_F_138094550_tDdrNPWdyycckV81QF75ov7U2OdE7WSr.jpg'),
-
+                          widget.image=='not found'?
+                        NetworkImage('https://t4.ftcdn.net/jpg/01/38/09/45/360_F_138094550_tDdrNPWdyycckV81QF75ov7U2OdE7WSr.jpg')
+                        :NetworkImage(widget.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -104,11 +107,12 @@ class _BookCardState extends State<BookCard> {
   }
 
   void toggleSaving() {
+    if(_isSaved)
+      {
+       authProvider.deleteEntertainmentBookmark(id: widget.id) ;
+      }
     setState(() {
 _isSaved=!_isSaved;
     });
-    // if(_isSaved)
-    //   print("saved");
-    // else print("not saved");
   }
 }

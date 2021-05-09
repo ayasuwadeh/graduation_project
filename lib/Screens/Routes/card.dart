@@ -9,6 +9,7 @@ import 'package:graduation_project/services/sql_lite/image_functions.dart';
 import 'package:graduation_project/api/story-sql-api.dart';
 import 'dart:convert';
 import 'package:graduation_project/Screens/StoryImagesView/synced_gridviwe.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class RouteCard extends StatefulWidget {
   final UserStory story;
@@ -42,142 +43,139 @@ class _RouteCardState extends State<RouteCard> {
 
 
       },
-      child: Padding(
-        padding: EdgeInsets.only(left:15,right: 15),
-        child: Container(
-          height: height*0.2,
-          margin: EdgeInsets.all(7),
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 3,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            borderRadius:BorderRadius.circular(20),
-            gradient: new LinearGradient(
-              colors: [
-                Colors.white,
-                Colors.black,
-
-              ],
-              begin: Alignment.centerLeft,
-              end: new Alignment(1.7, 1.7)
-            )
-          ),
-          child: Stack(
-            children: [
-              FutureBuilder(
-                key: ValueKey(changed),
-                  future: storySQLApi.fetchStory(int.parse(widget.story.id)),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.active:
-                        return Container();
-                        break;
-                      case ConnectionState.waiting:
-                        return Container();
-                        break;
-                      case ConnectionState.none:
-                        return Error(errorText: 'No Internet Connection');
-                        break;
-                      case ConnectionState.done:
-                        if (snapshot.hasError) {
-                          return Error(errorText: snapshot.error.toString());
-                          break;
-                        } else if (snapshot.hasData) {
-                          {
-
-                            if(snapshot.data.length>0)
-                            return opacityWidget(snapshot.data[0]);
-
-                          }
-                        }
-                    }
-                    return Container(
-                      color: Colors.white,
-                    );
-                  }),
-
-
-
-              Row(
-                children: [
-
-                  //SizedBox(height: 80,),
-                   Align(
-
-                      alignment: Alignment.bottomLeft,
-                      child: Column(
-                        children: [
-                          SizedBox(height: height*0.046,),
-                          FutureBuilder(
-                            key: ValueKey(changed),
-                              future: storySQLApi.fetchStory(int.parse(widget.story.id)),
-                              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                switch (snapshot.connectionState) {
-                                  case ConnectionState.active:
-                                    return Container();
-                                    break;
-                                  case ConnectionState.waiting:
-                                    return Container();
-                                    break;
-                                  case ConnectionState.none:
-                                    return Error(errorText: 'No Internet Connection');
-                                    break;
-                                  case ConnectionState.done:
-                                    if (snapshot.hasError) {
-                                      return Error(errorText: snapshot.error.toString());
-                                      break;
-                                    } else if (snapshot.hasData) {
-                                      {
-                                        return Row(
-                                          children: [//TODO:faded text
-                                            Text(snapshot.data[0].name,style: TextStyle(fontSize: 25
-                                                ,fontWeight: FontWeight.bold,
-                                                color: Colors.deepOrange.withAlpha(150)),),
-                                          ],
-                                        );
-
-                                      }
-                                    }
-                                }
-                                return Container(
-                                  color: Colors.white,
-                                );
-                              }),
-
-                          SizedBox(height: height*0.02,),
-                          Row(children:[
-                            Text("   "),
-                            Icon(Icons.location_pin,color: Colors.black54,),
-                            Text(widget.story.city+", "+widget.story.country,
-                              style: TextStyle(fontSize: 17
-                                  ,fontWeight: FontWeight.bold,
-                              color: Color(0xC1090A0A)),),]),
-                          Text(Jiffy(widget.story.time).fromNow().toString())
-                        ],
-                      ),
-                    ),
-                  // SizedBox(width: width*0.3,),
-                  // widget.isOpend?Icon(
-                  //   Icons.double_arrow_rounded,
-                  //   color: Colors.deepOrange.withOpacity(0.50),
-                  //   size: 30,
-                  // ):
-                  // Icon(
-                  //   Icons.double_arrow_rounded,
-                  //   color: Colors.deepOrange.withOpacity(0.60),
-                  //   size: 30,
-                  // ),
-
-
-
-                ],
-              )
+      child: Container(
+        height: height*0.2,
+        margin: EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 3,
+                blurRadius: 5,
+                offset: Offset(0, 5), // changes position of shadow
+              ),
             ],
+            borderRadius:BorderRadius.circular(20),
+        ),
+
+        child: Padding(
+          padding: EdgeInsets.only(left:10,right: 15),
+          child: Row(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FutureBuilder(
+                  key: ValueKey(changed),
+                    future: storySQLApi.fetchStory(int.parse(widget.story.id)),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.active:
+                          return Container();
+                          break;
+                        case ConnectionState.waiting:
+                          return Container();
+                          break;
+                        case ConnectionState.none:
+                          return Error(errorText: 'No Internet Connection');
+                          break;
+                        case ConnectionState.done:
+                          if (snapshot.hasError) {
+                            return Error(errorText: snapshot.error.toString());
+                            break;
+                          } else if (snapshot.hasData) {
+                            {
+
+                              if(snapshot.data.length>0)
+                              return opacityWidget(snapshot.data[0]);
+
+                            }
+                          }
+                      }
+                      return Container(
+                        color: Colors.white,
+                      );
+                    }),
+
+]),
+
+                Column(
+                  children: [
+
+                    //SizedBox(height: 80,),
+                     Align(
+
+                        alignment: Alignment.bottomLeft,
+                        child: Column(
+                          children: [
+                            SizedBox(height: height*0.046,),
+                            FutureBuilder(
+                              key: ValueKey(changed),
+                                future: storySQLApi.fetchStory(int.parse(widget.story.id)),
+                                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.active:
+                                      return Container();
+                                      break;
+                                    case ConnectionState.waiting:
+                                      return Container();
+                                      break;
+                                    case ConnectionState.none:
+                                      return Error(errorText: 'No Internet Connection');
+                                      break;
+                                    case ConnectionState.done:
+                                      if (snapshot.hasError) {
+                                        return Error(errorText: snapshot.error.toString());
+                                        break;
+                                      } else if (snapshot.hasData) {
+                                        {
+                                          return Row(
+                                            children: [//TODO:faded text
+                                              Text(snapshot.data[0].name,style: TextStyle(fontSize: 25
+                                                  ,fontWeight: FontWeight.bold,
+                                                  color: Colors.deepOrange.withAlpha(150)),),
+                                            ],
+                                          );
+
+                                        }
+                                      }
+                                  }
+                                  return Container(
+                                    color: Colors.white,
+                                  );
+                                }),
+
+                            SizedBox(height: height*0.02,),
+                            Row(children:[
+                              Text("   "),
+                              Icon(Icons.location_pin,color: Colors.black54,),
+                              Text(widget.story.city+", "+widget.story.country,
+                                style: TextStyle(fontSize: 17
+                                    ,fontWeight: FontWeight.bold,
+                                color: Color(0xC1090A0A)),),]),
+                            Text(Jiffy(widget.story.time).fromNow().toString())
+                          ],
+                        ),
+                      ),
+                    // SizedBox(width: width*0.3,),
+                    // widget.isOpend?Icon(
+                    //   Icons.double_arrow_rounded,
+                    //   color: Colors.deepOrange.withOpacity(0.50),
+                    //   size: 30,
+                    // ):
+                    // Icon(
+                    //   Icons.double_arrow_rounded,
+                    //   color: Colors.deepOrange.withOpacity(0.60),
+                    //   size: 30,
+                    // ),
+
+
+
+                  ],
+                )
+              ],
+
           ),
         ),
       ),
@@ -192,23 +190,47 @@ _isSaved=!_isSaved;
 
   Widget opacityWidget(UserStory story)
   {
-    return Opacity(opacity: 0.5,
-      child: Container(
-        decoration: new BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+    return  ClipRRect(
+      clipBehavior: Clip.antiAlias,
+      borderRadius:BorderRadius.circular(500),
+      child:
+        SizedBox(
+          height: 90,
+          width: 90,
+          child: CarouselSlider(
 
-          image: DecorationImage(
-            image:story.storyImages.length>0?
-            story.synced!='false'?MemoryImage(base64Decode(story.storyImages[0].path)):
-            NetworkImage(story.storyImages[0].path):
-            NetworkImage('https://t4.ftcdn.net/jpg/01/38/09/45/360_F_138094550_tDdrNPWdyycckV81QF75ov7U2OdE7WSr.jpg'),
+            items:widget.story.storyImages.map((i) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    width: 100,
+                      height: 320,
+                      // width: double.infinity,
+                      child: Image.memory(base64Decode(i.path), fit: BoxFit.cover,width: double.infinity,)
+                  );
+                },
+              );
+            }).toList(),
 
-            fit: BoxFit.cover,
+            options: CarouselOptions(
+               height: 300,
+
+
+              enlargeCenterPage: false,
+              autoPlay: true,
+              aspectRatio: 9 / 16,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayCurve: Curves.easeOutQuart,
+              enableInfiniteScroll: true,
+              autoPlayAnimationDuration: Duration(milliseconds: 1000),
+              viewportFraction:1
+              ,
+            ),
           ),
         ),
-        // child: Image.memory(base64Decode(storyList[0].storyImages[0].path),fit: BoxFit.contain,),
-      ),
+
     );
+
 
   }
 }

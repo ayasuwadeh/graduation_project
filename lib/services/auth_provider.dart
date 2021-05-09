@@ -8,6 +8,7 @@ import 'package:graduation_project/models/path-point.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:graduation_project/models/BookmarkPlace.dart';
+import 'package:graduation_project/models/BookmarkPlace.dart';
 enum Status {
   NotLoggedIn,
   NotRegistered,
@@ -33,12 +34,16 @@ enum PasswordCodeCheck {
 class AuthProvider extends ChangeNotifier {
   Status _loggedInStatus = Status.NotLoggedIn;
   Status _registeredInStatus = Status.NotRegistered;
-  ForgotPasswordSendCodeStatus _codeStatus = ForgotPasswordSendCodeStatus.NotSent;
+  ForgotPasswordSendCodeStatus _codeStatus = ForgotPasswordSendCodeStatus
+      .NotSent;
   PasswordCodeCheck _codeCheck = PasswordCodeCheck.NotSent;
 
   Status get loggedInStatus => _loggedInStatus;
+
   Status get registeredInStatus => _registeredInStatus;
+
   ForgotPasswordSendCodeStatus get codeStatus => _codeStatus;
+
   PasswordCodeCheck get codeCheck => _codeCheck;
 
 
@@ -57,7 +62,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     var response =
-        await http.post(ApiUtil.login, headers: headers, body: loginData);
+    await http.post(ApiUtil.login, headers: headers, body: loginData);
 
     if (response.statusCode == 200) {
       print('200');
@@ -91,7 +96,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>> logout() async {
     Future<Map<String, String>> headers =
-        UserPreferences().getToken().then((token) => getHeaders(token));
+    UserPreferences().getToken().then((token) => getHeaders(token));
     var response = await headers
         .then((value) => http.post(ApiUtil.logout, headers: value));
 
@@ -112,11 +117,10 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<Map<String, dynamic>> signUp(
-      {String name,
-      String email,
-      String password,
-      String passwordConfirmation}) async {
+  Future<Map<String, dynamic>> signUp({String name,
+    String email,
+    String password,
+    String passwordConfirmation}) async {
     var result;
     Map<String, String> headers = {'accept': 'application/json'};
 
@@ -131,7 +135,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     var response =
-        await http.post(ApiUtil.signUp, headers: headers, body: registeredData);
+    await http.post(ApiUtil.signUp, headers: headers, body: registeredData);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
@@ -173,19 +177,20 @@ class AuthProvider extends ChangeNotifier {
     return headers;
   }
 
-  Future<Map<String, dynamic>> sendCountryAndBirthday(
-      String country, DateTime birthday) async {
+  Future<Map<String, dynamic>> sendCountryAndBirthday(String country,
+      DateTime birthday) async {
     Map<String, dynamic> data = {
       'country': country,
       'birthday': birthday.toString()
     };
 
     Future<Map<String, String>> headers =
-        UserPreferences().getToken().then((token) => getHeaders(token));
-    var response = await headers.then((value) => http.post(
-        ApiUtil.countryAndBirthday + '?_method=put',
-        headers: value,
-        body: data));
+    UserPreferences().getToken().then((token) => getHeaders(token));
+    var response = await headers.then((value) =>
+        http.post(
+            ApiUtil.countryAndBirthday + '?_method=put',
+            headers: value,
+            body: data));
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
       var country = responseData['data']['country'];
@@ -215,9 +220,11 @@ class AuthProvider extends ChangeNotifier {
     };
 
     Future<Map<String, String>> headers =
-        UserPreferences().getToken().then((token) => getHeaders(token));
-    var response = await headers.then((value) => http
-        .post(ApiUtil.editInfo + '?_method=put', headers: value, body: data));
+    UserPreferences().getToken().then((token) => getHeaders(token));
+    var response = await headers.then((value) =>
+        http
+            .post(
+            ApiUtil.editInfo + '?_method=put', headers: value, body: data));
     var result;
 
     if (response.statusCode == 200) {
@@ -247,11 +254,12 @@ class AuthProvider extends ChangeNotifier {
     };
 
     Future<Map<String, String>> headers =
-        UserPreferences().getToken().then((token) => getHeaders(token));
-    var response = await headers.then((value) => http.post(
-        ApiUtil.changeEmail + '?_method=put',
-        headers: value,
-        body: data));
+    UserPreferences().getToken().then((token) => getHeaders(token));
+    var response = await headers.then((value) =>
+        http.post(
+            ApiUtil.changeEmail + '?_method=put',
+            headers: value,
+            body: data));
     var result;
 
     if (response.statusCode == 200) {
@@ -276,10 +284,9 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<Map<String, dynamic>> changePassword(
-      {String currentPassword,
-      String newPassword,
-      String newPasswordConfirmation}) async {
+  Future<Map<String, dynamic>> changePassword({String currentPassword,
+    String newPassword,
+    String newPasswordConfirmation}) async {
     Map<String, dynamic> data = {
       'current_password': currentPassword,
       'new_password': newPassword,
@@ -287,7 +294,7 @@ class AuthProvider extends ChangeNotifier {
     };
 
     Future<Map<String, String>> headers =
-        UserPreferences().getToken().then((token) => getHeaders(token));
+    UserPreferences().getToken().then((token) => getHeaders(token));
     var response = await headers.then((value) =>
         http.post(ApiUtil.changePassword, headers: value, body: data));
     var result;
@@ -396,7 +403,8 @@ class AuthProvider extends ChangeNotifier {
         .getToken()
         .then((token) => getHeadersForJsonContent(token));
     var response = await headers.then(
-        (value) => http.post(ApiUtil.storeNatures, headers: value, body: body));
+            (value) =>
+            http.post(ApiUtil.storeNatures, headers: value, body: body));
     var result;
 
     if (response.statusCode == 200) {
@@ -454,7 +462,6 @@ class AuthProvider extends ChangeNotifier {
         'errorStatus': error,
         'message': message
       };
-
     } else {
       final Map<String, dynamic> responseData = json.decode(response.body);
       var error = responseData['error'];
@@ -470,7 +477,8 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<Map<String, dynamic>> validatePasswordResetToken({String email, String code}) async {
+  Future<Map<String, dynamic>> validatePasswordResetToken(
+      {String email, String code}) async {
     Map<String, dynamic> data = {
       'email': email,
       'password_reset_code': code
@@ -494,9 +502,8 @@ class AuthProvider extends ChangeNotifier {
       result = {
         'errorStatus': error,
         'message': message,
-        'token' : token
+        'token': token
       };
-
     } else {
       final Map<String, dynamic> responseData = json.decode(response.body);
       var error = responseData['error'];
@@ -512,7 +519,8 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<Map<String, dynamic>> resetPassword({String email, String token, String password, String passwordConfirmation}) async {
+  Future<Map<String, dynamic>> resetPassword(
+      {String email, String token, String password, String passwordConfirmation}) async {
     Map<String, String> data = {
       'email': email,
       'password_token': token,
@@ -537,9 +545,8 @@ class AuthProvider extends ChangeNotifier {
       result = {
         'errorStatus': error,
         'message': message,
-        'user' : authUser
+        'user': authUser
       };
-
     } else {
       final Map<String, dynamic> responseData = json.decode(response.body);
       var error = responseData['error'];
@@ -554,9 +561,11 @@ class AuthProvider extends ChangeNotifier {
   }
 
 
-  Future<Map<String, dynamic>> saveStory({UserStory story, List<StoryImage> images, List<PathPoint> points}) async {
+  Future<Map<String, dynamic>> saveStory(
+      {UserStory story, List<StoryImage> images, List<
+          PathPoint> points}) async {
     List<String> pointsList = new List<String>();
-    for(var point in points){
+    for (var point in points) {
       pointsList.add(point.toString());
     }
 
@@ -577,18 +586,19 @@ class AuthProvider extends ChangeNotifier {
         .then((token) => getHeadersForJsonContent(token));
 
 
-    var response = await headers.then((header) => http.post(ApiUtil.saveStory,
-        headers: header, body: body));
+    var response = await headers.then((header) =>
+        http.post(ApiUtil.saveStory,
+            headers: header, body: body));
 
     var result;
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
-      if(responseData['success']){
+      if (responseData['success']) {
         result = {
           'success': true,
         };
-      }else{
+      } else {
         result = {
           'success': false,
         };
@@ -607,19 +617,19 @@ class AuthProvider extends ChangeNotifier {
         .getToken()
         .then((token) => getHeaders(token));
 
-    var response = await headers.then((header) => http.get(ApiUtil.userEntertainmentsBookmarks,
-        headers: header));
+    var response = await headers.then((header) =>
+        http.get(ApiUtil.userEntertainmentsBookmarks,
+            headers: header));
 
     var result;
-    List<BookmarkPlace > bookmarkPlaces=[];
+    List<BookmarkPlace> bookmarkPlaces = [];
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     if (response.statusCode == 200) {
-        for(var item in responseData['data']['entertainments'] )
-          {
-            BookmarkPlace bookmarkPlace=BookmarkPlace.fromJson(item);
-            bookmarkPlaces.add(bookmarkPlace);
-          }
+      for (var item in responseData['data']['entertainments']) {
+        BookmarkPlace bookmarkPlace = BookmarkPlace.fromJson(item);
+        bookmarkPlaces.add(bookmarkPlace);
+      }
     } else {
       print(response.statusCode);
     }
@@ -632,17 +642,17 @@ class AuthProvider extends ChangeNotifier {
         .getToken()
         .then((token) => getHeaders(token));
 
-    var response = await headers.then((header) => http.get(ApiUtil.userRestaurantsBookmarks,
-        headers: header));
+    var response = await headers.then((header) =>
+        http.get(ApiUtil.userRestaurantsBookmarks,
+            headers: header));
 
     var result;
-    List<BookmarkPlace > bookmarkPlaces=[];
+    List<BookmarkPlace> bookmarkPlaces = [];
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      for(var item in responseData['data']['restaurants'] )
-      {
-        BookmarkPlace bookmarkPlace=BookmarkPlace.fromJson(item);
+      for (var item in responseData['data']['restaurants']) {
+        BookmarkPlace bookmarkPlace = BookmarkPlace.fromJson(item);
         bookmarkPlaces.add(bookmarkPlace);
       }
     } else {
@@ -652,13 +662,121 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future <List<BookmarkPlace>> showAllBookmarks() async {
-    List<BookmarkPlace > bookmarkPlaces=[];
+    List<BookmarkPlace> bookmarkPlaces = [];
 
     bookmarkPlaces.addAll(await this.showEntertainmentsBookmarks());
     bookmarkPlaces.addAll(await this.showRestaurantsBookmarks());
     return bookmarkPlaces;
   }
 
+  Future<Map<String, dynamic>> addEntertainmentBookmark(
+      {BookmarkPlace place}) async {
+    Map<String, dynamic> data = {
+      'id': place.id,
+      'name': place.name,
+      'city': place.city,
+      'country': place.country,
+      'source': place.source,
+      'image': place.image,
+      'rating': place.rating
+    };
+    final body = jsonEncode(data);
 
+    print(body.toString());
+
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeadersForJsonContent(token));
+
+
+    var response = await headers.then((header) =>
+        http.post(ApiUtil.addEntertainmentBookmark,
+            headers: header, body: body));
+
+    var result;
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success']) {
+        result = {
+          'success': true,
+        };
+      } else {
+        result = {
+          'success': false,
+        };
+      }
+    } else {
+      print(response.statusCode);
+      result = {
+        'success': false,
+      };
+    }
+    return result;
+  }
+
+  Future<Map<String, dynamic>> deleteEntertainmentBookmark({String id}) async {
+    print(id);
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeaders(token));
+
+
+    var response = await headers.then((header) =>
+        http.delete(ApiUtil.deleteEntertainmentBookmark + id,
+            headers: header));
+
+    var result;
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success']) {
+        result = {
+          'success': true,
+        };
+      } else {
+        result = {
+          'success': false,
+        };
+      }
+    } else {
+      print(response.statusCode);
+      result = {
+        'success': false,
+      };
+    }
+    return result;
+  }
+
+  Future<bool> findEntertainmentBookmark({String id}) async {
+    print(id);
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeaders(token));
+
+
+    var response = await headers.then((header) =>
+        http.get(ApiUtil.findEntertainmentBookmark + id,
+            headers: header));
+
+    var result;
+
+    if (response.statusCode == 200) {
+      print("hello");
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success']) {
+        print("hii");
+        return true;
+      } else {
+        print("h1");
+
+        return false;
+      }
+    } else {
+      print(response.statusCode);
+
+      return false;
+    }
+  }
 
 }
