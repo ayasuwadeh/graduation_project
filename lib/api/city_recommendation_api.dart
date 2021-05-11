@@ -5,7 +5,7 @@ import 'package:graduation_project/models/recommendation_city.dart';
 import 'package:graduation_project/models/rest_details.dart';
 class CityRecommendationApi {
   Future <List<RecommendationCity>> fetchCities(String plan ) async {
-    print("hiiii");
+    // print("hiiii");
     String request=ApiUtilRecommendation.GET_ALL_CITIES_RECOMMENDATION(plan);
     http.Response response = await http.get(request);
 

@@ -8,7 +8,6 @@ import 'package:graduation_project/models/path-point.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:graduation_project/models/BookmarkPlace.dart';
-import 'package:graduation_project/models/BookmarkPlace.dart';
 enum Status {
   NotLoggedIn,
   NotRegistered,
@@ -628,6 +627,7 @@ class AuthProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       for (var item in responseData['data']['entertainments']) {
         BookmarkPlace bookmarkPlace = BookmarkPlace.fromJson(item);
+        bookmarkPlace.type='entertainment';
         bookmarkPlaces.add(bookmarkPlace);
       }
     } else {
@@ -653,6 +653,9 @@ class AuthProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       for (var item in responseData['data']['restaurants']) {
         BookmarkPlace bookmarkPlace = BookmarkPlace.fromJson(item);
+        bookmarkPlace.type='restaurant';
+        bookmarkPlace.source='google';
+        print(bookmarkPlace.id);
         bookmarkPlaces.add(bookmarkPlace);
       }
     } else {
@@ -757,6 +760,116 @@ class AuthProvider extends ChangeNotifier {
 
     var response = await headers.then((header) =>
         http.get(ApiUtil.findEntertainmentBookmark + id,
+            headers: header));
+
+    var result;
+
+    if (response.statusCode == 200) {
+      print("hello");
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success']) {
+        print("hii");
+        return true;
+      } else {
+        print("h1");
+
+        return false;
+      }
+    } else {
+      print(response.statusCode);
+
+      return false;
+    }
+  }
+
+  Future<Map<String, dynamic>> addRestaurantBookmark(
+      {BookmarkPlace restaurant}) async {
+    Map<String, dynamic> data = {
+      'id': restaurant.id,
+      'name': restaurant.name,
+      'city': restaurant.city,
+      'country': restaurant.country,
+      'image': restaurant.image,
+      'rating': restaurant.rating
+    };
+    final body = jsonEncode(data);
+
+    print(body.toString());
+
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeadersForJsonContent(token));
+
+
+    var response = await headers.then((header) =>
+        http.post('http://10.0.2.2:8000/api/user/add-restaurant-bookmark',
+            headers: header, body: body));
+
+    var result;
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success']) {
+        result = {
+          'success': true,
+        };
+      } else {
+        result = {
+          'success': false,
+        };
+      }
+    } else {
+      print(response.statusCode);
+      result = {
+        'success': false,
+      };
+    }
+    return result;
+  }
+
+  Future<Map<String, dynamic>> deleteRestaurantBookmark({String id}) async {
+    print(id);
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeaders(token));
+
+
+    var response = await headers.then((header) =>
+        http.delete(ApiUtil.deleteRestaurantBookmark + id,
+            headers: header));
+
+    var result;
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success']) {
+        result = {
+          'success': true,
+        };
+      } else {
+        result = {
+          'success': false,
+        };
+      }
+    } else {
+      print(response.statusCode);
+      result = {
+        'success': false,
+      };
+    }
+    return result;
+  }
+
+
+  Future<bool> findRestaurantBookmark({String id}) async {
+    print(id);
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeaders(token));
+
+
+    var response = await headers.then((header) =>
+        http.get(ApiUtil.findRestaurantBookmark + id,
             headers: header));
 
     var result;

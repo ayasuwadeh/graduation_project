@@ -191,10 +191,11 @@ class _MainPageState extends State<MainPage> {
       BookmarkPlace bookmarkPlace=new BookmarkPlace();
       bookmarkPlace.name=widget.gallery.name;
       bookmarkPlace.id=widget.gallery.id;
-      bookmarkPlace.rating=4;
-      bookmarkPlace.source='google';
-      bookmarkPlace.country='France';
-      bookmarkPlace.city='Paris';
+      bookmarkPlace.rating=widget.placeDetails.rating;
+      bookmarkPlace.source='foursquare';
+      bookmarkPlace.type='entertainment';
+      bookmarkPlace.country=widget.gallery.location.country;
+      bookmarkPlace.city=widget.gallery.location.city;
       bookmarkPlace.image=widget.placeDetails.images[0];
       authProvider.addEntertainmentBookmark(place:bookmarkPlace );
     }

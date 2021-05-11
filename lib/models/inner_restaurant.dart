@@ -1,6 +1,7 @@
 import 'package:graduation_project/models/category.dart';
 import 'package:graduation_project/models/location.dart';
 class InnerRest{
+  List <String> images=List<String>();
   List <String> imageReferences=List<String>();
   bool isOpen=false;
   int priceLevel=-1;
@@ -30,8 +31,10 @@ class InnerRest{
           { i++;
             if(i<6)
            {
-            innerRest.imageReferences.add("https://maps.googleapis.com/maps/api/place/photo?maxwidth=450&maxheight=1000&photoreference="+item['photo_reference']+"&key=AIzaSyD0r9-PDf_iRZH1Kkf6LqyuSnUkw1bJBJ8");
-            print(item['photo_reference']);}
+             innerRest.imageReferences.add(item['photo_reference']);
+            innerRest.images.add("https://maps.googleapis.com/maps/api/place/photo?maxwidth=450&maxheight=1000&photoreference="+item['photo_reference']+"&key=AIzaSyDA6EANtFodVUNO5AJXKL0m4xyTT3FJvec");
+            // print(item['photo_reference']);
+           }
           }
           //innerRest.imageReferences.add(item['photo_reference']);
 

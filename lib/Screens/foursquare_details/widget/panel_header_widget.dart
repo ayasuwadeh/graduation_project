@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Map/map_screen_double_version.dart';
-import 'package:graduation_project/models/place_details.dart';
-//import 'package:details_screen/widget/follow_button_widget.dart';
-import 'package:graduation_project/models/gallary.dart';
+import 'package:graduation_project/models/BookmarkPlace.dart';
+import 'package:graduation_project/models/foursquare_bookmark_place_details.dart';
+import 'package:graduation_project/Screens/Map/map_screen_bookmark.dart';
 class PanelHeaderWidget extends StatelessWidget {
-  final PlaceDetails place;
-  final Gallery gallery;
+  final FoursquareDetails placeDetails;
+  final BookmarkPlace place;
  // final VoidCallback onClickedFollowing;
 
   const PanelHeaderWidget({
     @required this.place,
    // @required this.onClickedFollowing,
-    Key key, this.gallery,
+    Key key, this.placeDetails,
   }) : super(key: key);
 
   @override
@@ -23,7 +22,7 @@ class PanelHeaderWidget extends StatelessWidget {
 
       onPressed: () {Navigator.push(context, MaterialPageRoute(
           builder: (context){
-        return MapSample(gallery:gallery);
+        return MapSample(place:place,details: placeDetails,);
       }
         ));},
       color: Colors.deepOrange,
@@ -45,14 +44,14 @@ class PanelHeaderWidget extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        gallery.name,
+        place.name,
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
       ),
       SizedBox(height: 4),
-      Text(gallery.location.country+","+gallery.location.city),
+      Text(place.country+","+place.city),
     ],
   );
 }

@@ -26,12 +26,7 @@ class _CardsListState extends State<CardsList> {
 List<Widget> _createChildren(List<BookmarkPlace> list) {
   return new List<Widget>.generate(list.length, (int index) {
     return BookCard(
-      id: list[index].id,
-      country: list[index].country,
-      name: list[index].name,
-      image: list[index].image,
-      city: list[index].city,
-      rating: list[index].rating,
+      place: list[index]
     );
   });
 }

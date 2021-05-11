@@ -11,6 +11,8 @@ import 'package:graduation_project/models/restaurant.dart';
 import 'package:graduation_project/models/inner_restaurant.dart';
 import 'package:graduation_project/models/BookmarkPlace.dart';
 import 'package:graduation_project/services/auth_provider.dart';
+import 'package:graduation_project/api/xampp_util.dart';
+import 'dart:convert';
 class PlaceWidget extends StatelessWidget {
   Restaurant restaurant;
   PlaceWidget(this.restaurant);
@@ -41,7 +43,7 @@ class PlaceWidget extends StatelessWidget {
                   break;
                 }
                 else if (snapshot.hasData) {
-                  {print(snapshot.data);
+                  {
                   innerRest=snapshot.data;
                   //print("kkkk");
                   return MainPage(innerRest,restaurant);
@@ -74,7 +76,6 @@ class PlaceWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-
                       "No details provided yet",
                       style: TextStyle(fontSize: 25,color: Colors.grey),
                     ),
@@ -107,11 +108,16 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
- // final place = widget.placeDetails;
   final panelController = PanelController();
   bool isBooked=false;
   bool isLiked=false;
   AuthProvider authProvider=new AuthProvider();
+
+  @override
+  void initState() {
+    updateBookmark();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,8 +149,8 @@ class _MainPageState extends State<MainPage> {
                       dotVerticalPadding: 320,
                       dotBgColor: Colors.transparent,
                       autoplayDuration: Duration(seconds: 12),
-                      images: widget.innerRest.imageReferences!=null?
-                      widget.innerRest.imageReferences.map((e)
+                      images: widget.innerRest.images!=null?
+                      widget.innerRest.images.map((e)
                       => Image.network(e,fit: BoxFit.fill,)).toList():
                       [NetworkImage('https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg')],
                     ),
@@ -231,6 +237,7 @@ class _MainPageState extends State<MainPage> {
     print('pressed');
     if(isBooked)
       {
+        authProvider.deleteRestaurantBookmark(id: widget.restaurant.googleID) ;
 
       }
 
@@ -241,13 +248,22 @@ class _MainPageState extends State<MainPage> {
         bookmarkPlace.id=widget.restaurant.googleID;
         bookmarkPlace.rating=widget.restaurant.rating;
         bookmarkPlace.source='google';
+        bookmarkPlace.type='restaurant';
         bookmarkPlace.country='France';
         bookmarkPlace.city='Paris';
-        bookmarkPlace.image=widget.innerRest.imageReferences[0];
-        authProvider.addEntertainmentBookmark(place:bookmarkPlace );
+        bookmarkPlace.image=widget.innerRest.imageReferences.length!=0?
+        widget.innerRest.imageReferences[0]:'not found';
+        authProvider.addRestaurantBookmark(restaurant:bookmarkPlace );
       }
     setState(() {
       isBooked=!isBooked;
+    });
+  }
+
+  void updateBookmark() async{
+    bool d=await authProvider.findRestaurantBookmark(id:widget.restaurant.googleID);
+    setState(() {
+      isBooked=d;
     });
   }
 

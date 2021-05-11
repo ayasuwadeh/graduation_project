@@ -36,7 +36,7 @@ class Restaurants extends StatelessWidget {
                 break;
               }
               else if (snapshot.hasData) {
-                {print(snapshot.data);
+                {
                 restaurants=snapshot.data;
                // galleries.sort((a, b) => a.location.distance.compareTo(b.location.distance));
                 return RestaurantsCards(restaurants);

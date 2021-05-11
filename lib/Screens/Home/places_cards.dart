@@ -37,7 +37,7 @@ class Places extends StatelessWidget {
                 break;
               }
               else if (snapshot.hasData) {
-                {print(snapshot.data);
+                {
                 places=snapshot.data;
                 // galleries.sort((a, b) => a.location.distance.compareTo(b.location.distance));
                 return PlacesCards(places);

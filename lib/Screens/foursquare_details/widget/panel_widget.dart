@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Details/widget/panel_header_widget.dart';
-//import 'package:graduation_project/Screens/Details/widget/stats_widget.dart';
-import 'package:graduation_project/models/place_details.dart';
-import 'package:graduation_project/models/gallary.dart';
+import 'package:graduation_project/Screens/foursquare_details/widget/panel_header_widget.dart';
+import 'package:graduation_project/models/BookmarkPlace.dart';
+import 'package:graduation_project/models/foursquare_bookmark_place_details.dart';
 import 'package:graduation_project/components/stats_widget_comp.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:graduation_project/constants.dart';
 class PanelWidget extends StatelessWidget {
-  final PlaceDetails place;
+  final FoursquareDetails placeDetails;
   final VoidCallback onClickedPanel;
-  final Gallery gallery;
+  final BookmarkPlace place;
   const PanelWidget({
     @required this.place,
     @required this.onClickedPanel,
-    Key key, this.gallery,
+    Key key, this.placeDetails,
   }) : super(key: key);
 
   @override
@@ -57,29 +56,27 @@ class PanelWidget extends StatelessWidget {
             ),
           ),
           PanelHeaderWidget(
-            place: place,
-            gallery: gallery,
-
+            place:place ,
+            placeDetails: placeDetails,
             //onClickedFollowing: onClickedFollowing,
           ),
-          SizedBox(height: 24),
-          Expanded(child: buildProfileDetails(place)),
+          SizedBox(height: 14),
+          Expanded(child: buildProfileDetails(placeDetails, place)),
         ],
       ),
     ),
   );
 
-  Widget buildProfileDetails(PlaceDetails placeIn) => Column(
+  Widget buildProfileDetails(FoursquareDetails placeIn, BookmarkPlace place ) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
         placeIn.description!='a gallery'?placeIn.description:"",
         style: TextStyle(fontStyle: FontStyle.italic),
       ),
-      SizedBox(height: 10),
-      Text('_________'),
-      SizedBox(height: 7),
-      Text(placeIn.isOpen),
+      Text(placeDetails.isOpen?"Opened":"Closed",style:
+      TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color:placeDetails.isOpen?
+      Colors.green:Colors.red ),),
       SizedBox(height: 12),
 
 
@@ -88,7 +85,7 @@ class PanelWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
 
         children: [
-          StatsWidget(rate: placeIn.rating,),
+          StatsWidget(rate: place.rating,),
         ],
       ),
       Row(

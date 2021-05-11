@@ -1,28 +1,28 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Details/widget/panel_widget.dart';
+import 'package:graduation_project/Screens/google_details/widget/panel_widget.dart';
 import 'package:graduation_project/components/bottom_navigation_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:graduation_project/components/loading.dart';
 import 'package:graduation_project/components/error.dart';
 import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/api/places_api.dart';
+import 'package:graduation_project/api/google_bookmark_details.dart';
 import 'package:graduation_project/models/place_details.dart';
-import 'package:graduation_project/models/gallary.dart';
 import 'package:graduation_project/models/BookmarkPlace.dart';
+import 'package:graduation_project/models/google_bookmark_place_details.dart';
 import 'package:graduation_project/services/auth_provider.dart';
-class PlaceWidget extends StatelessWidget {
-  Gallery place;
-  PlaceWidget(this.place);
-  PlaceDetails placeDetails;
-  PlaceDetailsApi placeDetailsApi = PlaceDetailsApi();
+class PlaceWidgetGoogle extends StatelessWidget {
+  BookmarkPlace place;
+  PlaceWidgetGoogle(this.place);
+  GoogleBookmarkPlace placeDetails;
+  GoogleBookmarkDetails googleBookmarkDetailsApi = GoogleBookmarkDetails();
 
 
   @override
   Widget build(BuildContext context) {
 
     return  FutureBuilder(
-          future: placeDetailsApi.fetchDetails(place.id),
+          future: googleBookmarkDetailsApi.fetchDetails(place.id),
           builder: (BuildContext context,
               AsyncSnapshot snapshot) {
             switch (snapshot.connectionState) {
@@ -56,8 +56,8 @@ class PlaceWidget extends StatelessWidget {
 }
 
 class MainPage extends StatefulWidget {
-  PlaceDetails placeDetails;
-  Gallery gallery;
+  GoogleBookmarkPlace placeDetails;
+  BookmarkPlace gallery;
   MainPage(this.placeDetails,this.gallery);
   @override
   _MainPageState createState() => _MainPageState();
@@ -65,13 +65,13 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final panelController = PanelController();
-  bool isBooked=false;
+  bool isBooked=true;
   bool isLiked=false;
   AuthProvider authProvider=new AuthProvider();
 
   @override
   void initState() {
-    updateBookmark();
+    print(widget.placeDetails.phoneNumber);
     super.initState();
   }
 
@@ -81,7 +81,13 @@ class _MainPageState extends State<MainPage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+
+          leading: IconButton(icon:Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context,isBooked);
+            },),
+          backgroundColor: Colors.transparent,
       ),
       body: Stack(
         children: [
@@ -112,8 +118,8 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
             panelBuilder: (ScrollController scrollController)=>PanelWidget(
-              gallery: widget.gallery,
-              place: widget.placeDetails,
+              place: widget.gallery,
+              placeDetails: widget.placeDetails,
               onClickedPanel: panelController.open,
 
             ),
@@ -191,17 +197,18 @@ class _MainPageState extends State<MainPage> {
       BookmarkPlace bookmarkPlace=new BookmarkPlace();
       bookmarkPlace.name=widget.gallery.name;
       bookmarkPlace.id=widget.gallery.id;
-      bookmarkPlace.rating=4;
-      bookmarkPlace.source='google';
-      bookmarkPlace.country='France';
-      bookmarkPlace.city='Paris';
-      bookmarkPlace.image=widget.placeDetails.images[0];
-      authProvider.addEntertainmentBookmark(place:bookmarkPlace );
+      bookmarkPlace.rating=widget.gallery.rating;
+      bookmarkPlace.source=widget.gallery.source;
+      bookmarkPlace.type=widget.gallery.type;
+      bookmarkPlace.country=widget.gallery.country;
+      bookmarkPlace.city=widget.gallery.city;
+      bookmarkPlace.image=widget.placeDetails.imageReferences[0];
+      authProvider.addRestaurantBookmark(restaurant:bookmarkPlace );
     }
 
     if(isBooked)
       {
-        authProvider.deleteEntertainmentBookmark(id: widget.gallery.id) ;
+        authProvider.deleteRestaurantBookmark(id: widget.gallery.id) ;
 
       }
 
@@ -210,12 +217,6 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  void updateBookmark() async{
-    bool d=await authProvider.findEntertainmentBookmark(id:widget.gallery.id);
-    setState(() {
-      isBooked=d;
-    });
-  }
 
 
 }

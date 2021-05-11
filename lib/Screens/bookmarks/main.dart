@@ -35,6 +35,7 @@ class _MyBookmarksState extends State<MyBookmarks> {
     Icon(Icons.nature_people,color: Colors.black,),
   ];
   int _value = 0;
+  bool isBack=false;
   int index;
   int apiIndex=0;
   @override
@@ -85,7 +86,6 @@ class _MyBookmarksState extends State<MyBookmarks> {
               },
             ).toList(),
           ),
-
           FutureBuilder(
               key: ValueKey(_value),
               future: _value==1?authProvider.showRestaurantsBookmarks():_value==2?

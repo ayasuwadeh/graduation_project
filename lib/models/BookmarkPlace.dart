@@ -4,9 +4,9 @@ import 'package:graduation_project/models/location.dart';
 class BookmarkPlace{
   String id;
   String name;
-String city;
-String country;
-
+  String city;
+  String country;
+  String type;
   double rating;
   String source;
   String image;
@@ -21,7 +21,7 @@ String country;
     this.country=jsonObject['country'];
 
     if((jsonObject['rating'])!=null)
-    { this.rating = (jsonObject['rating']/2);//TODO: ROUNDING
+    { this.rating = (jsonObject['rating'].toDouble());
     }
     else this.rating=-1;
 

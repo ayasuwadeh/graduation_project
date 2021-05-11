@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Screens/Details/widget/panel_header_widget.dart';
+import 'package:graduation_project/Screens/google_details/widget/panel_header_widget.dart';
 //import 'package:graduation_project/Screens/Details/widget/stats_widget.dart';
-import 'package:graduation_project/models/place_details.dart';
-import 'package:graduation_project/models/gallary.dart';
+import 'package:graduation_project/models/google_bookmark_place_details.dart';
+import 'package:graduation_project/models/BookmarkPlace.dart';
 import 'package:graduation_project/components/stats_widget_comp.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:graduation_project/constants.dart';
 class PanelWidget extends StatelessWidget {
-  final PlaceDetails place;
+  final GoogleBookmarkPlace placeDetails;
   final VoidCallback onClickedPanel;
-  final Gallery gallery;
+  final BookmarkPlace place;
   const PanelWidget({
-    @required this.place,
+    @required this.placeDetails,
     @required this.onClickedPanel,
-    Key key, this.gallery,
+    Key key, this.place,
   }) : super(key: key);
 
   @override
@@ -57,30 +57,35 @@ class PanelWidget extends StatelessWidget {
             ),
           ),
           PanelHeaderWidget(
+            placeDetails: placeDetails,
             place: place,
-            gallery: gallery,
 
             //onClickedFollowing: onClickedFollowing,
           ),
           SizedBox(height: 24),
-          Expanded(child: buildProfileDetails(place)),
+          Expanded(child: buildProfileDetails(placeDetails,place)),
         ],
       ),
     ),
   );
 
-  Widget buildProfileDetails(PlaceDetails placeIn) => Column(
+  Widget buildProfileDetails(GoogleBookmarkPlace placeIn, BookmarkPlace place) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        placeIn.description!='a gallery'?placeIn.description:"",
-        style: TextStyle(fontStyle: FontStyle.italic),
-      ),
-      SizedBox(height: 10),
-      Text('_________'),
       SizedBox(height: 7),
-      Text(placeIn.isOpen),
-      SizedBox(height: 12),
+      Text(placeDetails.isOpen?"Opened":"Closed",style:
+      TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color:placeDetails.isOpen?
+      Colors.green:Colors.red ),),
+      SizedBox(height: 7),
+      Text('_________'),
+      placeDetails.priceLevel!=-1?
+      Text(placeDetails.priceLevel==0?"Free":
+      placeDetails.priceLevel==1? "Inexpensive":
+      placeDetails.priceLevel==2? "Moderate":
+      placeDetails.priceLevel==3? "Expensive":
+      "Very Expensive",style: TextStyle(fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,fontSize: 14),
+      ):Container(height: 9,),
+
 
 
       Row(
@@ -88,7 +93,7 @@ class PanelWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
 
         children: [
-          StatsWidget(rate: placeIn.rating,),
+          StatsWidget(rate: place.rating,),
         ],
       ),
       Row(
@@ -119,35 +124,6 @@ class PanelWidget extends StatelessWidget {
 
                 _makePhoneCall(placeIn.phoneNumber);
               }
-            ),
-          ),
-          SizedBox(width: 14,),
-          Container(
-            margin: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 2,
-                    spreadRadius: 3,
-
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-
-                color: kPrimaryLightColor,
-                shape: BoxShape.circle
-            ),
-
-            child: IconButton(
-
-              icon: Icon(Icons.attachment_sharp,
-                  color:placeIn.url!='not found'? Colors.deepOrange:Colors.grey),
-              color: Colors.grey[200],
-              onPressed:  placeIn.url!='not found'?() {
-                _launchInBrowser(placeIn.url);
-
-              }:null,
             ),
           ),
         ],

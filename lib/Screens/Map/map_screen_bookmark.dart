@@ -6,9 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:graduation_project/api/api_util.dart';
 class MapSample extends StatefulWidget {
-  final  gallery;
-
-  const MapSample({Key key, this.gallery}) : super(key: key);
+  final  place;
+  final details;
+  const MapSample({Key key, this.place, this.details}) : super(key: key);
   @override
   State<MapSample> createState() => MapSampleState();
 }
@@ -26,7 +26,7 @@ class MapSampleState extends State<MapSample> {
   @override
   void initState() {
     getLocation();
-    if(widget.gallery.location.lat!=-100)_setInitialMarker();
+    if(widget.details.location.lat!=-100)_setInitialMarker();
     super.initState();
   }
   @override
@@ -40,7 +40,7 @@ class MapSampleState extends State<MapSample> {
             markers: markers,
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: LatLng(double.parse(widget.gallery.location.lat), double.parse(widget.gallery.location.lan)),
+              target: LatLng(double.parse(widget.details.location.lat), double.parse(widget.details.location.lan)),
               zoom: 15,
             ),
           ),
@@ -51,8 +51,8 @@ class MapSampleState extends State<MapSample> {
               onPressed: () {
                 ApiUtil.DIRECTION(position.latitude.toString(),
                     position.longitude.toString(),
-                    widget.gallery.location.lat.toString(),
-                    widget.gallery.location.lan.toString());
+                    widget.details.location.lat.toString(),
+                    widget.details.location.lan.toString());
 
               },
                 style: ButtonStyle(
@@ -83,9 +83,9 @@ class MapSampleState extends State<MapSample> {
     startMarker = Marker(
       markerId: MarkerId('POI'),
       position: LatLng(
-          double.parse(widget.gallery.location.lat), double.parse(widget.gallery.location.lan)),
+          double.parse(widget.details.location.lat), double.parse(widget.details.location.lan)),
       infoWindow: InfoWindow(
-        title: widget.gallery.name,
+        title: widget.place.name,
         snippet: 'provided by cockatoo',
       ),
       icon: BitmapDescriptor.defaultMarker,
