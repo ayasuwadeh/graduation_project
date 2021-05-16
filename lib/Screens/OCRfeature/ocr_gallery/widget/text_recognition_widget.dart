@@ -5,10 +5,12 @@ import 'package:clipboard/clipboard.dart';
 import 'package:graduation_project/api/firebase_ml_api.dart';
 import 'package:graduation_project/Screens/OCRfeature/ocr_gallery/widget/text_area_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api/xampp_util.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:graduation_project/api/api_util_ocr.dart';
+import 'package:graduation_project/api/ocr_api.dart';
 import 'controls_widget.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TextRecognitionWidget extends StatefulWidget {
   const TextRecognitionWidget({
@@ -21,6 +23,9 @@ class TextRecognitionWidget extends StatefulWidget {
 
 class _TextRecognitionWidgetState extends State<TextRecognitionWidget> {
   PermissionStatus _status;
+  ApiUtilOCR apiUtilOCR=ApiUtilOCR();
+  String text = '';
+  File image;
 
   @override
   void initState() {
@@ -35,8 +40,6 @@ class _TextRecognitionWidgetState extends State<TextRecognitionWidget> {
     }
   }
 
-  String text = '';
-  File image;
 
   @override
   Widget build(BuildContext context) =>
@@ -68,6 +71,9 @@ class _TextRecognitionWidgetState extends State<TextRecognitionWidget> {
       );
 
   Future pickImage() async {
+    // File imageFile = await ImagePicker.pickImage(
+    //     source: ImageSource.camera, imageQuality: 90);
+
     Permission.storage.status.then((value) => updateStatus(value));
     askLocationPermission();
     final file = await ImagePicker().getImage(source: ImageSource.gallery);
@@ -82,11 +88,23 @@ class _TextRecognitionWidgetState extends State<TextRecognitionWidget> {
         child: CircularProgressIndicator(),
       ),
     );
-    // final bytes = image.readAsBytesSync();
-    // String img64 = base64Encode(bytes);
 
-    final text = await FirebaseMLApi.recogniseText(image);
-   // final text =  ApiUtilOCR.GET_ALL_RESTAURANTS_RECOMMENDATION(img64);
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        text=await saveImageToServer();
+
+      } else {
+        text = await FirebaseMLApi.recogniseText(image);
+
+      }
+    } on SocketException catch(_) {
+      text = await FirebaseMLApi.recogniseText(image);
+
+    }
+
+
+  // final textHere =  ApiUtilOCR(img64);
 
     setText(text);
 
@@ -172,4 +190,14 @@ class _TextRecognitionWidgetState extends State<TextRecognitionWidget> {
       },
     );
   }
+  Future<String> saveImageToServer() async {
+    String base64Image = base64Encode(image.readAsBytesSync());
+    String serverFileName = '';
+      serverFileName ='aya' +
+          '.png';
+      await XamppUtilAPI.UPLOAD_IMAGE(serverFileName, base64Image);
+      return await apiUtilOCR.findTexts('C:/xampp/htdocs/story_images/'+serverFileName);
+  }
+
+
 }

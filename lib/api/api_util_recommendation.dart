@@ -14,6 +14,11 @@ class ApiUtilRecommendation{
   static const String V = 'v=20210316';
 
 
+  static String fetchTexts(String path) {
+    return FLASK_MAIN_REQUEST + 'ocr?path='+ path ;
+
+  }
+
   static String GET_ALL_RESTAURANTS_RECOMMENDATION(String keywords){
     return FLASK_MAIN_REQUEST + 'restaurants?keywords='+ keywords ;
   }
@@ -24,6 +29,10 @@ class ApiUtilRecommendation{
 
   static String GET_ALL_CITIES_RECOMMENDATION(String keywords){
     return FLASK_MAIN_REQUEST + 'cities?plan='+ keywords ;
+  }
+
+  static String GET_ALL_RESTAURANTS_BOOKMARKS(String ID){
+    return FLASK_MAIN_REQUEST + 'similar_bookmarks_api?ID='+ ID ;
   }
 
   static String GET_ALL_SIMILAR_PLACES(String id){

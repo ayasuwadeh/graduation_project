@@ -22,7 +22,6 @@ class HotelCard extends StatelessWidget {
       {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) {
-             // print("hereeeeeeeeeeeee");
               return
                FutureBuilder(
                  future: itemDetailsApi.fetchDetails(hotel.id),

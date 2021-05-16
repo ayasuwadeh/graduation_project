@@ -20,6 +20,12 @@ class _BookCardState extends State<BookCard> {
   bool _isSaved = true;
   AuthProvider authProvider = new AuthProvider();
   bool dummy=true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -104,15 +110,24 @@ class _BookCardState extends State<BookCard> {
                               Icons.location_pin,
                               color: Colors.black54,
                             ),
-                            Text(
+                          Container(
+                            width: width*0.37,
+                            child: Text(
+
                               widget.place.city + ", " + widget.place.country,
+                              overflow: TextOverflow.fade,
+
+                              maxLines: 1,
+                              //overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+
                               style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xC1090A0A)),
-                              textAlign: TextAlign.left,
-
                             ),
+                          ),
+
 
                         ]),
                       ),

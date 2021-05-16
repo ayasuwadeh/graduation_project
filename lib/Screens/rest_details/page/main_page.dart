@@ -13,6 +13,8 @@ import 'package:graduation_project/models/BookmarkPlace.dart';
 import 'package:graduation_project/services/auth_provider.dart';
 import 'package:graduation_project/api/xampp_util.dart';
 import 'dart:convert';
+import 'similar_bookmarks.dart';
+import 'package:graduation_project/api/collaborative.dart';
 class PlaceWidget extends StatelessWidget {
   Restaurant restaurant;
   PlaceWidget(this.restaurant);
@@ -112,6 +114,9 @@ class _MainPageState extends State<MainPage> {
   bool isBooked=false;
   bool isLiked=false;
   AuthProvider authProvider=new AuthProvider();
+  List<BookmarkPlace>similarBookmarksList= [];
+  CollaborativeModel collaborativeModelApi=new CollaborativeModel();
+  bool isSimilarOpened=false;
 
   @override
   void initState() {
@@ -120,6 +125,9 @@ class _MainPageState extends State<MainPage> {
   }
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -205,24 +213,75 @@ class _MainPageState extends State<MainPage> {
                         size: 35,color: Colors.white,),
 
                       onPressed: () {
-                    //    Navigator.pop(context);
                        _toggleLike();
                       },
                     ),
                   )
-
-
                 ],
               )
 
 
           ),
-
+          similarBookmarksList.length>0?similarBookmarks():Container(),
         ],
       ),
       bottomNavigationBar: BottomNavBar(),
 
     );
+  }
+
+  Widget similarBookmarks()
+  {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return  Positioned(
+      top: 170,
+      child: Visibility(
+        visible: isBooked&&isSimilarOpened,
+        child: AnimatedContainer(
+          color: Colors.transparent,
+          height: 200,
+          width: width,
+          duration: Duration(milliseconds: 200),
+          child: Column(
+            children: [
+              Align(
+                  alignment: Alignment.topRight,
+                  child:IconButton(
+                    onPressed: () {
+                      _toggleClose();
+                    },
+                    icon: Icon(Icons.close_rounded,color: Colors.deepOrange, size: 25,),
+
+
+                  )
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    for(int i=0;i<similarBookmarksList.length;i++)
+                      SimilarPlaceCard(similarBookmark: similarBookmarksList[i],)
+
+                  ],
+                ),
+              )
+            ],
+          ),),
+
+      ),
+    );
+
+  }
+
+  void _toggleClose() {
+    print('pressed');
+
+    setState(() {
+      isSimilarOpened=!isSimilarOpened;
+      // isLiked=!isLiked;
+    });
   }
 
   void _toggleLike() {
@@ -233,7 +292,8 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  void _toggleBook() {
+  void _toggleBook()async {
+
     print('pressed');
     if(isBooked)
       {
@@ -253,7 +313,9 @@ class _MainPageState extends State<MainPage> {
         bookmarkPlace.city='Paris';
         bookmarkPlace.image=widget.innerRest.imageReferences.length!=0?
         widget.innerRest.imageReferences[0]:'not found';
-        authProvider.addRestaurantBookmark(restaurant:bookmarkPlace );
+        await authProvider.addRestaurantBookmark(restaurant:bookmarkPlace );
+        showSimilarBookmarks();
+
       }
     setState(() {
       isBooked=!isBooked;
@@ -265,6 +327,15 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       isBooked=d;
     });
+  }
+
+  void showSimilarBookmarks() async{
+    similarBookmarksList=await collaborativeModelApi.fetchBookedRestaurants(widget.restaurant.googleID);
+    print(similarBookmarksList);
+    setState(() {
+  isSimilarOpened=true;
+
+});
   }
 
 

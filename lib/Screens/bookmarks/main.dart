@@ -56,35 +56,40 @@ class _MyBookmarksState extends State<MyBookmarks> {
       ListView(
         children: [
           SizedBox(height: 10,),
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 8.0, // gap between adjacent chips
+          Row(
+            children: [
+              SizedBox(width: 10,),
+              Wrap(
+                alignment: WrapAlignment.start,
+                spacing: 8.0, // gap between adjacent chips
 
-            children: List<Widget>.generate(//header
-              3,
-                  (int index) {
-                return ChoiceChip(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all( Radius.circular(10),)),
-                    padding: EdgeInsets.all(10),
-                    selectedShadowColor: Colors.black,
-                    selectedColor: Colors.deepOrangeAccent,
-                    label: Text(chipsMap[index]['name'],style: TextStyle(fontSize: 18,color: Colors.black),),
-                    selected: _value == index,
-                    onSelected: (bool selected) {
-                      setState(() {
-                        _value = selected ? index : null;
-                        print(_value);
-                      });
-                      checkValue();
-                    },
-                    avatar: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.transparent,
-                      child: icons.elementAt(index),
-                    )
-                );
-              },
-            ).toList(),
+                children: List<Widget>.generate(//header
+                  3,
+                      (int index) {
+                    return ChoiceChip(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all( Radius.circular(10),)),
+                        padding: EdgeInsets.all(10),
+                        selectedShadowColor: Colors.black,
+                        selectedColor: Colors.deepOrangeAccent,
+                        label: Text(chipsMap[index]['name'],style: TextStyle(fontSize: 18,color: Colors.black),),
+                        selected: _value == index,
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _value = selected ? index : null;
+                            print(_value);
+                          });
+                          checkValue();
+                        },
+                        avatar: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.transparent,
+                          child: icons.elementAt(index),
+                        )
+                    );
+                  },
+                ).toList(),
+              ),
+            ],
           ),
           FutureBuilder(
               key: ValueKey(_value),
