@@ -185,7 +185,7 @@ class _MainPageState extends State<MainPage> {
           Positioned(
             top: 170,
             child: Visibility(
-              visible: isLiked&&isSimilarOpened&&!isPanelClosedPlaces,
+              visible: isBooked&&isSimilarOpened&&!isPanelClosedPlaces,
               child: AnimatedContainer(
                 color: Colors.transparent,
                 height: 200,
@@ -231,7 +231,6 @@ class _MainPageState extends State<MainPage> {
     print('pressed');
 
     setState(() {
-      isSimilarOpened=!isSimilarOpened;
       isLiked=!isLiked;
     });
   }
@@ -247,6 +246,8 @@ class _MainPageState extends State<MainPage> {
   void _toggleBook() {
     print('pressed');
     setState(() {
+      isSimilarOpened=!isSimilarOpened;
+
       isBooked=!isBooked;
     });
   }

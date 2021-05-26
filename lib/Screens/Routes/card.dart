@@ -59,125 +59,109 @@ class _RouteCardState extends State<RouteCard> {
             borderRadius:BorderRadius.circular(20),
         ),
 
-        child: Padding(
-          padding: EdgeInsets.only(left:10,right: 15),
-          child: Row(
+          child: Stack(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FutureBuilder(
-                  key: ValueKey(changed),
-                    future: storySQLApi.fetchStory(int.parse(widget.story.id)),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.active:
-                          return Container();
-                          break;
-                        case ConnectionState.waiting:
-                          return Container();
-                          break;
-                        case ConnectionState.none:
-                          return Error(errorText: 'No Internet Connection');
-                          break;
-                        case ConnectionState.done:
-                          if (snapshot.hasError) {
-                            return Error(errorText: snapshot.error.toString());
+              Positioned.fill(
+                left: -270,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FutureBuilder(
+                    key: ValueKey(changed),
+                      future: storySQLApi.fetchStory(int.parse(widget.story.id)),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.active:
+                            return Container();
                             break;
-                          } else if (snapshot.hasData) {
-                            {
+                          case ConnectionState.waiting:
+                            return Container();
+                            break;
+                          case ConnectionState.none:
+                            return Error(errorText: 'No Internet Connection');
+                            break;
+                          case ConnectionState.done:
+                            if (snapshot.hasError) {
+                              return Error(errorText: snapshot.error.toString());
+                              break;
+                            } else if (snapshot.hasData) {
+                              {
 
-                              if(snapshot.data.length>0)
-                              return opacityWidget(snapshot.data[0]);
+                                if(snapshot.data.length>0)
+                                return opacityWidget(snapshot.data[0]);
 
+                              }
                             }
-                          }
-                      }
-                      return Container(
-                        color: Colors.white,
-                      );
-                    }),
+                        }
+                        return Container(
+                          color: Colors.white,
+                        );
+                      }),
 
 ]),
+              ),
 
-                Column(
-                  children: [
 
                     //SizedBox(height: 80,),
-                     Align(
-
-                        alignment: Alignment.bottomLeft,
-                        child: Column(
-                          children: [
-                            SizedBox(height: height*0.046,),
-                            FutureBuilder(
-                              key: ValueKey(changed),
-                                future: storySQLApi.fetchStory(int.parse(widget.story.id)),
-                                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.active:
-                                      return Container();
-                                      break;
-                                    case ConnectionState.waiting:
-                                      return Container();
-                                      break;
-                                    case ConnectionState.none:
-                                      return Error(errorText: 'No Internet Connection');
-                                      break;
-                                    case ConnectionState.done:
-                                      if (snapshot.hasError) {
-                                        return Error(errorText: snapshot.error.toString());
+                            Positioned.fill(
+                              top: -50,
+                              left: width*0.28,
+                              child: FutureBuilder(
+                                key: ValueKey(changed),
+                                  future: storySQLApi.fetchStory(int.parse(widget.story.id)),
+                                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.active:
+                                        return Container();
                                         break;
-                                      } else if (snapshot.hasData) {
-                                        {
-                                          return Row(
-                                            children: [//TODO:faded text
-                                              Text(snapshot.data[0].name,style: TextStyle(fontSize: 25
-                                                  ,fontWeight: FontWeight.bold,
-                                                  color: Colors.deepOrange.withAlpha(150)),),
-                                            ],
-                                          );
+                                      case ConnectionState.waiting:
+                                        return Container();
+                                        break;
+                                      case ConnectionState.none:
+                                        return Error(errorText: 'No Internet Connection');
+                                        break;
+                                      case ConnectionState.done:
+                                        if (snapshot.hasError) {
+                                          return Error(errorText: snapshot.error.toString());
+                                          break;
+                                        } else if (snapshot.hasData) {
+                                          {
+                                            return Row(
+                                              children: [//TODO:faded text
+                                                Text(snapshot.data[0].name,style: TextStyle(fontSize: 25
+                                                    ,fontWeight: FontWeight.bold,
+                                                    color: Colors.deepOrange.withAlpha(150)),),
+                                              ],
+                                            );
 
+                                          }
                                         }
-                                      }
-                                  }
-                                  return Container(
-                                    color: Colors.white,
-                                  );
-                                }),
+                                    }
+                                    return Container(
+                                      color: Colors.white,
+                                    );
+                                  }),
+                            ),
 
-                            SizedBox(height: height*0.02,),
-                            Row(children:[
-                              Text("   "),
-                              Icon(Icons.location_pin,color: Colors.black54,),
-                              Text(widget.story.city+", "+widget.story.country,
-                                style: TextStyle(fontSize: 17
-                                    ,fontWeight: FontWeight.bold,
-                                color: Color(0xC1090A0A)),),]),
-                            Text(Jiffy(widget.story.time).fromNow().toString())
+                            Positioned.fill(
+                              top: height*0.04,
+                              left: width*0.28,
+                              child: Row(children:[
+                                Text("  "),
+                                Icon(Icons.location_pin,color: Colors.black54,),
+                                Text(widget.story.city+", "+widget.story.country,
+                                  style: TextStyle(fontSize: 17
+                                      ,fontWeight: FontWeight.bold,
+                                  color: Color(0xC1090A0A)),),]),
+                            ),
+                            Positioned.fill(
+                                top: height*0.15,
+                                left: width*0.32,
+
+                                child: Text(Jiffy(widget.story.time).fromNow().toString()))
                           ],
                         ),
-                      ),
-                    // SizedBox(width: width*0.3,),
-                    // widget.isOpend?Icon(
-                    //   Icons.double_arrow_rounded,
-                    //   color: Colors.deepOrange.withOpacity(0.50),
-                    //   size: 30,
-                    // ):
-                    // Icon(
-                    //   Icons.double_arrow_rounded,
-                    //   color: Colors.deepOrange.withOpacity(0.60),
-                    //   size: 30,
-                    // ),
 
-
-
-                  ],
-                )
-              ],
-
-          ),
-        ),
       ),
     );
   }

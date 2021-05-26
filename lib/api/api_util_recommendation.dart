@@ -36,7 +36,7 @@ class ApiUtilRecommendation{
   }
 
   static String GET_ALL_SIMILAR_PLACES(String id){
-    return FLASK_MAIN_REQUEST + 'similarPlaces?ID='+ id ;
+    return FLASK_MAIN_REQUEST + 'similar_places?ID='+ id ;
   }
 
   static String GET_GOOGLE_DETAILS(String name){

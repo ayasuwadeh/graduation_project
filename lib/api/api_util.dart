@@ -29,8 +29,10 @@ class ApiUtil{
   static const String findEntertainmentBookmark = MAIN_API_UTIL + '/user/find-entertainment-bookmark?id=';
   static const String addRestaurantBookmark = MAIN_API_UTIL + '/user/add-restaurant-bookmark/';
   static const String deleteRestaurantBookmark = MAIN_API_UTIL + '/user/delete-restaurant-bookmark/';
-
   static const String findRestaurantBookmark = MAIN_API_UTIL + '/user/find-restaurant-bookmark?id=';
+  static const String findUserCuisines = MAIN_API_UTIL + '/user/get/cuisines';
+  static const String findUserInterests = MAIN_API_UTIL + '/user/get/interests';
+
 
 
 

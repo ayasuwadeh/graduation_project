@@ -2,21 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/Screens/OCRfeature/ocr_camera/main.dart';
 import 'package:graduation_project/Screens/OCRfeature/ocr_gallery/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-// void main() => runApp(MyApp());
-//
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Fab Menu',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MyHomePage(),
-//     );
-//   }
-// }
 
 class MainOCR extends StatefulWidget {
   @override
@@ -179,6 +166,7 @@ class _MainOCRState extends State<MainOCR> with SingleTickerProviderStateMixin {
                         if (animationController.isCompleted) {
                           animationController.reverse();
                         } else {
+                          checkWelcomeScreen(context);
                           animationController.forward();
                         }
                       },
@@ -189,6 +177,46 @@ class _MainOCRState extends State<MainOCR> with SingleTickerProviderStateMixin {
            ]);
 
   }
+  Future checkWelcomeScreen(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seenOcr') ?? false);
+
+    if (!_seen) {
+      showDeleteDialog(context);
+      await prefs.setBool('seenOcr', true);
+
+    }
+
+  }
+
+  void showDeleteDialog(BuildContext context,) {
+    bool deletingDone = false;
+    //print(index.toString()+"index");
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            title: new Text(
+                "Optical Character Recognition "),
+            content: new Text("this feature helps you extracting texts from images and translate them,"
+                " enjoy your trip and explore what's around"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  //    reflectDeleting(story, index);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
 }
 
 class CircularButton extends StatelessWidget {

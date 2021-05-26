@@ -91,10 +91,15 @@ dependencies:
   cupertino_icons: ^1.0.0
   carousel_pro: ^1.0.0
 dev_dependencies:
+  flutter_launcher_icons: "^0.8.0"
   gallery_saver:
   flutter_test:
     sdk: flutter
 
+flutter_icon:
+  android: true
+  ios: true
+  path: "assets/icons/cockatooic.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

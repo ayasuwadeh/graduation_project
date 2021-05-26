@@ -12,7 +12,6 @@ class UserStory {
   String name;
   String city;
   String country;
-
   List<StoryImage> storyImages;
   List<PathPoint> userPath;
 

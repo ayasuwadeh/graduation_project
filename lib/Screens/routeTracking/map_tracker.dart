@@ -9,6 +9,7 @@ import '../../gist.dart';
 import 'package:graduation_project/models/story-image.dart';
 import 'package:graduation_project/models/path-point.dart';
 import 'package:graduation_project/models/general_location.dart';
+import 'package:graduation_project/constants.dart';
 class LiveMap extends StatefulWidget {
   final Position initialPosition;
 
@@ -159,10 +160,11 @@ class _LiveMapState extends State<LiveMap> {
     LatLng firstPoint = points[_pointId - 1];
     LatLng secondPoint = points[_pointId];
     final Polyline polyline = Polyline(
+      // patterns: [PatternItem.dash(20), PatternItem.gap(10)],
       polylineId: polylineId,
       consumeTapEvents: true,
-      color: Colors.deepOrange,
-      width: 3,
+      color: Color(0x7cb59e).withOpacity(1),
+      width: 4,
       points: [firstPoint, secondPoint],
     );
     setState(() {

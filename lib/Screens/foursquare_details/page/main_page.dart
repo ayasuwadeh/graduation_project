@@ -65,12 +65,14 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final panelController = PanelController();
-  bool isBooked=true;
+  bool isBooked=false;
   bool isLiked=false;
   AuthProvider authProvider=new AuthProvider();
 
   @override
   void initState() {
+    updateBookmark();
+
     super.initState();
   }
 
@@ -195,6 +197,12 @@ class _MainPageState extends State<MainPage> {
 
     setState(() {
       isBooked=!isBooked;
+    });
+  }
+  void updateBookmark() async{
+    bool d=await authProvider.findEntertainmentBookmark(id:widget.place.id);
+    setState(() {
+      isBooked=d;
     });
   }
 

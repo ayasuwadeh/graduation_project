@@ -55,55 +55,56 @@ class _RouteCardState extends State<SyncCard> {
           borderRadius:BorderRadius.circular(20),
         ),
 
-        child: Padding(
-          padding: EdgeInsets.only(left:15,right: 15),
-          child: Row(
+        child: Stack(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Positioned.fill(
 
-                children: [
-                 opacityWidget(widget.story),
+        left: -270,
+
+          child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+
+                  children: [
+                        opacityWidget(widget.story)
 
 ]),
+              ),
 
-                Column(
-                  children: [
+               Positioned.fill(
+                 top: -50,
+                 left: width*0.28,
 
-                    //SizedBox(height: 80,),
-                    Align(
+                 child: Row(
+                          children: [//TODO:faded text
+                            Text(widget.story.name,style: TextStyle(fontSize: 25
+                                ,fontWeight: FontWeight.bold,
+                                color: Colors.deepOrange.withAlpha(150)),),
+                          ],
+                        ),
+               ),
 
-                      alignment: Alignment.bottomLeft,
-                      child: Column(
-                        children: [
-                          SizedBox(height: height*0.046,),
-                      Row(
-                        children: [//TODO:faded text
-                          Text(widget.story.name,style: TextStyle(fontSize: 25
-                              ,fontWeight: FontWeight.bold,
-                              color: Colors.deepOrange.withAlpha(150)),),
-                        ],
-                      ),
+                          Positioned.fill(
+                            top: height*0.04,
+                            left: width*0.28,
 
-                          SizedBox(height: height*0.02,),
-                          Row(children:[
-                            Text("   "),
-                            Icon(Icons.location_pin,color: Colors.black54,),
-                            Text(widget.story.city+", "+widget.story.country,
-                              style: TextStyle(fontSize: 17
-                                  ,fontWeight: FontWeight.bold,
-                                  color: Color(0xC1090A0A)),),]),
-                          Text(Jiffy(widget.story.time).fromNow().toString())
-                        ],
-                      ),
-                    ),
+                            child: Row(children:[
+                              Text("   "),
+                              Icon(Icons.location_pin,color: Colors.black54,),
+                              Text(widget.story.city+", "+widget.story.country,
+                                style: TextStyle(fontSize: 17
+                                    ,fontWeight: FontWeight.bold,
+                                    color: Color(0xC1090A0A)),),]),
+                          ),
+                          Positioned.fill(
+                              top: height*0.15,
+                              left: width*0.32,
 
-                  ],
-                )
+                              child: Text(Jiffy(widget.story.time).fromNow().toString()))
+
+
               ],
             ),
 
-          ),
         ),
     );
   }

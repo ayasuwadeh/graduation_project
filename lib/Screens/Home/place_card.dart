@@ -110,7 +110,6 @@ class _RestCardState extends State<RestCard> {
                     children: [
                       StatsWidget(rate: widget.recommendationPlace.rating,
                         size:30 ,),
-                      Text(" | matching:"+(widget.recommendationPlace.score*100).toStringAsFixed(0).toString()+"%"),
                     ],
                   ),
                 ),

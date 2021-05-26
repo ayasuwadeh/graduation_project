@@ -21,6 +21,7 @@ class PlaceWidget extends StatelessWidget {
   InnerRest innerRest;
   RestInnerDetails restInnerDetailsApi = RestInnerDetails();
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -115,13 +116,17 @@ class _MainPageState extends State<MainPage> {
   bool isLiked=false;
   AuthProvider authProvider=new AuthProvider();
   List<BookmarkPlace>similarBookmarksList= [];
+  List<BookmarkPlace>userRestaurantsBookmarks= [];
+
   CollaborativeModel collaborativeModelApi=new CollaborativeModel();
   bool isSimilarOpened=false;
 
   @override
   void initState() {
-    updateBookmark();
     super.initState();
+    updateBookmark();
+    findUserRestaurantBookmarks();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -262,7 +267,7 @@ class _MainPageState extends State<MainPage> {
                 child: Row(
                   children: [
                     for(int i=0;i<similarBookmarksList.length;i++)
-                      SimilarPlaceCard(similarBookmark: similarBookmarksList[i],)
+                    SimilarPlaceCard(similarBookmark: similarBookmarksList[i],)
 
                   ],
                 ),
@@ -331,12 +336,23 @@ class _MainPageState extends State<MainPage> {
 
   void showSimilarBookmarks() async{
     similarBookmarksList=await collaborativeModelApi.fetchBookedRestaurants(widget.restaurant.googleID);
-    print(similarBookmarksList);
+    for(int i=0;i<similarBookmarksList.length;i++)
+      // print(similarBookmarksList[i].id+"jjjj");
+
+    for(int i=0;i<userRestaurantsBookmarks.length;i++)
+      {
+        similarBookmarksList.removeWhere((element) => element.id==userRestaurantsBookmarks[i].id);
+    }
     setState(() {
   isSimilarOpened=true;
 
 });
   }
 
+  void findUserRestaurantBookmarks() async{
+    userRestaurantsBookmarks=await authProvider.showRestaurantsBookmarks();
+    // for(int i=0;i<userRestaurantsBookmarks.length;i++)
+    //   print(userRestaurantsBookmarks[i].id+"hii");
+  }
 
 }

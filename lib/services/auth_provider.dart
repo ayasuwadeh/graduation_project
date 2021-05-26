@@ -8,6 +8,7 @@ import 'package:graduation_project/models/path-point.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:graduation_project/models/BookmarkPlace.dart';
+import 'package:graduation_project/models/cuisine.dart';
 enum Status {
   NotLoggedIn,
   NotRegistered,
@@ -655,7 +656,7 @@ class AuthProvider extends ChangeNotifier {
         BookmarkPlace bookmarkPlace = BookmarkPlace.fromJson(item);
         bookmarkPlace.type='restaurant';
         bookmarkPlace.source='google';
-        print(bookmarkPlace.id);
+        // print(bookmarkPlace.id);
         bookmarkPlaces.add(bookmarkPlace);
       }
     } else {
@@ -889,6 +890,56 @@ class AuthProvider extends ChangeNotifier {
       print(response.statusCode);
 
       return false;
+    }
+  }
+
+  Future<Map<String, dynamic>> findUserCuisines() async {
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeaders(token));
+
+
+    var response = await headers.then((header) =>
+        http.get(ApiUtil.findUserCuisines ,
+            headers: header));
+
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success']) {
+        return responseData;
+      } else {
+        return {};
+      }
+    } else {
+      print(response.statusCode);
+
+      return {};
+    }
+  }
+
+  Future<Map<String, dynamic>> findUserInterests() async {
+    Future<Map<String, String>> headers = UserPreferences()
+        .getToken()
+        .then((token) => getHeaders(token));
+
+
+    var response = await headers.then((header) =>
+        http.get(ApiUtil.findUserInterests ,
+            headers: header));
+
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success']) {
+        return responseData;
+      } else {
+        return {};
+      }
+    } else {
+      print(response.statusCode);
+
+      return {};
     }
   }
 

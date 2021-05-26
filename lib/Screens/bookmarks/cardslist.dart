@@ -15,7 +15,25 @@ class CardsList extends StatefulWidget {
 class _CardsListState extends State<CardsList> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return widget.bookmarks.length==0?
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(height: 200,),
+        Center(
+          child: Text(
+            "no bookmarks available ",
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 22,
+              //fontWeight: FontWeight.bold
+            ),
+          ),
+        )
+      ],
+    ):
+    SingleChildScrollView(
       child: Column(
         children: _createChildren( widget.bookmarks),
       ),
