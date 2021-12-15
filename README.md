@@ -12,6 +12,8 @@ Moreover, tracks can be saved with added pictures and notes so the user can have
 keep or to share. Another great feature that Cockatoo provides is the OCR (Optical character recognition)
 to translate any sign in a language that the user cannot understand.
 
+For more details you can check: https://drive.google.com/file/d/1mAstyksLZx9vgkZ8eM2csMK_PsbBkmoR/view?usp=sharing
+
 ## Login Page
 <p align="center">
 <img src="https://user-images.githubusercontent.com/67008587/144004755-a46d5617-5ba4-43cb-aae5-9a7ae3f962a5.png" width="250">
